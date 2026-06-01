@@ -369,6 +369,59 @@ function BuildCmpTbl($markets) {
 }
 
 # ══════════════════════════════════════════════════════════════
+# 0. WATCHLIST PRICE DROP CHECK
+# ══════════════════════════════════════════════════════════════
+$watchlistDrops   = @()
+$watchlistItems   = @($current.watchlist)
+$watchlistSnap    = @($snapshot.watchlist)
+
+foreach ($item in $watchlistItems) {
+    if (-not $item.url -or -not $item.saved_price) { continue }
+    $prev = $watchlistSnap | Where-Object { $_.url -eq $item.url } | Select-Object -First 1
+    $prevPrice = if ($prev -and $prev.current_price) { $prev.current_price } else { $item.saved_price }
+    $currPrice = if ($item.current_price) { $item.current_price } else { $item.saved_price }
+    $delta = $currPrice - $prevPrice
+    if ($delta -lt -500) {  # flag drops of $500+
+        $watchlistDrops += [PSCustomObject]@{
+            address    = $item.address
+            market     = $item.market
+            savedPrice = $item.saved_price
+            prevPrice  = $prevPrice
+            currPrice  = $currPrice
+            delta      = $delta
+            url        = $item.url
+            notes      = $item.notes
+        }
+    }
+}
+
+$watchlistHtml = ""
+if ($watchlistDrops.Count -gt 0) {
+    $dropCards = ($watchlistDrops | ForEach-Object {
+        $drop    = [math]::Abs($_.delta)
+        $dropPct = [math]::Round(($drop / $_.prevPrice) * 100, 1)
+        "<div style='background:#fff5f5;border-radius:8px;padding:14px 16px;border-left:4px solid #c53030;margin-bottom:10px'>" +
+        "<div style='display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px'>" +
+        "<div>" +
+        "<div style='font-weight:700;font-size:.92rem'>$($_.address)</div>" +
+        "<div style='font-size:.78rem;color:#718096;margin-top:2px'>$($_.market) &nbsp;·&nbsp; Saved at `$$($_.savedPrice.ToString('N0'))</div>" +
+        "</div>" +
+        "<div style='text-align:right'>" +
+        "<div style='font-size:1rem;font-weight:900;color:#c53030'>▼ `$$($drop.ToString('N0')) ($dropPct%)</div>" +
+        "<div style='font-size:.78rem;color:#718096'>`$$($_.currPrice.ToString('N0')) now</div>" +
+        "</div></div>" +
+        $(if ($_.notes) { "<div style='margin-top:6px;font-size:.78rem;color:#718096;font-style:italic'>$($_.notes)</div>" } else { "" }) +
+        "<div style='margin-top:8px'><a href='$($_.url)' style='display:inline-block;padding:5px 12px;background:#c53030;color:#fff;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none'>View Listing ↗</a></div>" +
+        "</div>"
+    }) -join ""
+    $watchlistHtml = $dropCards
+} elseif ($watchlistItems.Count -gt 0) {
+    $watchlistHtml = "<div style='color:#276749;font-size:.85rem;padding:10px 0'>No price drops on your $($watchlistItems.Count) saved listing(s) this week.</div>"
+} else {
+    $watchlistHtml = "<div style='color:#718096;font-size:.85rem;padding:10px 0'>No listings saved to watchlist yet. Add listings via the dashboard Watchlist tab.</div>"
+}
+
+# ══════════════════════════════════════════════════════════════
 # 1. WHAT CHANGED
 # ══════════════════════════════════════════════════════════════
 $changedRows = ""
@@ -618,7 +671,7 @@ $narrativeHtml =
 # LISTING PULSE — pre-filtered search links per primary market
 # ══════════════════════════════════════════════════════════════
 # Search filters: 4+ beds, max $950K, single-family homes
-$maxPrice = 950000
+$maxPrice = 1000000
 
 # URL slugs for each primary market (Redfin state/city, Zillow city-state)
 $listingUrls = @{
@@ -638,8 +691,8 @@ $pulseCards = ($current.primary_markets | ForEach-Object {
     $dom  = if ($m.dom) { "$($m.dom)d DOM" } else { "DOM N/A" }
     $tone = if ($m.market_tone) { $m.market_tone } else { "" }
     $urls = $listingUrls[$m.id]
-    $rfUrl = "https://www.redfin.com/$($urls.redfin)/filter/max-price=$maxPrice,min-beds=4,property-type=house"
-    $zlUrl = "https://www.zillow.com/$($urls.zillow)/4-beds/?price=0-$maxPrice"
+    $rfUrl = "https://www.redfin.com/$($urls.redfin)/filter/max-price=$maxPrice,min-beds=3,property-type=house"
+    $zlUrl = "https://www.zillow.com/$($urls.zillow)/3-beds/?price=0-$maxPrice"
 
     "<div style='background:#f7fafc;border-radius:8px;padding:14px 16px;border-left:3px solid #0f3460;margin-bottom:10px'>" +
     "<div style='display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px'>" +
@@ -657,8 +710,56 @@ $pulseCards = ($current.primary_markets | ForEach-Object {
 }) -join ""
 
 $listingPulseHtml =
-    "<div style='font-size:.78rem;color:#718096;margin-bottom:12px'>4+ bedrooms &nbsp;·&nbsp; under $(M $maxPrice) &nbsp;·&nbsp; single-family &nbsp;·&nbsp; primary markets only &nbsp;·&nbsp; click to open live search</div>" +
+    "<div style='font-size:.78rem;color:#718096;margin-bottom:12px'>3+ bedrooms &nbsp;·&nbsp; under $(M $maxPrice) &nbsp;·&nbsp; single-family &nbsp;·&nbsp; primary markets only &nbsp;·&nbsp; click to open live search</div>" +
     $pulseCards
+
+# ── Top Picks (AI-scored listings from scan-listings.ps1) ─────────────────────
+$scanFile    = Join-Path $ROOT "data\listings_scan.json"
+$topPicksHtml = ""
+
+Log "Running listing scanner..."
+try {
+    & "$PSScriptRoot\scan-listings.ps1" | Out-Null
+} catch {
+    Log "WARN: scan-listings.ps1 failed — $($_.Exception.Message)"
+}
+
+if (Test-Path $scanFile) {
+    try {
+        $scored = Get-Content $scanFile -Raw | ConvertFrom-Json
+        if ($scored -and $scored.Count -gt 0) {
+            $cards = ($scored | ForEach-Object {
+                $priceStr = if ($_.price) { "`$$($_.price.ToString('N0'))" } else { "-" }
+                $scoreClr = if ($_.score -ge 8) { "#276749" } elseif ($_.score -ge 6) { "#744210" } else { "#c53030" }
+                $urlHref  = if ($_.url) { $_.url } else { "#" }
+                "<div style='background:#f7fafc;border-radius:8px;padding:14px 16px;border-left:4px solid $scoreClr;margin-bottom:10px'>" +
+                "<div style='display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px'>" +
+                "<div>" +
+                "<div style='font-weight:700;font-size:.92rem'>$($_.address)</div>" +
+                "<div style='font-size:.78rem;color:#718096;margin-top:2px'>$($_.market), $($_.state) &nbsp;·&nbsp; $priceStr &nbsp;·&nbsp; $($_.beds) BR</div>" +
+                "</div>" +
+                "<div style='display:flex;align-items:center;gap:8px'>" +
+                "<span style='font-size:1rem;font-weight:900;color:$scoreClr'>$($_.score)/10</span>" +
+                "<a href='$urlHref' style='display:inline-block;padding:5px 12px;background:#0f3460;color:#fff;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none'>View ↗</a>" +
+                "</div></div>" +
+                "<div style='margin-top:8px;font-size:.8rem;color:#2d3748'><strong>Why:</strong> $($_.why)</div>" +
+                "<div style='margin-top:4px;font-size:.78rem;color:#718096'><strong>Watch out:</strong> $($_.caveat)</div>" +
+                "</div>"
+            }) -join ""
+
+            $topPicksHtml =
+                "<div style='font-size:.78rem;color:#718096;margin-bottom:12px'>3+ BR &nbsp;·&nbsp; under `$1,000,000 &nbsp;·&nbsp; all markets &nbsp;·&nbsp; AI-scored by Claude</div>" +
+                $cards
+        } else {
+            $topPicksHtml = "<div style='color:#718096;font-size:.85rem;padding:10px 0'>No qualifying listings found this week across tracked markets.</div>"
+        }
+    } catch {
+        Log "WARN: Could not render top picks — $($_.Exception.Message)"
+        $topPicksHtml = "<div style='color:#718096;font-size:.85rem;padding:10px 0'>Listing scan unavailable this week.</div>"
+    }
+} else {
+    $topPicksHtml = "<div style='color:#718096;font-size:.85rem;padding:10px 0'>Listing scan unavailable this week.</div>"
+}
 
 # ══════════════════════════════════════════════════════════════
 # BUILD FULL EMAIL HTML
@@ -713,6 +814,14 @@ $htmlBody = "<!DOCTYPE html><html><body style='margin:0;padding:0;background:#f0
     "</div>" +
 
     "</div>" +
+
+    # ── Watchlist Price Drops ──────────────────────────────────────────────────
+    (SectionHeader "Watchlist Alerts" "🔔") +
+    $watchlistHtml +
+
+    # ── Top Picks (AI-scored) ──────────────────────────────────────────────────
+    (SectionHeader "Top Picks This Week" "🏆") +
+    $topPicksHtml +
 
     # ── Listing Pulse ──────────────────────────────────────────────────────────
     (SectionHeader "Listing Pulse" "🏠") +
