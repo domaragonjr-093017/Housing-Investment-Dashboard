@@ -60,18 +60,36 @@ The interactive dashboard widget was built iteratively across multiple Claude.ai
 
 ## File Structure
 
+**Project root: `C:\Users\domar\housing-dashboard\`**
+(Migrated June 2026 from `C:\Users\domar\` — always use the housing-dashboard folder)
+
 ```
-~/
-├── CLAUDE.md                  # This file — project context for Claude Code
-├── town_research.md           # Detailed research: Hoboken, Montclair, Ridgewood, White Plains, Garden City
+C:\Users\domar\housing-dashboard\
+├── CLAUDE.md                        # This file
+├── town_research.md                 # Research: Hoboken, Montclair, Ridgewood, White Plains, Garden City
 ├── data/
-│   └── markets.json           # Structured market data, watchlist, mortgage rate config
-├── exports/                   # Generated markdown/HTML exports
-├── scripts/
-│   ├── export.js              # Re-export markdown summary (planned)
-│   └── refresh.js             # Scheduled data refresh (planned)
-└── docs/                      # Additional research notes and source links
+│   ├── markets.json                 # All market data, watchlist, mortgage rate config
+│   ├── markets_snapshot.json        # Pre-refresh snapshot for diff/summary
+│   └── investment-rates.json        # Live FRED rates for Investment tab
+├── exports/                         # Generated markdown/HTML exports
+├── docs/
+│   └── index.html                   # GitHub Pages live dashboard (auto-pushed by export.ps1)
+└── scripts/
+    ├── dashboard-template.html      # Dashboard source template (all tabs/JS)
+    ├── export.ps1                   # Generates exports + pushes to GitHub Pages
+    ├── refresh.ps1                  # Wednesday data refresh (Zillow + FRED)
+    ├── scheduled-refresh.ps1        # Entry point for Windows Task Scheduler
+    ├── summarize.ps1                # Claude API narrative + Gmail email send
+    ├── send-summary.ps1             # Entry point for email scheduled task
+    ├── fetch-investment-rates.ps1   # FRED live rates for Investment tab
+    └── alert.ps1                    # Price threshold alerts
 ```
+
+**GitHub Pages live URL:** https://domaragonjr-093017.github.io/Housing-Investment-Dashboard/
+
+**Windows Scheduled Tasks (both updated to new path):**
+- `HousingDashboard-Wednesday` — runs `scheduled-refresh.ps1` at Wed 10:00 AM
+- `HousingDashboard_Weekly`    — runs `send-summary.ps1` at Wed 10:30 AM
 
 ---
 
