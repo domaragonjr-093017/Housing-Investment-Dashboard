@@ -1,0 +1,2099 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Housing Market Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f4f8;color:#1a202c;min-height:100vh}
+header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:20px 32px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:1.5rem;font-weight:700;letter-spacing:-.3px}
+header .meta{font-size:.8rem;opacity:.7;text-align:right}
+.rates-bar{background:#16213e;color:#fff;padding:8px 32px;display:flex;gap:32px;font-size:.8rem}
+.rates-bar span{opacity:.7}
+.rates-bar strong{opacity:1;color:#63b3ed}
+nav{background:#fff;border-bottom:2px solid #e2e8f0;padding:0 32px;display:flex;gap:4px}
+.tab{padding:14px 20px;cursor:pointer;font-size:.875rem;font-weight:500;color:#718096;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s}
+.tab:hover{color:#0f3460}
+.tab.active{color:#0f3460;border-bottom-color:#e94560;font-weight:600}
+.page{display:none;padding:28px 32px;max-width:1300px;margin:0 auto}
+.page.active{display:block}
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:28px}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-top:4px solid #e2e8f0;transition:.2s}
+.card:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-2px)}
+.card.primary{border-top-color:#0f3460}
+.card.research{border-top-color:#805ad5}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.card-name{font-weight:700;font-size:1rem;color:#1a202c}
+.card-state{font-size:.75rem;background:#edf2f7;color:#4a5568;padding:2px 8px;border-radius:99px}
+.card-price{font-size:1.5rem;font-weight:800;color:#0f3460;margin-bottom:4px}
+.card-piti{font-size:.85rem;color:#e94560;font-weight:600;margin-bottom:12px}
+.card-metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.metric{font-size:.78rem}
+.metric .label{color:#718096;display:block}
+.metric .value{color:#1a202c;font-weight:600}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.72rem;font-weight:700}
+.badge.green{background:#c6f6d5;color:#276749}
+.badge.yellow{background:#fefcbf;color:#744210}
+.badge.red{background:#fed7d7;color:#742a2a}
+.badge.blue{background:#bee3f8;color:#2a4365}
+/* Section headers */
+.section-title{font-size:1rem;font-weight:700;color:#0f3460;margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:#e2e8f0}
+/* Table */
+.table-wrap{overflow-x:auto;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:.84rem}
+thead tr{background:#0f3460;color:#fff}
+th{padding:11px 14px;text-align:left;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;cursor:pointer;white-space:nowrap}
+th:hover{background:#16213e}
+td{padding:10px 14px;border-bottom:1px solid #f0f4f8;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f7fafc}
+td.bold{font-weight:700;color:#0f3460}
+td.green{color:#276749;font-weight:700}
+td.red{color:#c53030;font-weight:700}
+td.muted{color:#a0aec0}
+/* Mortgage calculator */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:700px){.calc-grid{grid-template-columns:1fr}}
+.calc-panel{background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.calc-panel h3{font-size:.95rem;font-weight:700;color:#0f3460;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:.78rem;font-weight:600;color:#4a5568;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.field input[type=range]{width:100%;accent-color:#0f3460}
+.field .val{font-size:1.1rem;font-weight:800;color:#0f3460;margin-top:4px}
+.field input[type=number]{width:100%;padding:8px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:.95rem;color:#1a202c}
+.field input[type=number]:focus{outline:none;border-color:#0f3460}
+.piti-result{background:linear-gradient(135deg,#0f3460,#e94560);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-top:8px}
+.piti-result .label{font-size:.8rem;opacity:.8;text-transform:uppercase;letter-spacing:.6px}
+.piti-result .amount{font-size:2.8rem;font-weight:900;margin:8px 0}
+.piti-result .breakdown{font-size:.78rem;opacity:.8;display:grid;grid-template-columns:1fr 1fr;gap:4px;text-align:left;margin-top:12px}
+.piti-result .breakdown span{padding:3px 0}
+/* Term-comparison grid inside PITI result */
+.piti-term-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 12px}
+@media(max-width:640px){.piti-term-grid{grid-template-columns:repeat(2,1fr)}}
+.piti-tc{background:rgba(255,255,255,.1);border-radius:10px;padding:13px 12px;text-align:center;border:1.5px solid transparent;transition:.2s}
+.piti-tc.tc-primary{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.35)}
+.piti-tc .tc-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;opacity:.7;margin-bottom:2px}
+.piti-tc .tc-rate{font-size:.65rem;opacity:.55;margin-bottom:8px}
+.piti-tc .tc-amt{font-size:1.35rem;font-weight:900;line-height:1;margin-bottom:2px}
+.tc-divider{height:1px;background:rgba(255,255,255,.22);margin:8px 0 6px}
+.tc-components{text-align:left}
+.tc-comp{display:flex;justify-content:space-between;align-items:center;padding:3px 0;gap:6px}
+.tc-comp-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;opacity:.6}
+.tc-comp-val{font-size:.75rem;font-weight:700;opacity:.92}
+.tc-comp-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.35);margin:0 0 2px;transition:width .3s}
+.results-table{margin-top:24px}
+/* Watchlist */
+.watchlist-form{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
+.watchlist-form input,.watchlist-form select,.watchlist-form textarea{width:100%;padding:8px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:.875rem}
+.watchlist-form input:focus,.watchlist-form select:focus{outline:none;border-color:#0f3460}
+.btn{padding:9px 20px;border:none;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;transition:.15s}
+.btn-primary{background:#0f3460;color:#fff}
+.btn-primary:hover{background:#16213e}
+.btn-danger{background:#fed7d7;color:#c53030}
+.btn-danger:hover{background:#feb2b2}
+.wl-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.wl-card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-left:4px solid #0f3460}
+.wl-card .wl-addr{font-weight:700;font-size:.95rem;margin-bottom:4px}
+.wl-card .wl-market{font-size:.78rem;color:#718096;margin-bottom:8px}
+.wl-card .wl-price{font-size:1.1rem;font-weight:800;color:#0f3460}
+.wl-card .wl-note{font-size:.8rem;color:#4a5568;margin-top:8px;font-style:italic}
+.wl-card .wl-actions{margin-top:12px;display:flex;gap:8px}
+.empty{text-align:center;padding:48px;color:#a0aec0;font-size:.9rem}
+/* ── Active market card highlight ── */
+.card--active{border-top-color:#e94560 !important;box-shadow:0 0 0 2px rgba(233,69,96,.35),0 4px 16px rgba(233,69,96,.15) !important;transform:translateY(-2px)}
+/* ── Overview PITI Calculator — compact variant ── */
+.ov-calc{padding:14px 18px}
+.ov-calc h3{font-size:.82rem;margin-bottom:8px;padding-bottom:7px}
+.ov-calc-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+.ov-calc .field{margin-bottom:0}
+.ov-calc .field label{font-size:.65rem;margin-bottom:2px;letter-spacing:.03em}
+.ov-calc .field .val{font-size:.88rem;margin-top:1px}
+.ov-calc .field input[type=number]{padding:5px 8px;font-size:.82rem}
+
+/* ── Investment Analysis Tab ─────────────────────────────────── */
+#page-investment{background:#0a1628;padding:0;min-height:calc(100vh - 132px)}
+.inv-wrap{max-width:1440px;margin:0 auto;padding:16px 20px;color:#e2e8f0;font-size:14px}
+/* Live bar */
+.inv-live-bar{background:#0a1f10;border-bottom:1px solid #1a4a2a;padding:7px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:11px;color:#4ade80}
+.inv-live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:4px;animation:invPulse 2s infinite}
+@keyframes invPulse{0%,100%{opacity:1}50%{opacity:.4}}
+.inv-live-item{color:#94a3b8}.inv-live-item strong{color:#e2e8f0;margin-left:3px}
+.inv-live-stale{color:#64748b;font-style:italic}
+/* Sections */
+.inv-sec{background:#0d1f3c;border:1px solid #1e3a5f;border-radius:8px;padding:16px;margin-bottom:16px}
+.inv-sec-title{font-size:15px;font-weight:700;margin-bottom:4px;color:#e2e8f0}
+.inv-sec-sub{color:#94a3b8;font-size:12px;margin-bottom:12px}
+/* Scenario bar */
+.inv-sc-bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
+.inv-sc-card{background:#0d1f3c;border:1px solid #1e3a5f;border-radius:8px;padding:14px}
+.inv-sc-card.a{border-left:3px solid #3b82f6}.inv-sc-card.b{border-left:3px solid #22c55e}.inv-sc-card.d{border-left:3px solid #f59e0b}
+.inv-sc-lbl{font-size:10px;text-transform:uppercase;color:#94a3b8;letter-spacing:.06em;margin-bottom:6px}
+.inv-sc-ttl{font-size:14px;font-weight:600;margin-bottom:10px}
+.inv-row{display:flex;justify-content:space-between;margin-bottom:3px;font-size:13px}
+.inv-row span:last-child{font-weight:600}
+/* Inputs */
+.inv-ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.inv-ig-col-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.inv-ig{margin-bottom:12px}.inv-ig label{display:block;font-size:11px;color:#94a3b8;margin-bottom:3px}
+.inv-ig-row{display:flex;align-items:center;gap:6px}
+.inv-ig-row input[type=range]{flex:1;accent-color:#3b82f6;cursor:pointer;height:4px}
+.inv-ig-row input[type=number]{width:86px;background:#112240;border:1px solid #1e3a5f;color:#e2e8f0;padding:3px 6px;border-radius:4px;font-size:12px;text-align:right}
+.inv-unit{color:#94a3b8;font-size:11px;min-width:24px}
+.inv-calc-disp{padding:5px 10px;background:#112240;border:1px solid #1e3a5f;border-radius:4px;font-size:14px;font-weight:700}
+.inv-divider{border:none;border-top:1px solid #1e3a5f;margin:10px 0}
+/* Alloc bar */
+.inv-alloc-bar{height:10px;border-radius:5px;overflow:hidden;display:flex;margin-top:6px}
+.inv-alloc-sp{background:#22c55e}.inv-alloc-bonds{background:#f59e0b}.inv-alloc-tbill{background:#a855f7}
+.inv-alloc-legend{display:flex;gap:12px;font-size:10px;color:#94a3b8;margin-top:4px;flex-wrap:wrap}
+.inv-alloc-legend span{display:flex;align-items:center;gap:4px}
+.inv-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+/* Break-even */
+.inv-be-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.inv-be-item{text-align:center;padding:12px;background:#112240;border-radius:6px;border:1px solid #1e3a5f}
+.inv-be-lbl{font-size:10px;color:#94a3b8;margin-bottom:6px;line-height:1.4}
+.inv-be-val{font-size:20px;font-weight:700}
+/* Chart */
+.inv-chart-wrap{position:relative;height:340px}
+.inv-toggle-grp{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.inv-tb{padding:3px 12px;border-radius:16px;border:1px solid #1e3a5f;background:transparent;color:#94a3b8;cursor:pointer;font-size:11px;transition:all .15s;white-space:nowrap}
+.inv-tb.on{color:#fff}.inv-tb.on.c0{background:#64748b;border-color:#64748b}.inv-tb.on.c1{background:#3b82f6;border-color:#3b82f6}.inv-tb.on.c2{background:#22c55e;border-color:#22c55e}
+/* Tables */
+#page-investment table{width:100%;border-collapse:collapse;font-size:12px;background:transparent}
+#page-investment thead tr{background:#112240}
+#page-investment th{background:#112240;color:#94a3b8;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:7px 10px;text-align:right;border-bottom:2px solid #1e3a5f;white-space:nowrap}
+#page-investment th:first-child{text-align:left}
+#page-investment td{padding:7px 10px;text-align:right;border-bottom:1px solid #1e3a5f;color:#e2e8f0;white-space:nowrap}
+#page-investment td:first-child{text-align:left;font-weight:600}
+#page-investment tr:hover td{background:rgba(255,255,255,.02)}
+.inv-pos{color:#22c55e}.inv-neg{color:#ef4444}.inv-muted{color:#94a3b8}
+.inv-ov-x{overflow-x:auto}
+.inv-two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.inv-footnote{color:#94a3b8;font-size:11px;margin-top:12px;padding-top:10px;border-top:1px solid #1e3a5f;line-height:1.6}
+/* Historical chips */
+.inv-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.inv-chip{font-size:10px;padding:2px 7px;border-radius:10px;border:1px solid #1e3a5f;background:#112240;color:#94a3b8;cursor:pointer;transition:all .15s;white-space:nowrap}
+.inv-chip:hover{border-color:#22c55e;color:#22c55e}
+.inv-chip .inv-chip-val{font-weight:700;color:#e2e8f0}
+@media(max-width:960px){.inv-sc-bar,.inv-two-col{grid-template-columns:1fr}.inv-ig-grid{grid-template-columns:1fr 1fr}.inv-be-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.inv-ig-grid{grid-template-columns:1fr}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Housing Market Dashboard</h1>
+    <div style="font-size:.8rem;opacity:.7;margin-top:2px">NYC Suburban Markets &mdash; Home Purchase Research</div>
+  </div>
+  <div class="meta" id="meta-updated"></div>
+</header>
+
+<div class="rates-bar" id="rates-bar"></div>
+
+<nav>
+  <div class="tab active" onclick="showTab('summary')">📋 Our Story</div>
+  <div class="tab" onclick="showTab('overview')">Overview</div>
+  <div class="tab" onclick="showTab('compare')">Compare</div>
+  <div class="tab" onclick="showTab('weekly')">Weekly Changes</div>
+  <div class="tab" onclick="showTab('watchlist')">Watchlist</div>
+  <div class="tab" onclick="showTab('investment')">📊 Investment Analysis</div>
+</nav>
+
+<!-- ── OUR STORY (EXECUTIVE SUMMARY) ────────────────────────── -->
+<div class="page active" id="page-summary" style="padding:0;background:#0d1117;max-width:820px;margin:0 auto">
+
+  <!-- ① HERO -->
+  <div style="position:relative;border-radius:20px;overflow:hidden;margin-bottom:20px;background:linear-gradient(135deg,#0f3460 0%,#16213e 50%,#1a0a2e 100%);padding:56px 40px 48px">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(96,165,250,.18) 0%,transparent 55%),radial-gradient(ellipse at 20% 80%,rgba(168,85,247,.1) 0%,transparent 50%)"></div>
+    <div style="position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:32px">
+      <div>
+        <div style="font-size:.68rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#60a5fa;margin-bottom:16px;opacity:.8">Our Story</div>
+        <div style="font-size:3rem;font-weight:900;line-height:1.05;color:#fff;margin-bottom:16px">A home that<br><span style="color:#60a5fa">fits our family.</span></div>
+        <div style="font-size:1rem;color:#94a3b8;line-height:1.7;max-width:400px">Young family. NYC commute. $658K to deploy.<br>One dashboard to make it a data decision.</div>
+      </div>
+      <div style="text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px 28px;min-width:140px">
+        <div style="font-size:2.6rem;font-weight:900;color:#60a5fa;line-height:1">$658K</div>
+        <div style="font-size:.68rem;color:#475569;margin-top:6px;text-transform:uppercase;letter-spacing:.8px;font-weight:700">Down Payment<br>In Hand</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② THE JOURNEY — big numbered nodes -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;margin-bottom:20px;background:#161b22;border:1px solid #21262d;border-radius:16px;overflow:hidden">
+    <div style="padding:28px 18px;border-right:1px solid #21262d;position:relative">
+      <div style="position:absolute;right:-14px;top:50%;transform:translateY(-50%);width:28px;height:28px;background:#161b22;border:1px solid #21262d;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#334155;font-size:.9rem;z-index:3">›</div>
+      <div style="font-size:2.2rem;font-weight:900;color:#1e3a5f;line-height:1;margin-bottom:8px">01</div>
+      <div style="font-size:1.4rem;margin-bottom:8px">🏡</div>
+      <div style="font-size:.85rem;font-weight:800;color:#e2e8f0;margin-bottom:4px">Selling</div>
+      <div style="font-size:.72rem;color:#475569">~$700K home<br>→ $658K net</div>
+    </div>
+    <div style="padding:28px 18px;border-right:1px solid #21262d;position:relative">
+      <div style="position:absolute;right:-14px;top:50%;transform:translateY(-50%);width:28px;height:28px;background:#161b22;border:1px solid #21262d;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#334155;font-size:.9rem;z-index:3">›</div>
+      <div style="font-size:2.2rem;font-weight:900;color:#1e3a5f;line-height:1;margin-bottom:8px">02</div>
+      <div style="font-size:1.4rem;margin-bottom:8px">🔍</div>
+      <div style="font-size:.85rem;font-weight:800;color:#e2e8f0;margin-bottom:4px">Comparing</div>
+      <div style="font-size:.72rem;color:#475569">11 markets<br>across LI, NY, NJ</div>
+    </div>
+    <div style="padding:28px 18px;border-right:1px solid #21262d;position:relative">
+      <div style="position:absolute;right:-14px;top:50%;transform:translateY(-50%);width:28px;height:28px;background:#161b22;border:1px solid #21262d;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#334155;font-size:.9rem;z-index:3">›</div>
+      <div style="font-size:2.2rem;font-weight:900;color:#1e3a5f;line-height:1;margin-bottom:8px">03</div>
+      <div style="font-size:1.4rem;margin-bottom:8px">📊</div>
+      <div style="font-size:.85rem;font-weight:800;color:#e2e8f0;margin-bottom:4px">Tracking</div>
+      <div style="font-size:.72rem;color:#475569">Live rates + prices<br>every Wednesday</div>
+    </div>
+    <div style="padding:28px 18px">
+      <div style="font-size:2.2rem;font-weight:900;color:#276749;line-height:1;margin-bottom:8px">04</div>
+      <div style="font-size:1.4rem;margin-bottom:8px">✅</div>
+      <div style="font-size:.85rem;font-weight:800;color:#e2e8f0;margin-bottom:4px">Moving</div>
+      <div style="font-size:.72rem;color:#475569">When data says go,<br>not gut feel</div>
+    </div>
+  </div>
+
+  <!-- ③ WHAT DECIDES IT — 4 large visual tiles -->
+  <div style="text-align:center;margin-bottom:14px">
+    <div style="font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#334155">Four things that decide</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+    <div style="background:linear-gradient(160deg,#1e3a5f,#0f2040);border-radius:14px;padding:22px 14px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;bottom:-8px;right:-4px;font-size:4.5rem;font-weight:900;opacity:.08;color:#fff;line-height:1">1</div>
+      <div style="font-size:2rem;margin-bottom:10px">🎓</div>
+      <div style="font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#60a5fa;opacity:.7;margin-bottom:5px">#1</div>
+      <div style="font-size:.88rem;font-weight:800;color:#fff;margin-bottom:4px">Schools</div>
+      <div style="font-size:.68rem;color:#60a5fa;opacity:.6">Non-negotiable</div>
+    </div>
+    <div style="background:linear-gradient(160deg,#312040,#1a1030);border-radius:14px;padding:22px 14px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;bottom:-8px;right:-4px;font-size:4.5rem;font-weight:900;opacity:.08;color:#fff;line-height:1">2</div>
+      <div style="font-size:2rem;margin-bottom:10px">🚆</div>
+      <div style="font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#c084fc;opacity:.7;margin-bottom:5px">#2</div>
+      <div style="font-size:.88rem;font-weight:800;color:#fff;margin-bottom:4px">Commute</div>
+      <div style="font-size:.68rem;color:#c084fc;opacity:.6">33–75 min range</div>
+    </div>
+    <div style="background:linear-gradient(160deg,#14352a,#0a2019);border-radius:14px;padding:22px 14px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;bottom:-8px;right:-4px;font-size:4.5rem;font-weight:900;opacity:.08;color:#fff;line-height:1">3</div>
+      <div style="font-size:2rem;margin-bottom:10px">💰</div>
+      <div style="font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#34d399;opacity:.7;margin-bottom:5px">#3</div>
+      <div style="font-size:.88rem;font-weight:800;color:#fff;margin-bottom:4px">PITI / mo</div>
+      <div style="font-size:.68rem;color:#34d399;opacity:.6">Ceiling $5,000</div>
+    </div>
+    <div style="background:linear-gradient(160deg,#3a2010,#1f1208);border-radius:14px;padding:22px 14px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;bottom:-8px;right:-4px;font-size:4.5rem;font-weight:900;opacity:.08;color:#fff;line-height:1">4</div>
+      <div style="font-size:2rem;margin-bottom:10px">🏷️</div>
+      <div style="font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#fbbf24;opacity:.7;margin-bottom:5px">#4</div>
+      <div style="font-size:.88rem;font-weight:800;color:#fff;margin-bottom:4px">Price</div>
+      <div style="font-size:.68rem;color:#fbbf24;opacity:.6">$700K – $1M</div>
+    </div>
+  </div>
+
+  <!-- ④ THE MONEY — giant number flow -->
+  <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;text-align:center;gap:10px;margin-bottom:20px;background:#161b22;border:1px solid #21262d;border-radius:16px;padding:28px 24px">
+    <div>
+      <div style="font-size:2.8rem;font-weight:900;color:#64748b;line-height:1;margin-bottom:6px">$700K</div>
+      <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#334155">Home sold</div>
+    </div>
+    <div style="font-size:1.5rem;color:#21262d;padding:0 4px">→</div>
+    <div>
+      <div style="font-size:2.8rem;font-weight:900;color:#60a5fa;line-height:1;margin-bottom:6px">$658K</div>
+      <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#334155">Net proceeds</div>
+    </div>
+    <div style="font-size:1.5rem;color:#21262d;padding:0 4px">→</div>
+    <div>
+      <div style="font-size:2.8rem;font-weight:900;color:#34d399;line-height:1;margin-bottom:6px">≤$5K</div>
+      <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#334155">Monthly PITI</div>
+    </div>
+  </div>
+
+  <!-- ⑤ WHERE WE'RE LOOKING — transit-coded cards -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px">
+    <div style="background:#161b22;border:1px solid #21262d;border-radius:12px;overflow:hidden">
+      <div style="background:#3b82f6;padding:6px;text-align:center;font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#fff">LIRR</div>
+      <div style="padding:16px 12px;text-align:center">
+        <div style="font-size:.92rem;font-weight:800;color:#e2e8f0;margin-bottom:1px">Floral Park</div>
+        <div style="font-size:.65rem;color:#475569;margin-bottom:10px">Nassau, NY</div>
+        <div style="font-size:1.35rem;font-weight:900;color:#60a5fa;margin-bottom:2px">$790K</div>
+        <div style="font-size:.65rem;color:#334155">35–45 min</div>
+      </div>
+    </div>
+    <div style="background:#161b22;border:1px solid #21262d;border-radius:12px;overflow:hidden">
+      <div style="background:#3b82f6;padding:6px;text-align:center;font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#fff">LIRR</div>
+      <div style="padding:16px 12px;text-align:center">
+        <div style="font-size:.92rem;font-weight:800;color:#e2e8f0;margin-bottom:1px">Rockville Ctr</div>
+        <div style="font-size:.65rem;color:#475569;margin-bottom:10px">Nassau, NY</div>
+        <div style="font-size:1.35rem;font-weight:900;color:#60a5fa;margin-bottom:2px">$850K</div>
+        <div style="font-size:.65rem;color:#334155">40–45 min</div>
+      </div>
+    </div>
+    <div style="background:#161b22;border:1px solid #21262d;border-radius:12px;overflow:hidden">
+      <div style="background:#16a34a;padding:6px;text-align:center;font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#fff">NJ Transit</div>
+      <div style="padding:16px 12px;text-align:center">
+        <div style="font-size:.92rem;font-weight:800;color:#e2e8f0;margin-bottom:1px">Maplewood</div>
+        <div style="font-size:.65rem;color:#475569;margin-bottom:10px">Essex, NJ</div>
+        <div style="font-size:1.35rem;font-weight:900;color:#22c55e;margin-bottom:2px">$840K</div>
+        <div style="font-size:.65rem;color:#334155">45–55 min</div>
+      </div>
+    </div>
+    <div style="background:#161b22;border:1px solid #21262d;border-radius:12px;overflow:hidden">
+      <div style="background:#7c3aed;padding:6px;text-align:center;font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#fff">Metro-North</div>
+      <div style="padding:16px 12px;text-align:center">
+        <div style="font-size:.92rem;font-weight:800;color:#e2e8f0;margin-bottom:1px">Pelham</div>
+        <div style="font-size:.65rem;color:#475569;margin-bottom:10px">Westchester, NY</div>
+        <div style="font-size:1.35rem;font-weight:900;color:#c084fc;margin-bottom:2px">$1.07M</div>
+        <div style="font-size:.65rem;color:#334155">33 min to GCT</div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;font-size:.68rem;color:#334155;margin-bottom:20px">+ 7 research markets benchmarked &nbsp;·&nbsp; all prices auto-updated from Zillow</div>
+
+  <!-- ⑥ THE QUESTION — big visual split -->
+  <div style="display:grid;grid-template-columns:1fr 44px 1fr;gap:10px;align-items:center;margin-bottom:20px">
+    <div style="background:linear-gradient(160deg,#1e3a5f,#0f2040);border-radius:16px;padding:28px 22px">
+      <div style="font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#60a5fa;opacity:.7;margin-bottom:10px">Scenario A</div>
+      <div style="font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:18px">All in on<br>the house</div>
+      <div style="font-size:2.2rem;font-weight:900;color:#60a5fa;margin-bottom:2px">$658K</div>
+      <div style="font-size:.68rem;color:#334155;margin-bottom:14px">down payment</div>
+      <div style="font-size:2.2rem;font-weight:900;color:#1e3a5f;margin-bottom:2px">$0</div>
+      <div style="font-size:.68rem;color:#334155">invested</div>
+    </div>
+    <div style="text-align:center">
+      <div style="width:44px;height:44px;background:#161b22;border:2px solid #21262d;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#475569;margin:0 auto">VS</div>
+    </div>
+    <div style="background:linear-gradient(160deg,#14352a,#0a2019);border-radius:16px;padding:28px 22px">
+      <div style="font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#34d399;opacity:.7;margin-bottom:10px">Scenario B</div>
+      <div style="font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:18px">Split it —<br>house + market</div>
+      <div style="font-size:2.2rem;font-weight:900;color:#34d399;margin-bottom:2px">~$329K</div>
+      <div style="font-size:.68rem;color:#334155;margin-bottom:14px">down payment</div>
+      <div style="font-size:2.2rem;font-weight:900;color:#34d399;margin-bottom:2px">~$329K</div>
+      <div style="font-size:.68rem;color:#334155">invested in market</div>
+    </div>
+  </div>
+
+  <!-- ⑦ HOW IT RUNS — icon + 2 words each -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;background:#161b22;border:1px solid #21262d;border-radius:16px;overflow:hidden;margin-bottom:20px">
+    <div style="padding:22px 14px;text-align:center;border-right:1px solid #21262d">
+      <div style="font-size:1.8rem;margin-bottom:8px">📡</div>
+      <div style="font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#3b82f6;margin-bottom:3px">Wednesday</div>
+      <div style="font-size:.8rem;font-weight:800;color:#e2e8f0">Data pulled</div>
+    </div>
+    <div style="padding:22px 14px;text-align:center;border-right:1px solid #21262d">
+      <div style="font-size:1.8rem;margin-bottom:8px">⚡</div>
+      <div style="font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#3b82f6;margin-bottom:3px">Instantly</div>
+      <div style="font-size:.8rem;font-weight:800;color:#e2e8f0">Alerts fire</div>
+    </div>
+    <div style="padding:22px 14px;text-align:center;border-right:1px solid #21262d">
+      <div style="font-size:1.8rem;margin-bottom:8px">🤖</div>
+      <div style="font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#3b82f6;margin-bottom:3px">Auto</div>
+      <div style="font-size:.8rem;font-weight:800;color:#e2e8f0">AI brief written</div>
+    </div>
+    <div style="padding:22px 14px;text-align:center">
+      <div style="font-size:1.8rem;margin-bottom:8px">📬</div>
+      <div style="font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#3b82f6;margin-bottom:3px">Same day</div>
+      <div style="font-size:.8rem;font-weight:800;color:#e2e8f0">Email + link</div>
+    </div>
+  </div>
+
+  <!-- ⑧ CLOSING STATEMENT -->
+  <div style="background:linear-gradient(135deg,#0f3460,#16213e);border-radius:16px;border:1px solid #1e3a5f;padding:36px 32px;text-align:center">
+    <div style="font-size:1.7rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:10px">We're not guessing.<br><span style="color:#60a5fa">We're watching.</span></div>
+    <div style="font-size:.82rem;color:#475569;margin-bottom:28px">When the market moves in our favor, this dashboard tells us first.</div>
+    <div style="display:flex;justify-content:center;gap:0;border:1px solid #1e3a5f;border-radius:12px;overflow:hidden">
+      <div style="flex:1;padding:20px 10px;border-right:1px solid #1e3a5f">
+        <div style="font-size:2rem;font-weight:900;color:#60a5fa;line-height:1">11</div>
+        <div style="font-size:.62rem;color:#334155;margin-top:4px;text-transform:uppercase;letter-spacing:.5px">Markets</div>
+      </div>
+      <div style="flex:1;padding:20px 10px;border-right:1px solid #1e3a5f">
+        <div style="font-size:2rem;font-weight:900;color:#60a5fa;line-height:1">52×</div>
+        <div style="font-size:.62rem;color:#334155;margin-top:4px;text-transform:uppercase;letter-spacing:.5px">/year updated</div>
+      </div>
+      <div style="flex:1;padding:20px 10px;border-right:1px solid #1e3a5f">
+        <div style="font-size:2rem;font-weight:900;color:#60a5fa;line-height:1">30yr</div>
+        <div style="font-size:.62rem;color:#334155;margin-top:4px;text-transform:uppercase;letter-spacing:.5px">modeled</div>
+      </div>
+      <div style="flex:1;padding:20px 10px">
+        <div style="font-size:2rem;font-weight:900;color:#60a5fa;line-height:1">$0</div>
+        <div style="font-size:.62rem;color:#334155;margin-top:4px;text-transform:uppercase;letter-spacing:.5px">guesswork</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── OVERVIEW ─────────────────────────────────────────────── -->
+<div class="page" id="page-overview">
+  <div id="overview-purchasing-power" style="margin-bottom:20px"></div>
+
+  <!-- ── Calculator (compact) ── -->
+  <div class="calc-panel ov-calc" style="margin-bottom:20px">
+    <h3>PITI Calculator</h3>
+    <div id="ov-active-market-label" style="display:none;margin:-4px 0 10px;padding:5px 10px;background:rgba(233,69,96,.09);border:1px solid rgba(233,69,96,.22);border-radius:6px;font-size:.72rem;color:#e94560;font-weight:600;letter-spacing:.02em">
+      Pricing: <span id="ov-active-market-name"></span>
+    </div>
+    <div class="ov-calc-fields">
+      <!-- Row 1 -->
+      <div class="field">
+        <label>Home Price</label>
+        <input type="range" id="ov-price" min="500000" max="1500000" step="5000" oninput="ovSync('price',this.value)"/>
+        <div class="val" id="ov-v-price"></div>
+      </div>
+      <div class="field">
+        <label>Down Payment</label>
+        <input type="range" id="ov-down" min="50000" max="800000" step="5000" oninput="ovSync('down',this.value)"/>
+        <div class="val" id="ov-v-down"></div>
+      </div>
+      <!-- Row 2 -->
+      <div class="field">
+        <label style="color:#718096">Loan Amount</label>
+        <div class="val" id="ov-v-loan" style="color:#e94560"></div>
+      </div>
+      <div class="field">
+        <label>Interest Rate (30yr)</label>
+        <input type="range" id="ov-rate" min="4.0" max="9.0" step="0.05" oninput="ovSync('rate',this.value)"/>
+        <div class="val" id="ov-v-rate"></div>
+      </div>
+      <!-- Row 3 -->
+      <div class="field">
+        <label>Annual Property Tax</label>
+        <input type="number" id="ov-tax" placeholder="e.g. 13000" oninput="ovSync('tax',this.value)" style="width:100%"/>
+      </div>
+      <div class="field">
+        <label>Annual Insurance</label>
+        <input type="number" id="ov-ins" oninput="ovSync('ins',this.value)" style="width:100%"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PITI Term Comparison ── -->
+  <div class="section-title">Est. Monthly Principal, Interest, Taxes &amp; Insurance (PITI) — Term Comparison</div>
+  <div class="piti-result" style="margin-bottom:24px">
+    <div class="label">Est. Monthly Principal, Interest, Taxes &amp; Insurance (PITI) — Term Comparison</div>
+    <div class="piti-term-grid" id="overview-piti-grid"></div>
+    <div class="breakdown" id="overview-piti-breakdown"></div>
+  </div>
+
+  <!-- ── Total Cost of Loan chart ── -->
+  <div class="amort-chart-card" style="margin-bottom:20px">
+    <div class="acc-title">Total Cost of Loan — 30yr vs 20yr vs 15yr vs 5yr</div>
+    <div class="acc-sub">Each bar shows what you actually pay: principal (what you borrowed) + total interest (the cost of the loan). Shorter terms cost dramatically less in interest.</div>
+    <div style="position:relative;height:340px" id="overview-term-wrap"><canvas id="overview-term-chart"></canvas></div>
+  </div>
+
+  <div id="all-cards-container"></div>
+</div>
+
+<!-- ── COMPARE ──────────────────────────────────────────────── -->
+<div class="page" id="page-compare">
+  <div id="compare-exec-summary"></div>
+  <div class="table-wrap" id="compare-all" style="overflow:auto;max-height:68vh"></div>
+  <div style="font-size:.75rem;color:#a0aec0;margin-top:12px">Price/sqft, Days on Market, and Market Tone populate once added to data/markets.json</div>
+</div>
+
+<!-- ── Backing inputs — used by calcUpdate(); hidden from view ── -->
+<div style="display:none">
+  <input type="range" id="r-price" min="500000" max="1500000" step="5000"/>
+  <div id="v-price"></div>
+  <input type="range" id="r-down" min="50000" max="800000" step="5000"/>
+  <div id="v-down"></div>
+  <div id="v-loan"></div>
+  <input type="range" id="r-rate" min="4.0" max="9.0" step="0.05"/>
+  <div id="v-rate"></div>
+  <input type="number" id="n-tax"/>
+  <input type="number" id="n-ins" value="2400"/>
+</div>
+
+<!-- ── WEEKLY CHANGES ─────────────────────────────────────────── -->
+<div class="page" id="page-weekly">
+
+  <!-- KPI Summary Cards -->
+  <div class="cards" id="weekly-kpi-cards" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
+
+  <!-- Rate Changes -->
+  <div class="section-title">Rate Changes (Week-over-Week)</div>
+  <div id="weekly-rates" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px"></div>
+
+  <!-- Affordability Rank Shifts -->
+  <div class="section-title">Affordability Rank Shifts</div>
+  <div class="table-wrap" style="margin-bottom:24px">
+    <table>
+      <thead>
+        <tr>
+          <th>Market</th>
+          <th>St</th>
+          <th>Prev Rank</th>
+          <th>Now Rank</th>
+          <th>Movement</th>
+          <th>Principal, Interest, Taxes &amp; Insurance (PITI)/mo</th>
+        </tr>
+      </thead>
+      <tbody id="weekly-rank-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Price + PITI Changes -->
+  <div class="section-title">Price &amp; Principal, Interest, Taxes &amp; Insurance (PITI) Changes Per Market</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Market</th>
+          <th>St</th>
+          <th>Price (now)</th>
+          <th>Price Change</th>
+          <th>% Change</th>
+          <th>PITI (prev)</th>
+          <th>PITI (now)</th>
+          <th>PITI Change</th>
+        </tr>
+      </thead>
+      <tbody id="weekly-price-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Purchasing Power -->
+  <div class="section-title">Purchasing Power Shift</div>
+  <div id="weekly-power" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px"></div>
+  <div style="font-size:.75rem;color:#a0aec0;margin-top:6px">
+    Based on your <span id="weekly-down-label"></span> down payment, 30yr fixed, targeting a max Principal, Interest, Taxes &amp; Insurance (PITI) of <strong>$5,000/mo</strong>.
+  </div>
+
+</div>
+
+<!-- ── INVESTMENT ANALYSIS ───────────────────────────────────── -->
+<div class="page" id="page-investment">
+  <!-- Live data bar -->
+  <div class="inv-live-bar" id="inv-live-bar" style="display:none">
+    <span><span class="inv-live-dot"></span>Live Market Data &mdash; FRED</span>
+    <span class="inv-live-item">10yr Treasury: <strong id="inv-lb-t10">&mdash;</strong></span>
+    <span class="inv-live-item">Moody's Baa: <strong id="inv-lb-baa">&mdash;</strong></span>
+    <span class="inv-live-item">S&amp;P 500: <strong id="inv-lb-sp">&mdash;</strong></span>
+    <span class="inv-live-item">S&amp;P YTD: <strong id="inv-lb-ytd">&mdash;</strong></span>
+    <span class="inv-live-stale" id="inv-lb-asof"></span>
+  </div>
+  <div class="inv-wrap">
+
+    <!-- Key Insights -->
+    <div class="inv-sec"><div class="inv-sec-title">Key Insights</div><div id="inv-insights" style="font-size:13px;line-height:1.8;color:#94a3b8"></div></div>
+
+    <!-- Net Worth Chart -->
+    <div class="inv-sec">
+      <div class="inv-sec-title">Net Worth Projection</div>
+      <div class="inv-sec-sub">Home equity + after-tax investment portfolio. Both strategies also invest annual household income (wife + husband) in the same blended mix. Portfolio gains taxed at combined LTCG rate at liquidation.</div>
+      <div class="inv-toggle-grp">
+        <button class="inv-tb on c0" data-i="0" onclick="INV.toggleLine(this)">A: No Investing (ref)</button>
+        <button class="inv-tb on c1" data-i="1" onclick="INV.toggleLine(this)">A: Full Down + Investing</button>
+        <button class="inv-tb on c2" data-i="2" onclick="INV.toggleLine(this)">B: Partial Down + Portfolio</button>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px;font-size:.72rem;color:#94a3b8">
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(100,116,139,0.4);margin-right:5px;vertical-align:middle"></span>A Ref (no investing)</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#0f3460;margin-right:5px;vertical-align:middle"></span>A: Home Equity</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#3b82f6;margin-right:5px;vertical-align:middle"></span>A: Savings Invested</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#134e4a;margin-right:5px;vertical-align:middle"></span>B: Home Equity</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#22c55e;margin-right:5px;vertical-align:middle"></span>B: Proceeds Invested</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#fbbf24;margin-right:5px;vertical-align:middle"></span>Salary Invested (both)</span>
+      </div>
+      <div class="inv-chart-wrap"><canvas id="invNwChart"></canvas></div>
+    </div>
+
+    <!-- Scenario Cards -->
+    <div class="inv-sc-bar">
+      <div class="inv-sc-card a">
+        <div class="inv-sc-lbl">Scenario A &mdash; Full Down Payment</div>
+        <div class="inv-sc-ttl" style="color:#93c5fd">Maximum Equity, Minimum Debt</div>
+        <div class="inv-row"><span style="color:#94a3b8">Down Payment</span><span id="inv-a-down">$658,000</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">Loan Amount</span><span id="inv-a-loan">$250,000</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">Monthly P&amp;I</span><span id="inv-a-pmt">$1,582/mo</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">LTV Ratio</span><span id="inv-a-ltv">27.5%</span></div>
+      </div>
+      <div class="inv-sc-card b">
+        <div class="inv-sc-lbl">Scenario B &mdash; Partial Down + Invest</div>
+        <div class="inv-sc-ttl" style="color:#86efac">Lower Equity, Mixed Portfolio Growth</div>
+        <div class="inv-row"><span style="color:#94a3b8">Down Payment</span><span id="inv-b-down">$329,000</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">Loan Amount</span><span id="inv-b-loan">$579,000</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">Monthly P&amp;I</span><span id="inv-b-pmt">$3,663/mo</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">Amount Invested</span><span id="inv-b-invest" style="color:#22c55e">$329,000</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">Blended Return</span><span id="inv-b-blend" style="color:#22c55e">6.57%/yr</span></div>
+      </div>
+      <div class="inv-sc-card d">
+        <div class="inv-sc-lbl">Key Tradeoffs</div>
+        <div class="inv-sc-ttl" style="color:#fcd34d">B Costs More Monthly, But Invests</div>
+        <div class="inv-row"><span style="color:#94a3b8">Extra Monthly (B vs A)</span><span id="inv-d-pmt" style="color:#ef4444">+$2,081/mo</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">MID Benefit (B, yr 1)</span><span id="inv-b-mid" style="color:#22c55e">~$6,300/yr</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">Net Extra Cost (B, yr 1)</span><span id="inv-d-net" style="color:#ef4444">~$19,600/yr</span></div>
+        <div class="inv-row"><span style="color:#94a3b8">Combined LTCG Rate</span><span id="inv-d-ltcg" style="color:#f59e0b">36.50%</span></div>
+      </div>
+    </div>
+
+    <!-- Assumptions -->
+    <div class="inv-sec">
+      <div class="inv-sec-title">Assumptions</div>
+      <div class="inv-ig-grid">
+        <!-- Col 1: Property -->
+        <div>
+          <div class="inv-ig-col-lbl" style="color:#93c5fd">Property &amp; Down Payment</div>
+          <div class="inv-ig"><label>Home Price</label><div class="inv-ig-row"><input type="range" id="inv-sl-price" min="500000" max="2000000" step="10000" value="908000" oninput="INV.sync('price',this.value)"><input type="number" id="inv-in-price" value="908000" onchange="INV.sync('price',this.value)"><span class="inv-unit">$</span></div></div>
+          <div class="inv-ig"><label>Net Proceeds (total capital available)</label><div class="inv-ig-row"><input type="range" id="inv-sl-proceeds" min="100000" max="1500000" step="10000" value="658000" oninput="INV.sync('proceeds',this.value)"><input type="number" id="inv-in-proceeds" value="658000" onchange="INV.sync('proceeds',this.value)"><span class="inv-unit">$</span></div></div>
+          <div class="inv-ig"><label>Annual Investable Income &mdash; Wife</label><div class="inv-ig-row"><input type="range" id="inv-sl-incWife" min="0" max="200000" step="1000" value="25000" oninput="INV.sync('incWife',this.value)"><input type="number" id="inv-in-incWife" value="25000" onchange="INV.sync('incWife',this.value)"><span class="inv-unit">$</span></div></div>
+          <div class="inv-ig"><label>Annual Investable Income &mdash; Husband</label><div class="inv-ig-row"><input type="range" id="inv-sl-incHusband" min="0" max="200000" step="1000" value="25000" oninput="INV.sync('incHusband',this.value)"><input type="number" id="inv-in-incHusband" value="25000" onchange="INV.sync('incHusband',this.value)"><span class="inv-unit">$</span></div></div>
+          <div class="inv-ig"><label>Total Annual Investing (invested in both strategies)</label><div class="inv-calc-disp" id="inv-total-income" style="color:#86efac">$50,000/yr</div></div>
+          <div class="inv-ig"><label>Scenario B: % of Proceeds as Down Payment</label><div class="inv-ig-row"><input type="range" id="inv-sl-split" min="10" max="90" step="5" value="50" oninput="INV.sync('split',this.value)"><input type="number" id="inv-in-split" value="50" onchange="INV.sync('split',this.value)"><span class="inv-unit">%</span></div></div>
+          <div class="inv-ig"><label>Home Appreciation Rate</label><div class="inv-ig-row"><input type="range" id="inv-sl-apprec" min="0" max="8" step="0.1" value="3.5" oninput="INV.sync('apprec',this.value)"><input type="number" id="inv-in-apprec" value="3.5" step="0.1" onchange="INV.sync('apprec',this.value)"><span class="inv-unit">%/yr</span></div></div>
+          <div class="inv-ig"><label>Projection Horizon</label><div class="inv-ig-row"><input type="range" id="inv-sl-yrs" min="5" max="30" step="1" value="30" oninput="INV.sync('yrs',this.value)"><input type="number" id="inv-in-yrs" value="30" onchange="INV.sync('yrs',this.value)"><span class="inv-unit">yr</span></div></div>
+        </div>
+        <!-- Col 2: Returns + Allocation -->
+        <div>
+          <div class="inv-ig-col-lbl" style="color:#86efac">Investment Returns &amp; Portfolio Mix</div>
+          <div class="inv-ig">
+            <label>S&amp;P 500 Return <span id="inv-sp-asof" style="color:#94a3b8;font-weight:400;font-size:10px"></span></label>
+            <div class="inv-ig-row"><input type="range" id="inv-sl-sp" min="0" max="15" step="0.1" value="8.0" oninput="INV.sync('sp',this.value)"><input type="number" id="inv-in-sp" value="8.0" step="0.1" onchange="INV.sync('sp',this.value)"><span class="inv-unit">%</span></div>
+            <div class="inv-chips" id="inv-sp-chips" style="display:none"><span style="font-size:10px;color:#94a3b8;align-self:center">Historical:</span></div>
+          </div>
+          <div class="inv-ig">
+            <label>Bond Fund Return <span id="inv-bond-asof" style="color:#94a3b8;font-weight:400;font-size:10px"></span></label>
+            <div class="inv-ig-row"><input type="range" id="inv-sl-bonds" min="0" max="10" step="0.1" value="4.5" oninput="INV.sync('bonds',this.value)"><input type="number" id="inv-in-bonds" value="4.5" step="0.1" onchange="INV.sync('bonds',this.value)"><span class="inv-unit">%</span></div>
+            <div id="inv-bond-hint" style="font-size:10px;color:#94a3b8;margin-top:3px;display:none"></div>
+          </div>
+          <div class="inv-ig">
+            <label>Treasury Yield <span id="inv-tbill-asof" style="color:#94a3b8;font-weight:400;font-size:10px"></span></label>
+            <div class="inv-ig-row"><input type="range" id="inv-sl-tbill" min="0" max="8" step="0.1" value="4.2" oninput="INV.sync('tbill',this.value)"><input type="number" id="inv-in-tbill" value="4.2" step="0.1" onchange="INV.sync('tbill',this.value)"><span class="inv-unit">%</span></div>
+            <div id="inv-tbill-hint" style="font-size:10px;color:#94a3b8;margin-top:3px;display:none"></div>
+          </div>
+          <hr class="inv-divider">
+          <div style="font-size:11px;color:#94a3b8;margin-bottom:8px">Portfolio Allocation — Scenario B</div>
+          <div class="inv-ig"><label>S&amp;P 500</label><div class="inv-ig-row"><input type="range" id="inv-sl-spPct" min="0" max="100" step="5" value="60" oninput="INV.syncAlloc('spPct',this.value)"><input type="number" id="inv-in-spPct" value="60" onchange="INV.syncAlloc('spPct',this.value)"><span class="inv-unit">%</span></div></div>
+          <div class="inv-ig"><label>Bonds</label><div class="inv-ig-row"><input type="range" id="inv-sl-bondsPct" min="0" max="100" step="5" value="30" oninput="INV.syncAlloc('bondsPct',this.value)"><input type="number" id="inv-in-bondsPct" value="30" onchange="INV.syncAlloc('bondsPct',this.value)"><span class="inv-unit">%</span></div></div>
+          <div class="inv-ig"><label>Treasuries</label><div class="inv-ig-row"><input type="range" id="inv-sl-tbillPct" min="0" max="100" step="5" value="10" oninput="INV.syncAlloc('tbillPct',this.value)"><input type="number" id="inv-in-tbillPct" value="10" onchange="INV.syncAlloc('tbillPct',this.value)"><span class="inv-unit">%</span></div></div>
+          <div class="inv-alloc-bar"><div class="inv-alloc-sp" id="inv-bar-sp" style="width:60%"></div><div class="inv-alloc-bonds" id="inv-bar-bonds" style="width:30%"></div><div class="inv-alloc-tbill" id="inv-bar-tbill" style="width:10%"></div></div>
+          <div class="inv-alloc-legend">
+            <span><span class="inv-dot" style="background:#22c55e"></span>S&amp;P <span id="inv-lbl-spPct">60%</span></span>
+            <span><span class="inv-dot" style="background:#f59e0b"></span>Bonds <span id="inv-lbl-bondsPct">30%</span></span>
+            <span><span class="inv-dot" style="background:#a855f7"></span>T-Bills <span id="inv-lbl-tbillPct">10%</span></span>
+            <span style="margin-left:auto">Blended: <strong id="inv-lbl-blend" style="color:#22c55e">6.57%/yr</strong></span>
+          </div>
+          <div class="inv-ig" style="margin-top:10px"><label>Mortgage Rate (30yr fixed)</label><div class="inv-ig-row"><input type="range" id="inv-sl-rate" min="2" max="10" step="0.01" value="6.51" oninput="INV.sync('rate',this.value)"><input type="number" id="inv-in-rate" value="6.51" step="0.01" onchange="INV.sync('rate',this.value)"><span class="inv-unit">%</span></div></div>
+        </div>
+        <!-- Col 3: Taxes -->
+        <div>
+          <div class="inv-ig-col-lbl" style="color:#fcd34d">Tax Assumptions</div>
+          <div class="inv-ig"><label>Federal LTCG + NIIT (20% + 3.8%)</label><div class="inv-ig-row"><input type="range" id="inv-sl-fedcg" min="0" max="30" step="0.1" value="23.8" oninput="INV.sync('fedcg',this.value)"><input type="number" id="inv-in-fedcg" value="23.8" step="0.1" onchange="INV.sync('fedcg',this.value)"><span class="inv-unit">%</span></div></div>
+          <div class="inv-ig"><label>NY State Income Tax</label><div class="inv-ig-row"><input type="range" id="inv-sl-nystate" min="0" max="15" step="0.1" value="8.82" oninput="INV.sync('nystate',this.value)"><input type="number" id="inv-in-nystate" value="8.82" step="0.1" onchange="INV.sync('nystate',this.value)"><span class="inv-unit">%</span></div></div>
+          <div class="inv-ig"><label>NYC Income Tax</label><div class="inv-ig-row"><input type="range" id="inv-sl-nyc" min="0" max="6" step="0.1" value="3.876" oninput="INV.sync('nyc',this.value)"><input type="number" id="inv-in-nyc" value="3.876" step="0.1" onchange="INV.sync('nyc',this.value)"><span class="inv-unit">%</span></div></div>
+          <div class="inv-ig"><label>Total LTCG Rate</label><div class="inv-calc-disp" id="inv-total-ltcg" style="color:#f59e0b">36.50%</div></div>
+          <hr class="inv-divider">
+          <div class="inv-ig"><label>Federal Marginal Rate (for MID)</label><div class="inv-ig-row"><input type="range" id="inv-sl-marginal" min="10" max="45" step="1" value="32" oninput="INV.sync('marginal',this.value)"><input type="number" id="inv-in-marginal" value="32" onchange="INV.sync('marginal',this.value)"><span class="inv-unit">%</span></div></div>
+          <div class="inv-ig"><label>Standard Deduction MFJ 2026</label><div class="inv-ig-row"><input type="range" id="inv-sl-stdded" min="10000" max="50000" step="500" value="30000" oninput="INV.sync('stdded',this.value)"><input type="number" id="inv-in-stdded" value="30000" onchange="INV.sync('stdded',this.value)"><span class="inv-unit">$</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Break-even -->
+    <div class="inv-sec">
+      <div class="inv-sec-title">Break-Even Analysis</div>
+      <div class="inv-sec-sub">First year Scenario B net worth surpasses Scenario A</div>
+      <div class="inv-be-grid">
+        <div class="inv-be-item"><div class="inv-be-lbl">B (Mixed Portfolio) vs A &mdash; pure equity only (no investing)</div><div class="inv-be-val" id="inv-be0">&mdash;</div></div>
+        <div class="inv-be-item"><div class="inv-be-lbl">B (Mixed Portfolio) vs A &mdash; A invests savings in same mix</div><div class="inv-be-val" id="inv-be1">&mdash;</div></div>
+      </div>
+      <div style="font-size:11px;color:#64748b;margin-top:10px">"A invests savings" = Scenario A reinvests the monthly mortgage payment difference (~$2K+/mo) into the same portfolio mix as Scenario B. The fairest apples-to-apples comparison.</div>
+    </div>
+
+    <!-- NW Table -->
+    <div class="inv-sec">
+      <div class="inv-sec-title">Net Worth Detail by Year</div>
+      <div class="inv-sec-sub">After-tax portfolio values at hypothetical liquidation. Both scenarios own the same home.</div>
+      <div class="inv-ov-x"><table><thead><tr><th>Year</th><th>Home Value</th><th>A: Equity</th><th>A: Savings (AT)</th><th>A: Net Worth</th><th>B: Equity</th><th>B: Portfolio (AT)</th><th>B: Net Worth</th><th>Diff (B&minus;A)</th></tr></thead><tbody id="inv-nwTbody"></tbody></table></div>
+      <div class="inv-footnote">AT = After-Tax. Gains taxed at combined LTCG rate at liquidation. A portfolio = monthly payment savings + annual household income invested in same mix. B portfolio = lump sum + annual household income. Home appreciation compounded from purchase price.</div>
+    </div>
+
+    <!-- Tax + MID -->
+    <div class="inv-sec">
+      <div class="inv-sec-title">Capital Gains Tax &amp; Mortgage Interest Deduction</div>
+      <div class="inv-two-col">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#f59e0b;margin-bottom:8px">Capital Gains Tax &mdash; Scenario B Portfolio (lump sum + annual income)</div>
+          <div class="inv-ov-x"><table><thead><tr><th>Year</th><th>Portfolio Value</th><th>Basis</th><th>Gain</th><th>Total Tax</th><th>After-Tax</th><th>Tax %</th></tr></thead><tbody id="inv-taxTbody"></tbody></table></div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#3b82f6;margin-bottom:8px">Mortgage Interest Deduction</div>
+          <div class="inv-ov-x"><table><thead><tr><th>Year</th><th>A Interest</th><th>A Itemize?</th><th>A MID</th><th>B Interest</th><th>B Itemize?</th><th>B MID</th><th>B Adv.</th></tr></thead><tbody id="inv-midTbody"></tbody></table></div>
+        </div>
+      </div>
+      <div class="inv-footnote">NY &amp; NYC tax capital gains as ordinary income. Total LTCG rate ~36.5%. MID: SALT cap $10K, other deductions $2K, first $750K of mortgage deductible (TCJA). Scenario B's larger loan often clears the standard deduction threshold when Scenario A's does not.</div>
+    </div>
+
+  </div><!-- /inv-wrap -->
+</div><!-- /page-investment -->
+
+<!-- ── WATCHLIST ─────────────────────────────────────────────── -->
+<div class="page" id="page-watchlist">
+  <div class="calc-panel" style="margin-bottom:20px">
+    <h3>Add Listing</h3>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:12px;align-items:end;flex-wrap:wrap">
+      <div class="field" style="margin:0"><label>Address</label><input type="text" id="wl-addr" placeholder="123 Main St, Mineola NY"/></div>
+      <div class="field" style="margin:0"><label>Market</label>
+        <select id="wl-market"></select>
+      </div>
+      <div class="field" style="margin:0"><label>List Price</label><input type="number" id="wl-price" placeholder="750000"/></div>
+      <div class="field" style="margin:0"><label>Notes</label><input type="text" id="wl-note" placeholder="Corner lot, new roof"/></div>
+      <button class="btn btn-primary" onclick="addWatchlist()">Add</button>
+    </div>
+  </div>
+  <div class="section-title">Saved Listings</div>
+  <div class="wl-cards" id="wl-list"></div>
+</div>
+
+<script>
+// ── Data injected by export.ps1 ───────────────────────────────
+const D = {"meta":{"version":"1.0","last_updated":"2026-05-25","description":"Housing market dashboard data â€” NYC suburban markets for home purchase research","owner_context":{"net_proceeds":658000,"current_home_value":700000,"conforming_loan_limit":832750,"jumbo_rate_premium":0.00125,"priorities":["school_quality","commute","piti_affordability","price"]}},"mortgage_rates":{"as_of":"2026-05-22","source":"Freddie Mac PMMS / daily quotes","rate_driver":"Iran conflict + May CPI 3.8% â€” rates ticking up week-over-week","rates":{"30yr_fixed":0.0651,"20yr_fixed":0.0654,"15yr_fixed":0.0585},"notes":"30yr at 6.51% (up from 6.50% prior week). 15yr at 5.85% (up from 5.79%). 20yr at 6.54%. Above conforming limit ($832,750) adds ~0.10-0.15% for jumbo."},"primary_markets":[{"id":"fp","name":"Floral Park","state":"NY","county":"Nassau","region":"Long Island","transit":"LIRR","transit_terminal":"Penn Station","median_price":790000,"annual_tax":13000,"tax_rate_pct":1.65,"commute_min":{"low":35,"high":45},"school_rating_greatschools":null,"school_rating_niche":null,"yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":79,"walkability_rating":7,"character":"Quaint mid-century main street with three commercial corridors â€” Covert Ave, Tulip Ave, and Jericho Turnpike. Flat, sidewalked, and friendly for daily errands with a classic Long Island village feel.","highlights":["Tulip Avenue (\u0027Uptown\u0027) retail \u0026 dining strip","Floral Park Diner (50+ year institution)","Covert Avenue business district"],"verdict":"Genuinely walkable for a Long Island village â€” daily errands and the LIRR on foot, but nightlife variety is thin."},"notes":"Strong LIRR access; Nassau County taxes fully combined including school district.","watchlist":[]},{"id":"rvc","name":"Rockville Centre","state":"NY","county":"Nassau","region":"Long Island","transit":"LIRR","transit_terminal":"Penn Station","median_price":850000,"annual_tax":17000,"tax_rate_pct":2.0,"commute_min":{"low":40,"high":45},"school_rating_greatschools":null,"school_rating_niche":null,"yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":82,"walkability_rating":8,"character":"The most authentically walkable downtown of the LI primary markets. North Park Avenue is a tree-lined strip dense with restaurants, bars, and boutiques â€” over 98 dining and drinking establishments in the village, with genuine evening foot traffic rare for Long Island.","highlights":["North Park Avenue dining \u0026 bar strip","George Martin The Original (bistro anchor)","Churchill\u0027s \u0026 Tap Room (neighborhood bar scene)"],"verdict":"Best LI primary market downtown â€” rare suburb where you can leave the car home for evenings out."},"notes":"Higher tax burden than Floral Park; well-regarded school district.","watchlist":[]},{"id":"mw","name":"Maplewood","state":"NJ","county":"Essex","region":"New Jersey","transit":"NJ Transit","transit_terminal":"Penn Station","median_price":840000,"annual_tax":18000,"tax_rate_pct":2.14,"commute_min":{"low":45,"high":55},"school_rating_greatschools":null,"school_rating_niche":null,"yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":87,"walkability_rating":9,"character":"One of the best downtowns in the entire NYC suburban ring. Maplewood Avenue is a dense, diverse strip with fine dining, pubs, a jazz scene, and a farmer\u0027s market â€” all in a 5-minute pedestrian loop connecting the train station to Memorial Park.","highlights":["Maplewood Avenue village strip (train to park)","Lorena\u0027s (NJ\u0027s top French restaurant)","Memorial Park adjacent to village center"],"verdict":"Car-optional for evenings, weekends, and errands â€” a true \u0027village in the suburbs\u0027 with constant foot traffic."},"notes":"Added for NJ geographic diversity and NYC spillover demand angle. Note higher NJ tax burden.","watchlist":[]},{"id":"plh","name":"Pelham","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","median_price":1070000,"annual_tax":22000,"tax_rate_pct":2.06,"commute_min":{"low":33,"high":33},"school_rating_greatschools":null,"school_rating_niche":null,"yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":76,"walkability_rating":8,"character":"Pre-automobile street grid with continuous sidewalks and the Metro-North station at the center of it all. Fifth Avenue and Wolfs Lane flank the station with independent shops, a Michelin-recognized steakhouse, and the Pelham Art Center â€” more cultural depth than comparably-sized LI villages.","highlights":["Fifth Ave / Wolfs Lane (two-sided main street)","Macelleria Italian Steakhouse (Michelin-recognized)","Pelham Art Center (gallery \u0026 community hub)"],"verdict":"Genuinely walkable and well-programmed â€” station-centered grid is a structural advantage over car-first LI suburbs."},"notes":"Fastest commute of all markets. Metro-North to GCT is the key differentiator vs. LIRR to Penn.","watchlist":[]}],"research_markets":[{"id":"rkp","name":"Rockaway Park","state":"NY","county":"Queens","region":"Queens / NYC","transit":"MTA A train","transit_terminal":"Midtown Manhattan","median_price":700000,"annual_tax":8700,"tax_rate_pct":1.24,"commute_min":{"low":60,"high":75},"school_rating_greatschools":5,"school_rating_niche":"B+","yoy_pct":null,"dom":85,"price_per_sqft":null,"market_tone":"Neutral","downtown":{"walk_score":83,"walkability_rating":6,"character":"Beach community with surf-casual vibe. Rockaway Beach Blvd is the main strip with bars, cafes, and surf shops; the Atlantic Ocean boardwalk is the social center.","highlights":["Atlantic Ocean boardwalk \u0026 beach","NYC\u0027s only surfable beach","Seasonal boardwalk bar \u0026 food scene"],"verdict":"Seasonally walkable and charming in summer, thins out off-season. Beach-town strip rather than traditional village downtown."},"notes":"Lowest taxes of all markets due to NYC Class 1 assessment structure. Flood zone risk (FEMA Zone AE) adds ~$2-4K/yr flood insurance. Schools vary widely â€” Scholars\u0027 Academy 9/10 but admission not guaranteed by address.","sources":{}},{"id":"lch","name":"Larchmont","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","median_price":1470000,"annual_tax":24345,"tax_rate_pct":1.75,"commute_min":{"low":40,"high":50},"school_rating_greatschools":9,"school_rating_niche":"A+","niche_rank":"#24 Best SD in NY (Mamaroneck UFSD)","yoy_pct":null,"dom":23,"price_per_sqft":null,"market_tone":"Seller\u0027s Market","downtown":{"walk_score":92,"walkability_rating":9,"character":"Quintessential Sound Shore village with two downtown nodes â€” boutique shops, farm-to-table dining, and antique stores all steps from the Metro-North platform.","highlights":["Manor Park waterfront on Long Island Sound","Dual downtown shopping districts","Farm-to-table dining scene"],"verdict":"One of Westchester\u0027s most walkable downtowns. Can skip the car for daily errands â€” true village feel at its best."},"notes":"Above $700K-$1M budget ceiling. Shares Mamaroneck UFSD (A+, #24 NY) with Town of Mamaroneck at a ~$550K premium. Fast-moving market.","sources":{}},{"id":"brx","name":"Bronxville","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","median_price":1450000,"annual_tax":10759,"tax_rate_pct":1.37,"commute_min":{"low":45,"high":55},"school_rating_greatschools":10,"school_rating_niche":"A+","yoy_pct":null,"dom":29,"price_per_sqft":null,"market_tone":"Seller\u0027s Market","downtown":{"walk_score":94,"walkability_rating":9,"character":"Deliberately designed Gilded Age village where train station, village hall, library, and dining are all within a 0.4-mile radius. Iconic Tudor-style architecture along Pondfield Road.","highlights":["Pondfield Road Tudor-style dining strip","Train station at village center","Gilded Age architecture throughout"],"verdict":"Highest walk score of all 10 markets. Designed for pedestrians from inception â€” most cohesive walkable village in NYC suburbs. No supermarket within village limits."},"notes":"Best schools of all 10 markets (10/10 GS, 91% math proficiency). Tiny village â€” 0.6 sq mi, ~6,200 residents. Above budget for SFH. Moderate tax vs. Westchester peers.","sources":{}},{"id":"scl","name":"Sea Cliff","state":"NY","county":"Nassau","region":"Long Island","transit":"LIRR","transit_terminal":"Penn Station","median_price":1070000,"annual_tax":13125,"tax_rate_pct":1.23,"commute_min":{"low":65,"high":75},"school_rating_greatschools":10,"school_rating_niche":"A","niche_rank":"#75 Best Elementary in NY (Sea Cliff Elem)","yoy_pct":6.1,"dom":72,"price_per_sqft":null,"market_tone":"Cooling","downtown":{"walk_score":77,"walkability_rating":7,"character":"Quirky artsy Victorian hillside village with jewel-toned gingerbread houses on winding bluff-top streets above Long Island Sound. Bohemian energy with indie boutiques and a live-music gastropub.","highlights":["Sea Cliff Avenue village strip","Bluff-top Long Island Sound views","Still Partners gastropub (live music anchor)"],"verdict":"Genuinely charming and walkable within its 1 sq mile footprint â€” unusual for Long Island. LIRR Oyster Bay branch requires Jamaica transfer (65-75 min total) â€” commute is the primary headwind."},"notes":"Previously removed from primary dashboard. LIRR Oyster Bay branch requires Jamaica transfer â€” longest commute of all markets. DOM rising sharply (32 to 72 days) â€” negotiating leverage possible. Strong schools.","sources":{}},{"id":"mmk","name":"Mamaroneck","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","median_price":908000,"annual_tax":12615,"tax_rate_pct":1.76,"commute_min":{"low":45,"high":55},"school_rating_greatschools":9,"school_rating_niche":"A+","niche_rank":"#24 Best SD in NY","yoy_pct":null,"dom":25,"price_per_sqft":null,"market_tone":"Seller\u0027s Market","downtown":{"walk_score":86,"walkability_rating":8,"character":"Lively harborside village with cafe-lined Mamaroneck Avenue connecting Metro-North station to Long Island Sound. Multicultural main street with authentic diversity and a working harbor marina.","highlights":["Harbor Island Park (44 acres on the Sound)","Mamaroneck Avenue dining \u0026 shopping strip","Active waterfront marina with Sound views"],"verdict":"Genuinely walkable and well-rounded. More vibrant and diverse than Larchmont. Best value play: same A+ schools at ~$550K lower price. Tax trajectory rising sharply is the key risk."},"notes":"Best value play in Westchester â€” same A+ SD as Larchmont (~$550K lower median). Some inventory $750K-$950K. Tax levy rising: +9.95% in 2025, double-digit increases projected 2026-2027.","sources":{}},{"id":"mtc","name":"Montclair","state":"NJ","county":"Essex","region":"New Jersey","transit":"NJ Transit","transit_terminal":"Penn Station","median_price":975000,"annual_tax":22487,"tax_rate_pct":2.31,"commute_min":{"low":35,"high":45},"school_rating_greatschools":6,"school_rating_niche":"A","yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":80,"walkability_rating":9,"character":"Bloomfield Avenue forms a mile-plus spine through four distinct commercial districts â€” independent bookstores, art galleries, farm-to-table dining, the Wellmont Theater, Montclair Art Museum, and one of NJ\u0027s most celebrated coffee scenes. One of the most ethnically diverse suburbs in the entire NYC metro.","highlights":["Bloomfield Avenue (400+ shops \u0026 restaurants)","Wellmont Theater \u0026 Montclair Art Museum","Four walkable commercial districts (Center, Upper, Walnut, Watchung)"],"verdict":"Richer arts and dining scene than any other market in this set. Car-optional for evenings and weekends â€” six NJ Transit stations mean most residents walk to the train."},"notes":"Similar lifestyle to Maplewood but larger and more urban. Avg tax bill $22,487 (effective ~2.31% on market value; NJ statutory rate ~3.38% on assessed). School district rated Niche A with diverse academic profile.","sources":{}},{"id":"wfd","name":"Westfield","state":"NJ","county":"Union","region":"New Jersey","transit":"NJ Transit","transit_terminal":"Penn Station","transit_note":"Raritan Valley Line to Newark Penn, then NJT or PATH â€” no Midtown Direct","median_price":990000,"annual_tax":18500,"tax_rate_pct":1.87,"commute_min":{"low":60,"high":75},"school_rating_greatschools":9,"school_rating_niche":"A+","yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":79,"walkability_rating":8,"character":"Broad Street forms a genuine Main Street with continuous storefronts, sidewalk dining, independent boutiques, and a historic train depot adjacent to the NJ Transit platform. One of the best-preserved traditional downtowns in the NYC metro area.","highlights":["Broad Street dining and retail corridor (200+ establishments)","Mindowaskin Park (100-acre green anchor adjacent to downtown)","Westfield train station at the edge of the commercial core"],"verdict":"One of New Jersey\u0027s best Main Streets â€” station-adjacent, independently-owned mix, and genuine evening foot traffic. The Raritan Valley Line\u0027s Newark transfer is the primary commute trade-off vs. Midtown Direct towns like Chatham."},"notes":"Top-ranked Union County district (Niche A+, GS 9/10 â€” consistently top 5-10% in NJ). Raritan Valley Line requires a Newark Penn transfer adding ~15 min vs. Midtown Direct lines. Price point broadly similar to Maplewood with comparable or better schools. Lower taxes than Essex County (Maplewood, Montclair).","sources":{}},{"id":"chm","name":"Chatham","state":"NJ","county":"Morris","region":"New Jersey","transit":"NJ Transit","transit_terminal":"Penn Station","median_price":950000,"annual_tax":22000,"tax_rate_pct":2.32,"commute_min":{"low":40,"high":50},"school_rating_greatschools":8,"school_rating_niche":"A+","yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":72,"walkability_rating":7,"character":"Station-centered Main Street where the NJ Transit Midtown Direct stops steps from T.M. Ward Coffee Co., Crew cafÃ©, Scalini Fideli, and a tree-lined stretch of local shops. Old-fashioned small-town feel with wide sidewalks and dog-friendly patios â€” only 2.4 sq mi total.","highlights":["Main Street / NJ Transit station (walkable loop)","T.M. Ward Coffee Co. (local institution)","Scalini Fideli \u0026 growing dining scene"],"verdict":"Charming and intimate rather than expansive â€” more like a true small town than a suburban village strip. Midtown Direct is the key asset: no Secaucus transfer, straight to Penn Station."},"notes":"Morris County taxes are lower than Essex; Chatham SD ranked top-10% in NJ (Niche A+, 97% college placement). Borough vs Township distinction â€” Borough has the walkable downtown and train station.","sources":{}},{"id":"wyk","name":"Wykagyl (New Rochelle)","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","transit_note":"New Haven Line ~30-40 min station-to-GCT, BUT New Rochelle station is ~3 mi south â€” drive/Bee-Line bus to train adds 10-15 min; not a walk-to-rail neighborhood","median_price":1450000,"annual_tax":21000,"tax_rate_pct":1.5,"commute_min":{"low":45,"high":60},"school_rating_greatschools":6,"school_rating_niche":"A-","niche_rank":"North-end NR schools: Ward Elem B+, Albert Leonard Middle A-, NR High A-","yoy_pct":22.0,"dom":null,"price_per_sqft":478,"market_tone":"Seller\u0027s Market","downtown":{"walk_score":45,"walkability_rating":3,"character":"Affluent, almost entirely residential north-end neighborhood of New Rochelle (zip 10804) â€” sprawling early-to-mid-20th-century homes (Tudor, Mediterranean villa, classic colonial) on large landscaped lots beside the Wykagyl Country Club. The only commercial node is the Wykagyl Shopping Center strip on North Avenue; daily life is car-dependent.","highlights":["Wykagyl Country Club \u0026 green, leafy residential parks","Wykagyl Shopping Center (North Avenue strip)","Historic Thomas Paine Cottage Museum nearby"],"verdict":"A wealthy, quiet, car-first suburb â€” the opposite of a walkable village. You drive for everything, including to the train ~3 miles away. Big period homes and strong north-end schools, but well above budget and the weakest walkability/commute of the Westchester set."},"notes":"ABOVE BUDGET â€” Wykagyl Park median sale ~$1.7M (avg ~$1.74M, +22% YoY); broader-area median ~$1.4M including some North Ave co-ops. Wealthier than ~99% of US neighborhoods; dominated by large 4-5BR homes. Served by New Rochelle City SD but north-end schools rate higher than the city overall (Ward Elem B+, Albert Leonard Middle A-, NR High A-). Key trade-off: ~3 mi from the Metro-North station, so unlike Pelham/Larchmont it is NOT a walk-to-rail town. 10804 carries among the highest tax bills in New Rochelle (~$21K).","sources":{}},{"id":"nro","name":"New Rochelle","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","transit_note":"New Haven Line â€” express ~30 min to GCT, locals ~40 min; downtown homes walkable to station","price_basis":"all_homes_incl_condos","median_price":1050000,"annual_tax":17500,"tax_rate_pct":1.67,"commute_min":{"low":30,"high":40},"school_rating_greatschools":5,"school_rating_niche":"A-","niche_rank":"#166 Best SD in NY (New Rochelle City SD)","yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":"Mixed","downtown":{"walk_score":88,"walkability_rating":8,"character":"A genuine small-city downtown in the middle of a transit-oriented building boom. The core around Library Green, North Avenue, and Huguenot Street is filling with new mixed-use towers, ground-floor retail, and restaurants â€” all within a short walk of the Metro-North/Amtrak station. More urban and less \u0027village\u0027 than its Sound Shore neighbors.","highlights":["North Avenue / Library Green downtown core","New Rochelle Metro-North + Amtrak station (walkable TOD district)","Rapidly expanding restaurant and high-rise residential scene"],"verdict":"The most urban, fastest-changing downtown of the Westchester set â€” strong walkability and a quick New Haven Line commute, though the large, diverse school district rates lower than premium peers like Bronxville or Larchmont."},"notes":"PRICE INCLUDES ALL HOMES (condos + SFH) â€” Zillow does not publish a city-level single-family-only series for New Rochelle, so the auto-refresh uses the combined all-homes ZHVI (~$900K). True SFH-only price is likely $1.0M-$1.1M based on Redfin/PropertyShark SFH listings; the all-homes figure is dragged down by New Rochelle\u0027s large co-op and condo stock. City structure means combined city + school + county tax. Fastest Westchester commute in the research set (~30 min express to GCT). New Rochelle City SD is large and diverse â€” Niche A- (#166 NY), GreatSchools mid-range (~5/10), below premium Westchester peers. Seed value $1.05M will be corrected to the live SFR figure on next Wednesday refresh.","sources":{}}],"removed_markets":[{"name":"Sea Cliff (prior)","state":"NY","reason":"Removed v1 in favor of Maplewood NJ and Pelham NY; re-added v2 as research market for walkability comparison"},{"name":"Port Washington","state":"NY","reason":"Removed in favor of Maplewood NJ and Pelham NY"},{"name":"Hoboken","state":"NJ","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"},{"name":"Montclair","state":"NJ","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"},{"name":"White Plains","state":"NY","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"},{"name":"Garden City","state":"NY","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"},{"name":"Ridgewood","state":"NJ","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"}],"watchlist":[]};
+
+// ── Helpers ───────────────────────────────────────────────────
+const fmt$ = n => n ? '$' + Math.round(n).toLocaleString() : '—';
+const fmtPct = n => n != null ? n.toFixed(2) + '%' : '—';
+const fmtRate = r => r != null ? (r * 100).toFixed(2) + '%' : '—';
+const fmtMin = c => c ? c.low + '–' + c.high + ' min' : '—';
+const fmtSchool = (gs, n) => [gs != null ? gs + '/10' : null, n ? 'Niche ' + n : null].filter(Boolean).join(' · ') || '—';
+
+function piti(price, down, rate, yrs, tax, ins) {
+  const loan = price - down, r = rate / 12, n = yrs * 12;
+  const pi = r === 0 ? loan / n : loan * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+  return { pi: Math.round(pi), taxmo: Math.round(tax/12), insmo: Math.round(ins/12), total: Math.round(pi + tax/12 + ins/12), loan };
+}
+
+const DOWN = D.meta.owner_context.net_proceeds;
+const RATE30 = D.mortgage_rates.rates['30yr_fixed'];
+const INS = 2400;
+
+function schoolBadge(gs) {
+  if (gs == null) return '<span class="badge blue">N/A</span>';
+  if (gs >= 9)  return '<span class="badge green">' + gs + '/10</span>';
+  if (gs >= 7)  return '<span class="badge yellow">' + gs + '/10</span>';
+  return '<span class="badge red">' + gs + '/10</span>';
+}
+
+// ── Rates bar ─────────────────────────────────────────────────
+document.getElementById('rates-bar').innerHTML =
+  ['30yr_fixed','20yr_fixed','15yr_fixed'].map(k =>
+    '<div><span>' + k.replace('yr_fixed',' yr fixed') + '</span> <strong>' + fmtRate(D.mortgage_rates.rates[k]) + '</strong></div>'
+  ).join('') +
+  '<div style="margin-left:auto"><span>As of</span> <strong>' + D.mortgage_rates.as_of + '</strong></div>' +
+  '<div><span>Driver</span> <strong>' + D.mortgage_rates.rate_driver + '</strong></div>';
+
+document.getElementById('meta-updated').innerHTML = 'Last updated<br><strong>' + D.meta.last_updated + '</strong>';
+
+// ── Snapshot data (prev week) ─────────────────────────────────
+const S = {"meta":{"version":"1.0","last_updated":"2026-05-25","description":"Housing market dashboard data â€” NYC suburban markets for home purchase research","owner_context":{"net_proceeds":658000,"current_home_value":700000,"conforming_loan_limit":832750,"jumbo_rate_premium":0.00125,"priorities":["school_quality","commute","piti_affordability","price"]}},"mortgage_rates":{"as_of":"2026-05-22","source":"Freddie Mac PMMS / daily quotes","rate_driver":"Iran conflict + May CPI 3.8% â€” rates ticking up week-over-week","rates":{"30yr_fixed":0.0651,"20yr_fixed":0.0654,"15yr_fixed":0.0585},"notes":"30yr at 6.51% (up from 6.50% prior week). 15yr at 5.85% (up from 5.79%). 20yr at 6.54%. Above conforming limit ($832,750) adds ~0.10-0.15% for jumbo."},"primary_markets":[{"id":"fp","name":"Floral Park","state":"NY","county":"Nassau","region":"Long Island","transit":"LIRR","transit_terminal":"Penn Station","median_price":790000,"annual_tax":13000,"tax_rate_pct":1.65,"commute_min":{"low":35,"high":45},"school_rating_greatschools":null,"school_rating_niche":null,"yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":79,"walkability_rating":7,"character":"Quaint mid-century main street with three commercial corridors â€” Covert Ave, Tulip Ave, and Jericho Turnpike. Flat, sidewalked, and friendly for daily errands with a classic Long Island village feel.","highlights":["Tulip Avenue (\u0027Uptown\u0027) retail \u0026 dining strip","Floral Park Diner (50+ year institution)","Covert Avenue business district"],"verdict":"Genuinely walkable for a Long Island village â€” daily errands and the LIRR on foot, but nightlife variety is thin."},"notes":"Strong LIRR access; Nassau County taxes fully combined including school district.","watchlist":[]},{"id":"rvc","name":"Rockville Centre","state":"NY","county":"Nassau","region":"Long Island","transit":"LIRR","transit_terminal":"Penn Station","median_price":850000,"annual_tax":17000,"tax_rate_pct":2.0,"commute_min":{"low":40,"high":45},"school_rating_greatschools":null,"school_rating_niche":null,"yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":82,"walkability_rating":8,"character":"The most authentically walkable downtown of the LI primary markets. North Park Avenue is a tree-lined strip dense with restaurants, bars, and boutiques â€” over 98 dining and drinking establishments in the village, with genuine evening foot traffic rare for Long Island.","highlights":["North Park Avenue dining \u0026 bar strip","George Martin The Original (bistro anchor)","Churchill\u0027s \u0026 Tap Room (neighborhood bar scene)"],"verdict":"Best LI primary market downtown â€” rare suburb where you can leave the car home for evenings out."},"notes":"Higher tax burden than Floral Park; well-regarded school district.","watchlist":[]},{"id":"mw","name":"Maplewood","state":"NJ","county":"Essex","region":"New Jersey","transit":"NJ Transit","transit_terminal":"Penn Station","median_price":840000,"annual_tax":18000,"tax_rate_pct":2.14,"commute_min":{"low":45,"high":55},"school_rating_greatschools":null,"school_rating_niche":null,"yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":87,"walkability_rating":9,"character":"One of the best downtowns in the entire NYC suburban ring. Maplewood Avenue is a dense, diverse strip with fine dining, pubs, a jazz scene, and a farmer\u0027s market â€” all in a 5-minute pedestrian loop connecting the train station to Memorial Park.","highlights":["Maplewood Avenue village strip (train to park)","Lorena\u0027s (NJ\u0027s top French restaurant)","Memorial Park adjacent to village center"],"verdict":"Car-optional for evenings, weekends, and errands â€” a true \u0027village in the suburbs\u0027 with constant foot traffic."},"notes":"Added for NJ geographic diversity and NYC spillover demand angle. Note higher NJ tax burden.","watchlist":[]},{"id":"plh","name":"Pelham","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","median_price":1070000,"annual_tax":22000,"tax_rate_pct":2.06,"commute_min":{"low":33,"high":33},"school_rating_greatschools":null,"school_rating_niche":null,"yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":76,"walkability_rating":8,"character":"Pre-automobile street grid with continuous sidewalks and the Metro-North station at the center of it all. Fifth Avenue and Wolfs Lane flank the station with independent shops, a Michelin-recognized steakhouse, and the Pelham Art Center â€” more cultural depth than comparably-sized LI villages.","highlights":["Fifth Ave / Wolfs Lane (two-sided main street)","Macelleria Italian Steakhouse (Michelin-recognized)","Pelham Art Center (gallery \u0026 community hub)"],"verdict":"Genuinely walkable and well-programmed â€” station-centered grid is a structural advantage over car-first LI suburbs."},"notes":"Fastest commute of all markets. Metro-North to GCT is the key differentiator vs. LIRR to Penn.","watchlist":[]}],"research_markets":[{"id":"rkp","name":"Rockaway Park","state":"NY","county":"Queens","region":"Queens / NYC","transit":"MTA A train","transit_terminal":"Midtown Manhattan","median_price":700000,"annual_tax":8700,"tax_rate_pct":1.24,"commute_min":{"low":60,"high":75},"school_rating_greatschools":5,"school_rating_niche":"B+","yoy_pct":null,"dom":85,"price_per_sqft":null,"market_tone":"Neutral","downtown":{"walk_score":83,"walkability_rating":6,"character":"Beach community with surf-casual vibe. Rockaway Beach Blvd is the main strip with bars, cafes, and surf shops; the Atlantic Ocean boardwalk is the social center.","highlights":["Atlantic Ocean boardwalk \u0026 beach","NYC\u0027s only surfable beach","Seasonal boardwalk bar \u0026 food scene"],"verdict":"Seasonally walkable and charming in summer, thins out off-season. Beach-town strip rather than traditional village downtown."},"notes":"Lowest taxes of all markets due to NYC Class 1 assessment structure. Flood zone risk (FEMA Zone AE) adds ~$2-4K/yr flood insurance. Schools vary widely â€” Scholars\u0027 Academy 9/10 but admission not guaranteed by address.","sources":{}},{"id":"lch","name":"Larchmont","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","median_price":1470000,"annual_tax":24345,"tax_rate_pct":1.75,"commute_min":{"low":40,"high":50},"school_rating_greatschools":9,"school_rating_niche":"A+","niche_rank":"#24 Best SD in NY (Mamaroneck UFSD)","yoy_pct":null,"dom":23,"price_per_sqft":null,"market_tone":"Seller\u0027s Market","downtown":{"walk_score":92,"walkability_rating":9,"character":"Quintessential Sound Shore village with two downtown nodes â€” boutique shops, farm-to-table dining, and antique stores all steps from the Metro-North platform.","highlights":["Manor Park waterfront on Long Island Sound","Dual downtown shopping districts","Farm-to-table dining scene"],"verdict":"One of Westchester\u0027s most walkable downtowns. Can skip the car for daily errands â€” true village feel at its best."},"notes":"Above $700K-$1M budget ceiling. Shares Mamaroneck UFSD (A+, #24 NY) with Town of Mamaroneck at a ~$550K premium. Fast-moving market.","sources":{}},{"id":"brx","name":"Bronxville","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","median_price":1450000,"annual_tax":10759,"tax_rate_pct":1.37,"commute_min":{"low":45,"high":55},"school_rating_greatschools":10,"school_rating_niche":"A+","yoy_pct":null,"dom":29,"price_per_sqft":null,"market_tone":"Seller\u0027s Market","downtown":{"walk_score":94,"walkability_rating":9,"character":"Deliberately designed Gilded Age village where train station, village hall, library, and dining are all within a 0.4-mile radius. Iconic Tudor-style architecture along Pondfield Road.","highlights":["Pondfield Road Tudor-style dining strip","Train station at village center","Gilded Age architecture throughout"],"verdict":"Highest walk score of all 10 markets. Designed for pedestrians from inception â€” most cohesive walkable village in NYC suburbs. No supermarket within village limits."},"notes":"Best schools of all 10 markets (10/10 GS, 91% math proficiency). Tiny village â€” 0.6 sq mi, ~6,200 residents. Above budget for SFH. Moderate tax vs. Westchester peers.","sources":{}},{"id":"scl","name":"Sea Cliff","state":"NY","county":"Nassau","region":"Long Island","transit":"LIRR","transit_terminal":"Penn Station","median_price":1070000,"annual_tax":13125,"tax_rate_pct":1.23,"commute_min":{"low":65,"high":75},"school_rating_greatschools":10,"school_rating_niche":"A","niche_rank":"#75 Best Elementary in NY (Sea Cliff Elem)","yoy_pct":6.1,"dom":72,"price_per_sqft":null,"market_tone":"Cooling","downtown":{"walk_score":77,"walkability_rating":7,"character":"Quirky artsy Victorian hillside village with jewel-toned gingerbread houses on winding bluff-top streets above Long Island Sound. Bohemian energy with indie boutiques and a live-music gastropub.","highlights":["Sea Cliff Avenue village strip","Bluff-top Long Island Sound views","Still Partners gastropub (live music anchor)"],"verdict":"Genuinely charming and walkable within its 1 sq mile footprint â€” unusual for Long Island. LIRR Oyster Bay branch requires Jamaica transfer (65-75 min total) â€” commute is the primary headwind."},"notes":"Previously removed from primary dashboard. LIRR Oyster Bay branch requires Jamaica transfer â€” longest commute of all markets. DOM rising sharply (32 to 72 days) â€” negotiating leverage possible. Strong schools.","sources":{}},{"id":"mmk","name":"Mamaroneck","state":"NY","county":"Westchester","region":"Westchester","transit":"Metro-North","transit_terminal":"Grand Central Terminal","median_price":908000,"annual_tax":12615,"tax_rate_pct":1.76,"commute_min":{"low":45,"high":55},"school_rating_greatschools":9,"school_rating_niche":"A+","niche_rank":"#24 Best SD in NY","yoy_pct":null,"dom":25,"price_per_sqft":null,"market_tone":"Seller\u0027s Market","downtown":{"walk_score":86,"walkability_rating":8,"character":"Lively harborside village with cafe-lined Mamaroneck Avenue connecting Metro-North station to Long Island Sound. Multicultural main street with authentic diversity and a working harbor marina.","highlights":["Harbor Island Park (44 acres on the Sound)","Mamaroneck Avenue dining \u0026 shopping strip","Active waterfront marina with Sound views"],"verdict":"Genuinely walkable and well-rounded. More vibrant and diverse than Larchmont. Best value play: same A+ schools at ~$550K lower price. Tax trajectory rising sharply is the key risk."},"notes":"Best value play in Westchester â€” same A+ SD as Larchmont (~$550K lower median). Some inventory $750K-$950K. Tax levy rising: +9.95% in 2025, double-digit increases projected 2026-2027.","sources":{}},{"id":"mtc","name":"Montclair","state":"NJ","county":"Essex","region":"New Jersey","transit":"NJ Transit","transit_terminal":"Penn Station","median_price":975000,"annual_tax":22487,"tax_rate_pct":2.31,"commute_min":{"low":35,"high":45},"school_rating_greatschools":6,"school_rating_niche":"A","yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":80,"walkability_rating":9,"character":"Bloomfield Avenue forms a mile-plus spine through four distinct commercial districts â€” independent bookstores, art galleries, farm-to-table dining, the Wellmont Theater, Montclair Art Museum, and one of NJ\u0027s most celebrated coffee scenes. One of the most ethnically diverse suburbs in the entire NYC metro.","highlights":["Bloomfield Avenue (400+ shops \u0026 restaurants)","Wellmont Theater \u0026 Montclair Art Museum","Four walkable commercial districts (Center, Upper, Walnut, Watchung)"],"verdict":"Richer arts and dining scene than any other market in this set. Car-optional for evenings and weekends â€” six NJ Transit stations mean most residents walk to the train."},"notes":"Similar lifestyle to Maplewood but larger and more urban. Avg tax bill $22,487 (effective ~2.31% on market value; NJ statutory rate ~3.38% on assessed). School district rated Niche A with diverse academic profile.","sources":{}},{"id":"wfd","name":"Westfield","state":"NJ","county":"Union","region":"New Jersey","transit":"NJ Transit","transit_terminal":"Penn Station","transit_note":"Raritan Valley Line to Newark Penn, then NJT or PATH â€” no Midtown Direct","median_price":990000,"annual_tax":18500,"tax_rate_pct":1.87,"commute_min":{"low":60,"high":75},"school_rating_greatschools":9,"school_rating_niche":"A+","yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":79,"walkability_rating":8,"character":"Broad Street forms a genuine Main Street with continuous storefronts, sidewalk dining, independent boutiques, and a historic train depot adjacent to the NJ Transit platform. One of the best-preserved traditional downtowns in the NYC metro area.","highlights":["Broad Street dining and retail corridor (200+ establishments)","Mindowaskin Park (100-acre green anchor adjacent to downtown)","Westfield train station at the edge of the commercial core"],"verdict":"One of New Jersey\u0027s best Main Streets â€” station-adjacent, independently-owned mix, and genuine evening foot traffic. The Raritan Valley Line\u0027s Newark transfer is the primary commute trade-off vs. Midtown Direct towns like Chatham."},"notes":"Top-ranked Union County district (Niche A+, GS 9/10 â€” consistently top 5-10% in NJ). Raritan Valley Line requires a Newark Penn transfer adding ~15 min vs. Midtown Direct lines. Price point broadly similar to Maplewood with comparable or better schools. Lower taxes than Essex County (Maplewood, Montclair).","sources":{}},{"id":"chm","name":"Chatham","state":"NJ","county":"Morris","region":"New Jersey","transit":"NJ Transit","transit_terminal":"Penn Station","median_price":950000,"annual_tax":22000,"tax_rate_pct":2.32,"commute_min":{"low":40,"high":50},"school_rating_greatschools":8,"school_rating_niche":"A+","yoy_pct":null,"dom":null,"price_per_sqft":null,"market_tone":null,"downtown":{"walk_score":72,"walkability_rating":7,"character":"Station-centered Main Street where the NJ Transit Midtown Direct stops steps from T.M. Ward Coffee Co., Crew cafÃ©, Scalini Fideli, and a tree-lined stretch of local shops. Old-fashioned small-town feel with wide sidewalks and dog-friendly patios â€” only 2.4 sq mi total.","highlights":["Main Street / NJ Transit station (walkable loop)","T.M. Ward Coffee Co. (local institution)","Scalini Fideli \u0026 growing dining scene"],"verdict":"Charming and intimate rather than expansive â€” more like a true small town than a suburban village strip. Midtown Direct is the key asset: no Secaucus transfer, straight to Penn Station."},"notes":"Morris County taxes are lower than Essex; Chatham SD ranked top-10% in NJ (Niche A+, 97% college placement). Borough vs Township distinction â€” Borough has the walkable downtown and train station.","sources":{}}],"removed_markets":[{"name":"Sea Cliff (prior)","state":"NY","reason":"Removed v1 in favor of Maplewood NJ and Pelham NY; re-added v2 as research market for walkability comparison"},{"name":"Port Washington","state":"NY","reason":"Removed in favor of Maplewood NJ and Pelham NY"},{"name":"Hoboken","state":"NJ","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"},{"name":"Montclair","state":"NJ","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"},{"name":"White Plains","state":"NY","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"},{"name":"Garden City","state":"NY","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"},{"name":"Ridgewood","state":"NJ","reason":"Removed May 2026 â€” replaced with walkability-focused NY research set"}],"watchlist":[]};
+
+// ── Tabs ──────────────────────────────────────────────────────
+function showTab(id) {
+  const ids = ['summary','overview','compare','weekly','watchlist','investment'];
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ids[i] === id));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (id === 'investment') INV.init();
+}
+
+// ── Overview cards — grouped by region ───────────────────────
+function _cardHtml(m) {
+  const p   = piti(m.median_price, DOWN, RATE30, 30, m.annual_tax, INS);
+  const yoy = m.yoy_pct != null ? (m.yoy_pct > 0 ? '+' : '') + m.yoy_pct + '% YoY' : '';
+  return `<div class="card primary" data-market-id="${m.id}" onclick="quickFill(${m.median_price},${m.annual_tax},'${m.name}','${m.id}')" style="cursor:pointer" title="Click to load ${m.name} into the PITI Calculator">
+    <div class="card-header">
+      <div class="card-name">${m.name}</div>
+      <span class="card-state">${m.state}</span>
+    </div>
+    <div class="card-price">${fmt$(m.median_price)}</div>
+    <div class="card-metrics">
+      <div class="metric"><span class="label">Ann. Tax</span><span class="value">${fmt$(m.annual_tax)}</span></div>
+      <div class="metric"><span class="label">Tax Rate</span><span class="value">${fmtPct(m.tax_rate_pct)}</span></div>
+      <div class="metric"><span class="label">Schools</span><span class="value">${fmtSchool(m.school_rating_greatschools, m.school_rating_niche)}</span></div>
+      <div class="metric"><span class="label">Commute</span><span class="value">${m.commute_min ? fmtMin(m.commute_min) : (m.transit || '—')}</span></div>
+      ${yoy ? `<div class="metric" style="grid-column:span 2"><span class="label">Price Trend</span><span class="value">${yoy}</span></div>` : ''}
+      ${m.downtown ? `<div class="metric" style="grid-column:span 2"><span class="label">Downtown Walk</span><span class="value" style="color:${m.downtown.walkability_rating>=9?'#276749':m.downtown.walkability_rating>=7?'#744210':'#c53030'}">${m.downtown.walkability_rating}/10 &nbsp;<span style="font-weight:400;color:#718096;font-size:.72rem">(Walk Score ${m.downtown.walk_score})</span></span></div>` : ''}
+    </div>
+    <div style="margin-top:10px;font-size:.68rem;color:#a0aec0;text-align:right;letter-spacing:.02em">↑ Load in calculator</div>
+  </div>`;
+}
+
+(function renderGroupedCards() {
+  const all = [...D.primary_markets, ...D.research_markets];
+  const groups = [
+    { region: 'New Jersey',   label: 'New Jersey' },
+    { region: 'Westchester',  label: 'Westchester' },
+    { region: 'Long Island',  label: 'Long Island' },
+    { region: 'Queens / NYC', label: 'Queens / NYC' },
+  ];
+  document.getElementById('all-cards-container').innerHTML = groups.map(g => {
+    const markets = all.filter(m => m.region === g.region).sort((a,b) => a.median_price - b.median_price);
+    if (!markets.length) return '';
+    return `<div class="section-title">${g.label}</div>
+            <div class="cards">${markets.map(_cardHtml).join('')}</div>`;
+  }).join('');
+})();
+
+// ── Compare table (metrics × markets) ────────────────────────
+function buildCmpTable(markets) {
+  const metrics = [
+    { label: 'Median Price',         fn: m => `<strong>${fmt$(m.median_price)}</strong>` },
+    { label: 'School District',      fn: m => fmtSchool(m.school_rating_greatschools, m.school_rating_niche) },
+    { label: 'Days on Market',       fn: m => m.dom ? m.dom + 'd' : '—' },
+    { label: 'Transit Line',         fn: m => m.transit || '—' },
+    { label: 'Est. Commute',         fn: m => m.commute_min ? fmtMin(m.commute_min) : '—' },
+    { label: 'Walk Score',           fn: m => m.downtown ? `<strong>${m.downtown.walk_score}</strong>/100` : '—' },
+    { label: 'Downtown Walkability', fn: m => {
+        if (!m.downtown) return '—';
+        const r = m.downtown.walkability_rating;
+        const clr = r >= 9 ? '#276749' : r >= 7 ? '#744210' : '#c53030';
+        return `<span style="color:${clr};font-weight:700">${r}/10</span>`;
+    }},
+    { label: 'Downtown Character',   fn: m => m.downtown ? `<span style="font-size:.75rem;color:#4a5568">${m.downtown.character}</span>` : '—' },
+    { label: 'Downtown Highlights',  fn: m => m.downtown ? `<span style="font-size:.75rem;color:#4a5568">${m.downtown.highlights.join(' &bull; ')}</span>` : '—' },
+    { label: 'Downtown Verdict',     fn: m => m.downtown ? `<span style="font-size:.75rem;font-style:italic;color:#718096">${m.downtown.verdict}</span>` : '—' },
+    { label: 'Market Tone',          fn: m => m.market_tone || '—' },
+    { label: 'Zillow ZHVI / YoY',    fn: m => m.yoy_pct != null
+        ? `<span style="color:${m.yoy_pct>0?'#c53030':'#276749'};font-weight:700">${m.yoy_pct>0?'+':''}${m.yoy_pct}%</span>`
+        : '—' },
+    { label: 'Price / sqft',         fn: m => m.price_per_sqft ? '$' + m.price_per_sqft : '—' },
+    { label: 'Est. Annual Tax',      fn: m => fmt$(m.annual_tax) + '/yr' },
+    { label: 'Monthly Tax Burden',   fn: m => fmt$(Math.round(m.annual_tax / 12)) + '/mo' },
+  ];
+  // Sticky frozen panes: header row (top) + first column (left).
+  // border-collapse:separate is required — collapse breaks position:sticky in most browsers.
+  const HDR_BG   = '#0f3460';
+  const EVEN_BG  = '#ffffff';
+  const ODD_BG   = '#f7fafc';
+  // Subtle right-shadow on the frozen metric column so it visually "lifts" off scrolled content
+  const COL_SHADOW = 'box-shadow:3px 0 6px rgba(0,0,0,.07)';
+
+  const hdrCells = markets.map(m =>
+    `<th style="text-align:center;min-width:130px;position:sticky;top:0;z-index:3;background:${HDR_BG};border-bottom:2px solid #1a3a6e">${m.name}<br><span style="font-weight:400;opacity:.7;font-size:.7rem">${m.state}</span></th>`
+  ).join('');
+
+  const rows = metrics.map((metric, i) => {
+    const rowBg = i % 2 === 1 ? ODD_BG : EVEN_BG;
+    const cells = markets.map(m =>
+      `<td style="text-align:center;padding:9px 12px;background:${rowBg};border-bottom:1px solid #f0f4f8">${metric.fn(m)}</td>`
+    ).join('');
+    return `<tr>
+      <td style="padding:9px 14px;font-size:.8rem;font-weight:600;color:#4a5568;white-space:nowrap;min-width:150px;border-right:2px solid #e2e8f0;border-bottom:1px solid #f0f4f8;position:sticky;left:0;z-index:2;background:${rowBg};${COL_SHADOW}">${metric.label}</td>
+      ${cells}
+    </tr>`;
+  }).join('');
+
+  return `<table style="width:100%;border-collapse:separate;border-spacing:0">
+    <thead><tr>
+      <th style="text-align:left;padding:10px 14px;position:sticky;top:0;left:0;z-index:5;background:${HDR_BG};border-right:2px solid #1a3a6e;border-bottom:2px solid #1a3a6e;${COL_SHADOW}">Metric</th>
+      ${hdrCells}
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+document.getElementById('compare-all').innerHTML = buildCmpTable(
+  [...D.primary_markets, ...D.research_markets].sort((a, b) => {
+    const priceDiff = a.median_price - b.median_price;
+    if (priceDiff !== 0) return priceDiff;
+    const wA = a.downtown ? a.downtown.walkability_rating : 0;
+    const wB = b.downtown ? b.downtown.walkability_rating : 0;
+    return wB - wA;
+  })
+);
+
+// ── Compare: Executive Summary ────────────────────────────────
+(function renderCompareExecSummary() {
+  const BUDGET_LOW = 700000, BUDGET_HIGH = 1000000;
+  const all = [...D.primary_markets, ...D.research_markets];
+
+  const inRange    = all.filter(m => m.median_price >= BUDGET_LOW && m.median_price <= BUDGET_HIGH);
+  const aboveRange = all.filter(m => m.median_price > BUDGET_HIGH);
+
+  // Composite score — weights reflect stated priorities:
+  // school quality, downtown walkability/character, commute, price headroom
+  function score(m) {
+    const schoolRaw  = m.school_rating_greatschools != null ? m.school_rating_greatschools : 6.5;
+    const walkSc     = m.downtown ? m.downtown.walk_score / 10 : 0;          // 0-10
+    const walkRating = m.downtown ? m.downtown.walkability_rating : 0;        // 0-10
+    const commuteLow = m.commute_min ? m.commute_min.low : 65;
+    const commuteSc  = Math.max(0, Math.min(10, 10 - (commuteLow - 30) / 5));
+    const headroom   = Math.min(1, (BUDGET_HIGH - m.median_price) / (BUDGET_HIGH - BUDGET_LOW)) * 10;
+    return schoolRaw  * 0.30
+         + walkSc     * 0.15
+         + walkRating * 0.30   // highest weight: character + lifestyle walkability
+         + commuteSc  * 0.12
+         + headroom   * 0.13;
+  }
+
+  const ranked = [...inRange].sort((a, b) => score(b) - score(a));
+
+  const MEDALS   = ['🥇', '🥈', '🥉'];
+  const TITLES   = ['Top Pick', 'Runner-Up', '#3 Pick'];
+  const BORDERS  = ['rgba(255,215,0,.45)', 'rgba(192,192,192,.35)', 'rgba(205,127,50,.3)'];
+  const BG_ALPHA = ['.16', '.09', '.09'];
+
+  // Short human reason for each rank position
+  function whyPick(m, rank) {
+    const school = m.school_rating_greatschools != null
+      ? `${m.school_rating_greatschools}/10 GS`
+      : (m.school_rating_niche ? `Niche ${m.school_rating_niche}` : 'schools TBD');
+    const walk  = m.downtown ? `Walk ${m.downtown.walk_score} · ${m.downtown.walkability_rating}/10 lifestyle` : '';
+    const delta = BUDGET_HIGH - m.median_price;
+    const headStr = delta >= 0 ? fmt$(delta) + ' under ceiling' : fmt$(Math.abs(delta)) + ' over budget';
+    return `${school} &nbsp;·&nbsp; ${walk} &nbsp;·&nbsp; ${headStr}`;
+  }
+
+  // Lifestyle badge: derive a label from walkability_rating + verdicts
+  function lifestyleBadge(m) {
+    if (!m.downtown) return '';
+    const r = m.downtown.walkability_rating;
+    if (r >= 9) return '<span style="background:rgba(56,161,105,.22);color:#9ae6b4;border-radius:99px;padding:2px 9px;font-size:.63rem;font-weight:700">Car-optional village</span>';
+    if (r >= 8) return '<span style="background:rgba(99,179,237,.18);color:#90cdf4;border-radius:99px;padding:2px 9px;font-size:.63rem;font-weight:700">Walkable evenings</span>';
+    return '<span style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border-radius:99px;padding:2px 9px;font-size:.63rem;font-weight:700">Walkable errands</span>';
+  }
+
+  const topCards = ranked.slice(0, 3).map((m, i) => {
+    const school = m.school_rating_greatschools != null
+      ? `${m.school_rating_greatschools}/10`
+      : (m.school_rating_niche ? `Niche ${m.school_rating_niche}` : '—');
+    const commute = m.commute_min ? fmtMin(m.commute_min) : (m.transit || '—');
+    const verdict = m.downtown ? m.downtown.verdict : '';
+
+    return `<div style="background:rgba(255,255,255,${BG_ALPHA[i]});border:1.5px solid ${BORDERS[i]};border-radius:12px;padding:18px 20px;flex:1;min-width:220px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span style="font-size:1.5rem;line-height:1">${MEDALS[i]}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;opacity:.55;margin-bottom:1px">${TITLES[i]}</div>
+          <div style="font-size:1.05rem;font-weight:800;letter-spacing:-.2px">${m.name}, <span style="font-weight:500;opacity:.7">${m.state}</span></div>
+        </div>
+        <div style="font-size:1.1rem;font-weight:900;color:#63b3ed;white-space:nowrap">${fmt$(m.median_price)}</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center">
+        <span style="background:rgba(255,255,255,.1);border-radius:99px;padding:2px 9px;font-size:.63rem;font-weight:600">🏫 ${school}</span>
+        <span style="background:rgba(255,255,255,.1);border-radius:99px;padding:2px 9px;font-size:.63rem;font-weight:600">🚶 ${m.downtown ? m.downtown.walk_score + ' / ' + m.downtown.walkability_rating + '/10' : '—'}</span>
+        <span style="background:rgba(255,255,255,.1);border-radius:99px;padding:2px 9px;font-size:.63rem;font-weight:600">🚉 ${commute}</span>
+        ${lifestyleBadge(m)}
+      </div>
+      <div style="font-size:.71rem;color:rgba(255,255,255,.65);line-height:1.55;border-top:1px solid rgba(255,255,255,.1);padding-top:8px">${verdict}</div>
+    </div>`;
+  }).join('');
+
+  const aboveList = aboveRange
+    .sort((a, b) => a.median_price - b.median_price)
+    .map(m => `<span style="opacity:.7">${m.name}</span> <span style="color:rgba(255,255,255,.35)">${fmt$(m.median_price)}</span>`)
+    .join(' &nbsp;·&nbsp; ');
+
+  document.getElementById('compare-exec-summary').innerHTML =
+    `<div style="background:linear-gradient(135deg,#0f3460 0%,#16213e 100%);color:#fff;border-radius:14px;padding:22px 26px;margin-bottom:22px;box-shadow:0 4px 20px rgba(15,52,96,.25)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:18px">
+        <div>
+          <div style="font-size:1rem;font-weight:800;letter-spacing:-.2px;margin-bottom:3px">Executive Summary</div>
+          <div style="font-size:.72rem;opacity:.5;line-height:1.5">Budget ${fmt$(BUDGET_LOW)}–${fmt$(BUDGET_HIGH)} &nbsp;·&nbsp; Priorities: schools &nbsp;·&nbsp; walkable to coffee &amp; restaurants &nbsp;·&nbsp; commute to Midtown</div>
+        </div>
+        <div style="font-size:.72rem;opacity:.45;text-align:right;white-space:nowrap">${inRange.length} in range &nbsp;·&nbsp; ${aboveRange.length} above budget</div>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        ${topCards}
+      </div>
+      ${aboveRange.length ? `<div style="margin-top:14px;padding-top:11px;border-top:1px solid rgba(255,255,255,.1);font-size:.68rem;line-height:1.6">
+        <span style="font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.05em;margin-right:8px">Above budget</span>${aboveList}
+      </div>` : ''}
+    </div>`;
+})();
+
+// ── Overview: Purchasing Power card — called from calcUpdate() so down slider is live ──
+function renderOverviewPurchasingPower() {
+  const down    = +rDown.value;                // live from slider
+  const allMarkets = [...D.primary_markets, ...D.research_markets];
+  const avgTax  = allMarkets.reduce((s, m) => s + m.annual_tax, 0) / allMarkets.length;
+  const MAX_PITI = 5000;
+  const rate20   = D.mortgage_rates.rates['20yr_fixed'];
+  const rate15   = D.mortgage_rates.rates['15yr_fixed'];
+
+  const terms = [
+    { label:'30yr Fixed', yrs:30, r:RATE30, primary:true  },
+    { label:'20yr Fixed', yrs:20, r:rate20, primary:false },
+    { label:'15yr Fixed', yrs:15, r:rate15, primary:false },
+    { label:'5yr Payoff', yrs:5,  r:RATE30, primary:false },
+  ];
+
+  function maxAffordable(rate, yrs) {
+    let lo = 100000, hi = 3000000;
+    for (let i = 0; i < 40; i++) {
+      const mid = (lo + hi) / 2;
+      piti(mid, down, rate, yrs, avgTax, INS).total <= MAX_PITI ? lo = mid : hi = mid;
+    }
+    return Math.round(lo);
+  }
+
+  const results = terms.map(t => {
+    const maxHome = maxAffordable(t.r, t.yrs);
+    const p = piti(maxHome, down, t.r, t.yrs, avgTax, INS);
+    return { ...t, maxHome, p };
+  });
+
+  const termCards = results.map(t => `
+    <div style="background:rgba(255,255,255,${t.primary?'.18':'.08'});border-radius:10px;padding:14px 16px;
+         border:1.5px solid rgba(255,255,255,${t.primary?'.32':'.13'});min-width:0">
+      <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;opacity:.72;margin-bottom:1px">${t.label}</div>
+      <div style="font-size:.6rem;opacity:.48;margin-bottom:8px">${(t.r*100).toFixed(2)}%</div>
+      <div style="font-size:1.45rem;font-weight:900;letter-spacing:-.4px;line-height:1;margin-bottom:6px">${fmt$(t.maxHome)}</div>
+      <div style="font-size:.68rem;opacity:.62;margin-bottom:4px">Loan&nbsp;&nbsp;${fmt$(t.maxHome - down)}</div>
+      <div style="font-size:.68rem;opacity:.62;margin-bottom:1px">P&amp;I&nbsp;&nbsp;&nbsp;${fmt$(t.p.pi)}/mo</div>
+      <div style="font-size:.68rem;opacity:.62;margin-bottom:1px">Tax&nbsp;&nbsp;&nbsp;${fmt$(t.p.taxmo)}/mo</div>
+      <div style="font-size:.68rem;opacity:.62;margin-bottom:5px">Ins&nbsp;&nbsp;&nbsp;&nbsp;${fmt$(t.p.insmo)}/mo</div>
+      <div style="height:1px;background:rgba(255,255,255,.22);margin-bottom:5px"></div>
+      <div style="font-size:.72rem;font-weight:700;opacity:.9">PITI&nbsp;&nbsp;${fmt$(t.p.total)}/mo</div>
+    </div>`).join('');
+
+  document.getElementById('overview-purchasing-power').innerHTML =
+    `<div style="background:linear-gradient(135deg,#0f3460,#16213e);border-radius:12px;padding:18px 24px;color:#fff">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+        <div>
+          <span style="font-size:.72rem;opacity:.65;text-transform:uppercase;letter-spacing:.6px">Purchasing Power</span>
+        </div>
+        <div style="font-size:.72rem;opacity:.55">
+          ${fmt$(down)} down &middot; ${fmt$(MAX_PITI)}/mo max PITI &middot; avg tax ${fmt$(Math.round(avgTax))}/yr
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+        ${termCards}
+      </div>
+    </div>`;
+}
+
+// ── Mortgage calculator ───────────────────────────────────────
+const rPrice = document.getElementById('r-price');
+const rDown  = document.getElementById('r-down');
+const rRate  = document.getElementById('r-rate');
+const nTax   = document.getElementById('n-tax');
+const nIns   = document.getElementById('n-ins');
+
+rPrice.value = 850000;
+rDown.value  = DOWN;
+rRate.value  = (RATE30 * 100).toFixed(2);
+nTax.value   = 15000;
+
+function calcUpdate() {
+  // Clear active market unless this call came directly from quickFill()
+  if (!_activeMktJustSet) _activeMkt = null;
+  _activeMktJustSet = false;
+  const price = +rPrice.value, down = +rDown.value;
+  const rate  = +rRate.value / 100;
+  const tax   = +nTax.value || 0;
+  const ins   = +nIns.value || 2400;
+  const rate20 = D.mortgage_rates.rates['20yr_fixed'];
+  const rate15 = D.mortgage_rates.rates['15yr_fixed'];
+  const terms = [
+    { label:'30yr Fixed', yrs:30, r:rate,  primary:true  },
+    { label:'20yr Fixed', yrs:20, r:rate20, primary:false },
+    { label:'15yr Fixed', yrs:15, r:rate15, primary:false },
+    { label:'5yr Payoff',  yrs:5,  r:rate,  primary:false },
+  ];
+  const termHtml = terms.map(t => {
+    const p = piti(price, down, t.r, t.yrs, tax, ins);
+    const piPct  = Math.round(p.pi    / p.total * 100);
+    const taxPct = Math.round(p.taxmo / p.total * 100);
+    const insPct = Math.round(p.insmo / p.total * 100);
+    return `<div class="piti-tc${t.primary ? ' tc-primary' : ''}">
+      <div class="tc-label">${t.label}</div>
+      <div class="tc-rate">${(t.r*100).toFixed(2)}%</div>
+      <div class="tc-amt">${fmt$(p.total)}</div>
+      <div class="tc-divider"></div>
+      <div class="tc-components">
+        <div class="tc-comp">
+          <span class="tc-comp-label">P&amp;I</span>
+          <span class="tc-comp-val">${fmt$(p.pi)}</span>
+        </div>
+        <div class="tc-comp-bar" style="width:${piPct}%"></div>
+        <div class="tc-comp">
+          <span class="tc-comp-label">Tax</span>
+          <span class="tc-comp-val">${fmt$(p.taxmo)}</span>
+        </div>
+        <div class="tc-comp-bar" style="width:${taxPct}%"></div>
+        <div class="tc-comp">
+          <span class="tc-comp-label">Ins</span>
+          <span class="tc-comp-val">${fmt$(p.insmo)}</span>
+        </div>
+        <div class="tc-comp-bar" style="width:${insPct}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+  const p = piti(price, down, rate, 30, tax, ins);
+  const loanAmt = Math.round(p.loan);
+  document.getElementById('overview-piti-breakdown').innerHTML =
+    `<span>Loan: ${fmt$(p.loan)}</span><span>Tax: ${fmt$(p.taxmo)}/mo</span>` +
+    `<span>Ins: ${fmt$(p.insmo)}/mo</span><span>Down: ${Math.round(down/price*100)}%</span>`;
+  document.getElementById('overview-piti-grid').innerHTML  = termHtml;
+  renderOverviewPurchasingPower();
+  renderTermComparisonChart('overview-term-wrap');
+
+  // Keep Overview tab controls in sync with the mortgage-tab sliders/fields.
+  // Skip whichever control is currently focused to avoid fighting the user mid-drag.
+  const _focused = document.activeElement;
+  // Sliders (range) — update both input.value and the companion .val display div
+  [
+    { id:'ov-price', vid:'ov-v-price', val:price,                     display:fmt$(price) },
+    { id:'ov-down',  vid:'ov-v-down',  val:down,                      display:fmt$(down) + ' (' + Math.round(down/price*100) + '%)' },
+    { id:'ov-rate',  vid:'ov-v-rate',  val:(+rRate.value).toFixed(2), display:(+rRate.value).toFixed(2) + '%' },
+  ].forEach(({ id, vid, val, display }) => {
+    const el = document.getElementById(id);
+    if (el && el !== _focused) el.value = val;
+    const vEl = document.getElementById(vid);
+    if (vEl) vEl.textContent = display;
+  });
+  // Loan amount — computed display only (no input)
+  const _ovLoan = document.getElementById('ov-v-loan');
+  if (_ovLoan) _ovLoan.textContent = fmt$(price - down);
+  // Number inputs — value only
+  [{ id:'ov-tax', val:tax || 0 }, { id:'ov-ins', val:ins }].forEach(({ id, val }) => {
+    const el = document.getElementById(id);
+    if (el && el !== _focused) el.value = val;
+  });
+
+  // Active market indicator — label in calculator + ring on card
+  const _lbl = document.getElementById('ov-active-market-label');
+  const _nm  = document.getElementById('ov-active-market-name');
+  if (_lbl) _lbl.style.display = _activeMkt ? '' : 'none';
+  if (_nm && _activeMkt) _nm.textContent = _activeMkt.name;
+  document.querySelectorAll('#all-cards-container .card').forEach(c => c.classList.remove('card--active'));
+  if (_activeMkt?.id) {
+    const ac = document.querySelector(`#all-cards-container [data-market-id="${_activeMkt.id}"]`);
+    if (ac) ac.classList.add('card--active');
+  }
+}
+
+// Tracks which market is currently loaded; cleared on any manual slider/input change
+var _activeMkt = null, _activeMktJustSet = false;
+
+function quickFill(price, tax, name, id) {
+  rPrice.value = price;
+  nTax.value   = tax;
+  _activeMkt = { id: id || null, name };
+  _activeMktJustSet = true;
+  calcUpdate();
+}
+
+// ovSync — called by the Overview tab's controls; mirrors values into the
+// backing inputs, then re-runs calcUpdate().
+function ovSync(field, val) {
+  const map = { price: rPrice, down: rDown, rate: rRate, tax: nTax, ins: nIns };
+  if (map[field]) map[field].value = val;
+  calcUpdate();
+}
+
+// ── Amortization Explorer — chart instances (declared before calcUpdate() call) ──
+var _termCompCharts = {};
+
+calcUpdate();
+
+
+// ── Term comparison chart: Total Cost Breakdown (4 stacked bars) ──────────────
+function renderTermComparisonChart(wrapId) {
+  wrapId = wrapId || 'overview-term-wrap';
+  const price = +rPrice.value, down = +rDown.value;
+  const loan = price - down;
+  if (loan <= 0) return;
+
+  const rate30 = +rRate.value / 100;
+  const rate20 = D.mortgage_rates.rates['20yr_fixed'];
+  const rate15 = D.mortgage_rates.rates['15yr_fixed'];
+
+  function calcTotals(loanAmt, rate, yrs) {
+    const r = rate / 12, n = yrs * 12;
+    const pmt = r === 0 ? loanAmt / n : loanAmt * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
+    return { pmt: Math.round(pmt), interest: Math.round(pmt * n - loanAmt) };
+  }
+
+  const terms = [
+    { label: '30yr Fixed', sublabel: (rate30*100).toFixed(2)+'%', yrs: 30, r: rate30 },
+    { label: '20yr Fixed', sublabel: (rate20*100).toFixed(2)+'%', yrs: 20, r: rate20 },
+    { label: '15yr Fixed', sublabel: (rate15*100).toFixed(2)+'%', yrs: 15, r: rate15 },
+    { label: '5yr Payoff', sublabel: (rate30*100).toFixed(2)+'%', yrs: 5,  r: rate30 },
+  ];
+
+  const calcs  = terms.map(t => calcTotals(loan, t.r, t.yrs));
+  const int30  = calcs[0].interest;
+  const totals = calcs.map(c => loan + c.interest);
+
+  // Inline plugin: inside-bar labels + above-bar annotations
+  const labelPlugin = {
+    id: 'termLabels',
+    afterDatasetsDraw(chart) {
+      const ctx = chart.ctx;
+      const meta0 = chart.getDatasetMeta(0); // principal (navy, bottom)
+      const meta1 = chart.getDatasetMeta(1); // interest (rose, top)
+      const font  = '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+
+      // ── Inside principal (navy) section ──
+      meta0.data.forEach((bar, i) => {
+        const h = Math.abs(bar.base - bar.y);
+        if (h < 22) return;
+        const cy = (bar.y + bar.base) / 2;
+        ctx.save();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        if (h >= 44) {
+          ctx.font = `600 9px ${font}`;
+          ctx.fillStyle = 'rgba(255,255,255,.55)';
+          ctx.fillText('LOAN', bar.x, cy - 9);
+          ctx.font = `bold 12px ${font}`;
+          ctx.fillStyle = 'rgba(255,255,255,.88)';
+          ctx.fillText(fmt$(loan), bar.x, cy + 7);
+        } else {
+          ctx.font = `bold 11px ${font}`;
+          ctx.fillStyle = 'rgba(255,255,255,.85)';
+          ctx.fillText(fmt$(loan), bar.x, cy);
+        }
+        ctx.restore();
+      });
+
+      // ── Inside interest (rose) section ──
+      meta1.data.forEach((bar, i) => {
+        const h = Math.abs(bar.base - bar.y);
+        if (h < 22) return;
+        const cy = (bar.y + bar.base) / 2;
+        ctx.save();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        if (h >= 44) {
+          ctx.font = `600 9px ${font}`;
+          ctx.fillStyle = 'rgba(255,255,255,.55)';
+          ctx.fillText('INTEREST', bar.x, cy - 9);
+          ctx.font = `bold 12px ${font}`;
+          ctx.fillStyle = 'rgba(255,255,255,.88)';
+          ctx.fillText(fmt$(calcs[i].interest), bar.x, cy + 7);
+        } else {
+          ctx.font = `bold 11px ${font}`;
+          ctx.fillStyle = 'rgba(255,255,255,.85)';
+          ctx.fillText(fmt$(calcs[i].interest), bar.x, cy);
+        }
+        ctx.restore();
+      });
+
+      // ── Above-bar: total cost, monthly payment, savings badge ──
+      meta1.data.forEach((bar, i) => {
+        const total   = totals[i];
+        const monthly = calcs[i].pmt;
+        const saved   = int30 - calcs[i].interest;
+        ctx.save();
+
+        ctx.font = `bold 12px ${font}`;
+        ctx.fillStyle = '#1a202c';
+        ctx.textAlign = 'center';
+        ctx.fillText(fmt$(total), bar.x, bar.y - 28);
+
+        ctx.font = `10px ${font}`;
+        ctx.fillStyle = '#718096';
+        ctx.fillText(fmt$(monthly) + '/mo P&I', bar.x, bar.y - 14);
+
+        if (i > 0 && saved > 0) {
+          const text = 'saves ' + fmt$(saved);
+          const tw = ctx.measureText(text).width;
+          const bx = bar.x - tw/2 - 5, by = bar.y - 50, bw = tw + 10, bh = 15;
+          ctx.fillStyle = 'rgba(16,185,129,.13)';
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
+          ctx.font = `bold 9px ${font}`;
+          ctx.fillStyle = '#065f46';
+          ctx.fillText(text, bar.x, by + 8);
+        }
+        ctx.restore();
+      });
+    }
+  };
+
+  // Gradient plugin — builds a gradient using real chart-area pixel coords so it
+  // Principal: the dashboard's signature dark-navy gradient (#0f3460→#16213e),
+  // matching the header, callout, and nav throughout the page.
+  function principalGradient(context) {
+    const chart = context.chart;
+    const { ctx: c, chartArea } = chart;
+    if (!chartArea) return '#0f3460';
+    const grad = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+    grad.addColorStop(0, '#16213e');  // darkest navy — top of principal region
+    grad.addColorStop(1, '#0f3460'); // standard navy — bar base
+    return grad;
+  }
+
+  // Interest: rose at the top fading into a deeper wine at the bottom,
+  // so it naturally transitions into the navy principal section below.
+  function interestGradient(context) {
+    const chart = context.chart;
+    const { ctx: c, chartArea } = chart;
+    if (!chartArea) return '#e94560';
+    const grad = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+    grad.addColorStop(0,    '#e94560');  // bright rose — very top
+    grad.addColorStop(0.55, '#c0304e'); // deep rose
+    grad.addColorStop(1,    '#8b1a35'); // dark wine — bottom of interest region
+    return grad;
+  }
+
+  // Replace canvas — target the correct wrapper by wrapId
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  if (_termCompCharts[wrapId]) { _termCompCharts[wrapId].destroy(); _termCompCharts[wrapId] = null; }
+  const canvas = document.createElement('canvas');
+  canvas.id = wrapId.replace('-wrap', '-chart');
+  wrap.innerHTML = '';
+  wrap.appendChild(canvas);
+
+  _termCompCharts[wrapId] = new Chart(canvas, {
+    type: 'bar',
+    plugins: [labelPlugin],
+    data: {
+      labels: terms.map(t => t.label + '\n' + t.sublabel),
+      datasets: [
+        {
+          label: 'Principal (loan amount)',
+          data: terms.map(() => loan),
+          backgroundColor: principalGradient,
+          borderWidth: 0,
+          stack: 'cost',
+          borderRadius: 0,
+        },
+        {
+          label: 'Total interest paid',
+          data: calcs.map(c => c.interest),
+          backgroundColor: interestGradient,
+          borderWidth: 0,
+          stack: 'cost',
+          borderRadius: { topLeft: 6, topRight: 6, bottomLeft: 0, bottomRight: 0 },
+        },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 400 },
+      layout: { padding: { top: 65 } },
+      plugins: {
+        legend: {
+          display: true, position: 'bottom',
+          labels: {
+            font: { size: 11 }, padding: 18, usePointStyle: true, pointStyle: 'rect',
+            // Show fixed endpoint colors rather than the gradient object
+            generateLabels(chart) {
+              return [
+                { text: 'Principal (loan amount)', fillStyle: 'rgba(15,52,96,.88)',  strokeStyle: 'transparent', lineWidth: 0, hidden: false, datasetIndex: 0 },
+                { text: 'Total interest paid',     fillStyle: 'rgba(162,30,62,.88)', strokeStyle: 'transparent', lineWidth: 0, hidden: false, datasetIndex: 1 },
+              ];
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            title: lbls => {
+              const i = lbls[0]?.dataIndex;
+              return terms[i] ? terms[i].label + ' at ' + terms[i].sublabel : '';
+            },
+            label: ctx => {
+              if (ctx.datasetIndex === 0) return '  Principal:  ' + fmt$(ctx.parsed.y);
+              const saved = int30 - ctx.parsed.y;
+              const tag = ctx.datasetIndex > 0 && saved > 0 ? '  (saves ' + fmt$(saved) + ' vs 30yr)' : '';
+              return '  Interest:   ' + fmt$(ctx.parsed.y) + tag;
+            },
+            afterBody: items => {
+              const i = items[0]?.dataIndex;
+              if (i == null) return [];
+              return ['', '  Total cost:  ' + fmt$(totals[i]), '  Monthly P&I: ' + fmt$(calcs[i].pmt)];
+            },
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          ticks: { font: { size: 11, weight: '600' }, color: '#2d3748' },
+          grid: { display: false },
+        },
+        y: {
+          stacked: true,
+          ticks: { font: { size: 10 }, callback: v => '$' + (v/1000).toFixed(0) + 'K' },
+          grid: { color: '#f0f4f8' },
+          title: { display: true, text: 'Total Dollars Paid Over Life of Loan', font: { size: 11 }, color: '#718096' },
+        }
+      }
+    }
+  });
+}
+
+// ── Watchlist ─────────────────────────────────────────────────
+const allMarkets = [...D.primary_markets, ...D.research_markets];
+document.getElementById('wl-market').innerHTML =
+  allMarkets.map(m => `<option value="${m.id}">${m.name}, ${m.state}</option>`).join('');
+
+function getWL() { return JSON.parse(localStorage.getItem('housing_watchlist') || '[]'); }
+function saveWL(wl) { localStorage.setItem('housing_watchlist', JSON.stringify(wl)); }
+
+function addWatchlist() {
+  const addr  = document.getElementById('wl-addr').value.trim();
+  const mktId = document.getElementById('wl-market').value;
+  const price = +document.getElementById('wl-price').value;
+  const note  = document.getElementById('wl-note').value.trim();
+  if (!addr) { alert('Please enter an address'); return; }
+  const wl = getWL();
+  wl.unshift({ id: Date.now(), addr, mktId, price, note, added: new Date().toISOString().slice(0,10) });
+  saveWL(wl);
+  document.getElementById('wl-addr').value = '';
+  document.getElementById('wl-price').value = '';
+  document.getElementById('wl-note').value = '';
+  renderWL();
+}
+
+function removeWatchlist(id) {
+  saveWL(getWL().filter(x => x.id !== id));
+  renderWL();
+}
+
+function renderWL() {
+  const wl  = getWL();
+  const el  = document.getElementById('wl-list');
+  if (!wl.length) { el.innerHTML = '<div class="empty">No listings saved yet. Add one above.</div>'; return; }
+  el.innerHTML = wl.map(item => {
+    const mkt = allMarkets.find(m => m.id === item.mktId) || {};
+    const p   = item.price ? piti(item.price, DOWN, RATE30, 30, mkt.annual_tax || 15000, INS) : null;
+    return `<div class="wl-card">
+      <div class="wl-addr">${item.addr}</div>
+      <div class="wl-market">${mkt.name || item.mktId}, ${mkt.state || ''} &nbsp;&bull;&nbsp; Added ${item.added}</div>
+      ${item.price ? `<div class="wl-price">${fmt$(item.price)} &nbsp;<span style="font-size:.8rem;color:#718096;font-weight:400">${p ? '~ ' + fmt$(p.total) + '/mo Principal, Interest, Taxes &amp; Insurance (PITI)' : ''}</span></div>` : ''}
+      ${item.note ? `<div class="wl-note">"${item.note}"</div>` : ''}
+      <div class="wl-actions">
+        <button class="btn btn-danger" onclick="removeWatchlist(${item.id})">Remove</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+renderWL();
+
+// ── Weekly Changes ────────────────────────────────────────────
+(function renderWeekly() {
+  const allCurr = [...D.primary_markets, ...D.research_markets];
+  const allSnap = [...(S.primary_markets||[]), ...(S.research_markets||[])];
+  const snap = id => allSnap.find(m => m.id === id) || null;
+  const MAX_PITI = 5000;
+
+  // Rate changes
+  const rateKeys = [['30yr_fixed','30yr Fixed'],['20yr_fixed','20yr Fixed'],['15yr_fixed','15yr Fixed']];
+  const rRates   = D.mortgage_rates.rates;
+  const sRates   = S.mortgage_rates ? S.mortgage_rates.rates : rRates;
+  document.getElementById('weekly-rates').innerHTML = rateKeys.map(([k,label]) => {
+    const cur = rRates[k], prv = sRates[k] || cur;
+    const bps = Math.round((cur - prv) * 10000);
+    const clr = bps > 0 ? '#c53030' : bps < 0 ? '#276749' : '#718096';
+    const arr = bps > 0 ? '▲' : bps < 0 ? '▼' : '→';
+    return `<div style="background:#fff;border-radius:10px;padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:160px;border-top:4px solid ${clr}">
+      <div style="font-size:.75rem;color:#718096;text-transform:uppercase;letter-spacing:.4px">${label}</div>
+      <div style="font-size:1.6rem;font-weight:900;color:#0f3460;margin:4px 0">${(cur*100).toFixed(2)}%</div>
+      <div style="font-size:.85rem;font-weight:700;color:${clr}">${bps !== 0 ? arr+' '+Math.abs(bps)+' bps' : 'No change'}</div>
+      <div style="font-size:.72rem;color:#a0aec0;margin-top:2px">prev: ${(prv*100).toFixed(2)}%</div>
+    </div>`;
+  }).join('');
+
+  // Price + PITI changes
+  const prevRate = sRates['30yr_fixed'] || RATE30;
+  document.getElementById('weekly-price-body').innerHTML = allCurr.map(m => {
+    const s      = snap(m.id);
+    const pPrev  = s ? s.median_price : m.median_price;
+    const tPrev  = s ? s.annual_tax   : m.annual_tax;
+    const delta  = m.median_price - pPrev;
+    const pct    = pPrev ? ((delta/pPrev)*100).toFixed(2) : '0.00';
+    const ppiti  = piti(pPrev, DOWN, prevRate, 30, tPrev, INS).total;
+    const npiti  = piti(m.median_price, DOWN, RATE30, 30, m.annual_tax, INS).total;
+    const pd     = npiti - ppiti;
+    const pc     = delta < 0 ? '#276749' : delta > 0 ? '#c53030' : '#718096';
+    const tc     = pd < 0 ? '#276749' : pd > 0 ? '#c53030' : '#718096';
+    const none   = delta === 0 && pd === 0;
+    return `<tr style="border-bottom:1px solid #f0f4f8${none?';opacity:.45':''}">
+      <td style="padding:8px 12px;font-weight:700">${m.name}</td>
+      <td style="padding:8px 12px;color:#718096">${m.state}</td>
+      <td style="padding:8px 12px;font-weight:700">${fmt$(m.median_price)}</td>
+      <td style="padding:8px 12px;font-weight:700;color:${pc}">${delta===0?'—':(delta>0?'+':'')+fmt$(delta)}</td>
+      <td style="padding:8px 12px;font-weight:700;color:${pc}">${delta===0?'—':(delta>0?'+':'')+pct+'%'}</td>
+      <td style="padding:8px 12px;color:#718096">${fmt$(ppiti)}</td>
+      <td style="padding:8px 12px;font-weight:700">${fmt$(npiti)}</td>
+      <td style="padding:8px 12px;font-weight:700;color:${tc}">${pd===0?'—':(pd>0?'+':'')+fmt$(pd)+'/mo'}</td>
+    </tr>`;
+  }).join('');
+
+  // Affordability rank shifts
+  const rankNow  = [...allCurr].sort((a,b)=>piti(a.median_price,DOWN,RATE30,30,a.annual_tax,INS).total-piti(b.median_price,DOWN,RATE30,30,b.annual_tax,INS).total);
+  const rankPrev = [...allCurr].sort((a,b)=>{
+    const sa=snap(a.id),sb=snap(b.id);
+    return piti(sa?sa.median_price:a.median_price,DOWN,prevRate,30,sa?sa.annual_tax:a.annual_tax,INS).total -
+           piti(sb?sb.median_price:b.median_price,DOWN,prevRate,30,sb?sb.annual_tax:b.annual_tax,INS).total;
+  });
+  document.getElementById('weekly-rank-body').innerHTML = rankNow.map((m,i)=>{
+    const pr   = rankPrev.findIndex(r=>r.id===m.id);
+    const move = pr - i;
+    const mt   = move===0 ? '<span style="color:#a0aec0">No change</span>'
+               : move>0  ? `<span style="color:#276749;font-weight:700">▲ Up ${move}</span>`
+               :            `<span style="color:#c53030;font-weight:700">▼ Down ${Math.abs(move)}</span>`;
+    return `<tr style="border-bottom:1px solid #f0f4f8">
+      <td style="padding:8px 12px;font-weight:700">${m.name}</td>
+      <td style="padding:8px 12px;color:#718096">${m.state}</td>
+      <td style="padding:8px 12px;color:#718096">#${pr+1}</td>
+      <td style="padding:8px 12px;font-weight:700">#${i+1}</td>
+      <td style="padding:8px 12px">${mt}</td>
+      <td style="padding:8px 12px;font-weight:700;color:#e94560">${fmt$(piti(m.median_price,DOWN,RATE30,30,m.annual_tax,INS).total)}/mo Principal, Interest, Taxes &amp; Insurance (PITI)</td>
+    </tr>`;
+  }).join('');
+
+  // Purchasing power
+  function maxAffordable(rate) {
+    const avgTax = allCurr.reduce((s,m)=>s+m.annual_tax,0)/allCurr.length;
+    let lo=100000, hi=3000000;
+    for(let i=0;i<40;i++){const mid=(lo+hi)/2; piti(mid,DOWN,rate,30,avgTax,INS).total<=MAX_PITI?lo=mid:hi=mid;}
+    return Math.round(lo);
+  }
+  const pwNow  = maxAffordable(RATE30);
+  const pwPrev = maxAffordable(prevRate);
+  const pwD    = pwNow - pwPrev;
+  const pwClr  = pwD >= 0 ? '#276749' : '#c53030';
+  const avgPITIShift = Math.round(allCurr.reduce((s,m)=>{
+    const sn=snap(m.id);
+    return s + piti(m.median_price,DOWN,RATE30,30,m.annual_tax,INS).total
+             - piti(sn?sn.median_price:m.median_price,DOWN,prevRate,30,sn?sn.annual_tax:m.annual_tax,INS).total;
+  },0)/allCurr.length);
+  const asClr = avgPITIShift<=0?'#276749':'#c53030';
+
+  document.getElementById('weekly-down-label').textContent = fmt$(DOWN);
+  document.getElementById('weekly-power').innerHTML = [
+    {label:'Max Affordable (now)', val:fmt$(pwNow), sub:`${pwD>=0?'▲':'▼'} ${fmt$(Math.abs(pwD))} vs prior`, clr:pwClr, note:`prev: ${fmt$(pwPrev)}`},
+    {label:'30yr Rate', val:(RATE30*100).toFixed(2)+'%', sub:'current rate', clr:'#0f3460', note:`prev: ${(prevRate*100).toFixed(2)}%`},
+    {label:'Avg Principal, Interest, Taxes &amp; Insurance (PITI) Shift', val:(avgPITIShift>=0?'+':'')+fmt$(avgPITIShift)+'/mo', sub:'avg across all markets', clr:asClr, note:'vs prior period'}
+  ].map(c=>`<div style="background:#fff;border-radius:10px;padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:180px;border-top:4px solid ${c.clr}">
+    <div style="font-size:.75rem;color:#718096;text-transform:uppercase;letter-spacing:.4px">${c.label}</div>
+    <div style="font-size:1.5rem;font-weight:900;color:${c.clr};margin:4px 0">${c.val}</div>
+    <div style="font-size:.82rem;font-weight:600;color:${c.clr}">${c.sub}</div>
+    <div style="font-size:.72rem;color:#a0aec0;margin-top:2px">${c.note}</div>
+  </div>`).join('');
+
+  // KPI summary cards
+  const bestNow  = rankNow[0];
+  const bestPrev = rankPrev[0];
+  const changed  = bestNow.id !== bestPrev.id;
+  const rateMove = Math.round((RATE30-prevRate)*10000);
+  const rmClr    = rateMove>0?'#c53030':rateMove<0?'#276749':'#718096';
+  document.getElementById('weekly-kpi-cards').innerHTML = [
+    {title:'30yr Rate Change', val:rateMove===0?'Flat':(rateMove>0?'+':'')+rateMove+' bps', sub:(RATE30*100).toFixed(2)+'% now', clr:rmClr},
+    {title:'Best Value Pick',  val:`${bestNow.name}, ${bestNow.state}`, sub:fmt$(piti(bestNow.median_price,DOWN,RATE30,30,bestNow.annual_tax,INS).total)+'/mo Principal, Interest, Taxes &amp; Insurance (PITI)', clr:'#0f3460', extra:changed?`<div style="font-size:.72rem;color:#c53030;margin-top:4px">Replaced ${bestPrev.name}, ${bestPrev.state}</div>`:''},
+    {title:'Purchasing Power',  val:(pwD>=0?'▲ +':'▼ ')+fmt$(Math.abs(pwD)), sub:'max home price shift', clr:pwClr}
+  ].map(c=>`<div class="card" style="border-top-color:${c.clr}">
+    <div class="card-header"><div class="card-name">${c.title}</div><span class="card-state">Weekly</span></div>
+    <div class="card-price" style="color:${c.clr};font-size:1.1rem">${c.val}</div>
+    <div class="card-piti">${c.sub}</div>
+    ${c.extra||''}
+  </div>`).join('');
+})();
+
+// ── Investment Analysis Tab ───────────────────────────────────────────────────
+const INV = (function() {
+  let initialized = false;
+  let invChart = null;
+  const invVis = [true, true, true];
+
+  // State — seeded from live dashboard data
+  const IS = {
+    price:    908000,
+    proceeds: (D.meta && D.meta.owner_context && D.meta.owner_context.net_proceeds) || 658000,
+    split:    50,
+    apprec:   3.5,
+    yrs:      30,
+    rate:     ((D.mortgage_rates && D.mortgage_rates.rates && D.mortgage_rates.rates['30yr_fixed']) || 0.0651) * 100,
+    sp:       8.0,  bonds:    4.5,  tbill:    4.2,
+    spPct:    60,   bondsPct: 30,   tbillPct: 10,
+    fedcg:    23.8, nystate:  8.82, nyc:      3.876,
+    marginal: 32,   stdded:   30000,
+    incWife:  25000, incHusband: 25000
+  };
+
+  // Helpers
+  const f$ = n => (n < 0 ? '-$' : '$') + Math.abs(Math.round(n)).toLocaleString();
+  const fPct = n => (+n).toFixed(2) + '%';
+  const iBlend = () => (IS.sp * IS.spPct + IS.bonds * IS.bondsPct + IS.tbill * IS.tbillPct) / 100;
+
+  // Finance
+  function iPmt(principal, rate, years) {
+    if (principal <= 0) return 0;
+    const r = rate / 100 / 12, n = years * 12;
+    if (r === 0) return principal / n;
+    return principal * r * Math.pow(1+r,n) / (Math.pow(1+r,n) - 1);
+  }
+  function iBal(principal, rate, years, yearsPaid) {
+    if (yearsPaid <= 0) return principal;
+    if (yearsPaid >= years || principal <= 0) return 0;
+    const r = rate / 100 / 12, n = years * 12, p = yearsPaid * 12;
+    const m = iPmt(principal, rate, years);
+    if (r === 0) return principal - m * p;
+    return principal * Math.pow(1+r,p) - m * (Math.pow(1+r,p) - 1) / r;
+  }
+  function iAnnInt(principal, rate, years, yr) {
+    if (yr < 1 || yr > years || principal <= 0) return 0;
+    const m = iPmt(principal, rate, years);
+    return m * 12 - (iBal(principal, rate, years, yr-1) - iBal(principal, rate, years, yr));
+  }
+  function iFvAnn(monthly, rate, years) {
+    if (years <= 0 || monthly <= 0) return 0;
+    const r = rate / 100 / 12, n = years * 12;
+    if (r === 0) return monthly * n;
+    return monthly * (Math.pow(1+r,n) - 1) / r;
+  }
+  function iAtVal(fv, basis, ltcgPct) {
+    return fv - Math.max(0, fv - basis) * ltcgPct / 100;
+  }
+
+  // Core calc per year
+  function iCalc(yr) {
+    const aDown = IS.proceeds;
+    const aLoan = Math.max(0, IS.price - aDown);
+    const bDown = IS.proceeds * IS.split / 100;
+    const bLoan = Math.max(0, IS.price - bDown);
+    const inv   = IS.proceeds - bDown;
+    const aPmt  = iPmt(aLoan, IS.rate, 30);
+    const bPmt  = iPmt(bLoan, IS.rate, 30);
+    const diff  = Math.max(0, bPmt - aPmt);
+    const ltcg  = IS.fedcg + IS.nystate + IS.nyc;
+    const blend = iBlend();
+
+    // Annual investable income (wife + husband), invested each year in the blended
+    // portfolio in BOTH strategies — it's salary savings, independent of the housing choice.
+    const inc      = IS.incWife + IS.incHusband;
+    const incFV    = iFvAnn(inc / 12, blend, yr);
+    const incBasis = inc * yr;
+
+    const homeVal = IS.price * Math.pow(1 + IS.apprec / 100, yr);
+    const aEq = homeVal - iBal(aLoan, IS.rate, 30, yr);
+    const bEq = homeVal - iBal(bLoan, IS.rate, 30, yr);
+
+    // A: invests monthly payment savings + annual income in same blended portfolio
+    const aSaveFV = iFvAnn(diff, blend, yr);
+    const aFV     = aSaveFV + incFV;
+    const aBasis  = diff * 12 * yr + incBasis;
+    const aSaveAT = iAtVal(aSaveFV, diff * 12 * yr, ltcg);
+    const incAT   = iAtVal(incFV, incBasis, ltcg);   // salary portfolio, identical in A & B
+    const aAT     = aSaveAT + incAT;
+
+    // B: lump sum + annual income in blended portfolio
+    const bLumpFV = inv * Math.pow(1 + blend / 100, yr);
+    const bFV     = bLumpFV + incFV;
+    const bBasis  = inv + incBasis;
+    const bLumpAT = iAtVal(bLumpFV, inv, ltcg);
+    const bAT     = bLumpAT + incAT;
+
+    const nwA0 = aEq;
+    const nwA1 = aEq + aAT;
+    const nwB  = bEq + bAT;
+
+    // MID
+    const SALT  = 10000, other = 2000;
+    const aInt  = iAnnInt(aLoan, IS.rate, 30, yr);
+    const bInt  = iAnnInt(bLoan, IS.rate, 30, yr);
+    const aItem = SALT + aInt * Math.min(aLoan, 750000) / Math.max(aLoan, 1) + other;
+    const bItem = SALT + bInt * Math.min(bLoan, 750000) / Math.max(bLoan, 1) + other;
+    const aMID  = Math.max(0, (aItem - IS.stdded) * IS.marginal / 100);
+    const bMID  = Math.max(0, (bItem - IS.stdded) * IS.marginal / 100);
+
+    // Tax on B portfolio (lump sum + annual income contributions)
+    const bGain   = Math.max(0, bFV - bBasis);
+    const bTax    = bGain * ltcg / 100;
+    const bTaxPct = bFV > 0 ? bTax / bFV * 100 : 0;
+
+    return {
+      homeVal, aEq, bEq, inv, aPmt, bPmt, diff, ltcg, blend,
+      aLoan, bLoan, aFV, aAT, aBasis, bFV, bAT, bBasis,
+      aSaveAT, incAT, bLumpAT,
+      nwA0, nwA1, nwB, inc, incFV,
+      aInt, bInt, aItem, bItem, aMID, bMID, midAdv: bMID - aMID,
+      bGain, bTax, bTaxPct
+    };
+  }
+
+  // Chart — grouped stacked bars at milestone years
+  const CHART_MILES = [1, 3, 5, 7, 10, 15, 20, 25, 30];
+  function iChartData() {
+    const miles = CHART_MILES.filter(y => y <= IS.yrs);
+    const labels = miles.map(y => 'Yr ' + y);
+    // 7 arrays: ref A0 | A equity | A savings | A salary | B equity | B proceeds | B salary
+    const a0 = [], aEq = [], aSave = [], aInc = [], bEq = [], bLump = [], bInc = [];
+    for (const y of miles) {
+      const c = iCalc(y);
+      a0.push(c.nwA0);
+      aEq.push(c.aEq);
+      aSave.push(c.aSaveAT);
+      aInc.push(c.incAT);
+      bEq.push(c.bEq);
+      bLump.push(c.bLumpAT);
+      bInc.push(c.incAT);
+    }
+    return { labels, a0, aEq, aSave, aInc, bEq, bLump, bInc };
+  }
+  function buildChart() {
+    const cd = iChartData();
+    const ctx = document.getElementById('invNwChart').getContext('2d');
+    invChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: cd.labels,
+        datasets: [
+          // A0 reference — muted single stack
+          { label: 'A: No Investing (ref)', data: cd.a0,
+            backgroundColor: 'rgba(100,116,139,0.28)', borderColor: 'rgba(100,116,139,0.5)',
+            borderWidth: 1, borderRadius: 3, stack: 'a0', hidden: !invVis[0] },
+          // A+invest: equity (bottom) + savings portfolio + salary portfolio (top)
+          { label: 'A: Home Equity', data: cd.aEq,
+            backgroundColor: '#0f3460', borderColor: '#0f3460',
+            borderWidth: 0, borderRadius: 0, stack: 'a1', hidden: !invVis[1] },
+          { label: 'A: Savings Invested (AT)', data: cd.aSave,
+            backgroundColor: '#3b82f6', borderColor: '#3b82f6',
+            borderWidth: 0, borderRadius: 0, stack: 'a1', hidden: !invVis[1] },
+          { label: 'Salary Invested (AT)', data: cd.aInc,
+            backgroundColor: '#fbbf24', borderColor: '#fbbf24',
+            borderWidth: 0, borderRadius: 4, stack: 'a1', hidden: !invVis[1] },
+          // B: equity (bottom) + proceeds portfolio + salary portfolio (top)
+          { label: 'B: Home Equity', data: cd.bEq,
+            backgroundColor: '#134e4a', borderColor: '#134e4a',
+            borderWidth: 0, borderRadius: 0, stack: 'b', hidden: !invVis[2] },
+          { label: 'B: Proceeds Invested (AT)', data: cd.bLump,
+            backgroundColor: '#22c55e', borderColor: '#22c55e',
+            borderWidth: 0, borderRadius: 0, stack: 'b', hidden: !invVis[2] },
+          { label: 'Salary Invested (AT)', data: cd.bInc,
+            backgroundColor: '#fbbf24', borderColor: '#fbbf24',
+            borderWidth: 0, borderRadius: 4, stack: 'b', hidden: !invVis[2] }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { intersect: false, mode: 'index' },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#0d1f3c', borderColor: '#1e3a5f', borderWidth: 1,
+            titleColor: '#e2e8f0', bodyColor: '#94a3b8',
+            callbacks: {
+              label: ctx => {
+                if (ctx.parsed.y === 0) return null;
+                return '  ' + ctx.dataset.label + ':  ' + f$(ctx.parsed.y);
+              },
+              footer: items => {
+                const byStack = {};
+                items.forEach(it => {
+                  const s = it.dataset.stack;
+                  byStack[s] = (byStack[s] || 0) + it.parsed.y;
+                });
+                return Object.entries(byStack)
+                  .filter(([, v]) => v > 0)
+                  .map(([s, v]) => {
+                    const lbl = s === 'a0' ? 'Ref total' : s === 'a1' ? 'A total' : 'B total';
+                    return lbl + ': ' + f$(v);
+                  });
+              }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748b' } },
+          y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748b', callback: v => '$' + (v/1e6).toFixed(2) + 'M' }, stacked: true }
+        }
+      }
+    });
+  }
+  function updateChart() {
+    if (!invChart) return;
+    const cd = iChartData();
+    invChart.data.labels = cd.labels;
+    invChart.data.datasets[0].data = cd.a0;
+    invChart.data.datasets[1].data = cd.aEq;
+    invChart.data.datasets[2].data = cd.aSave;
+    invChart.data.datasets[3].data = cd.aInc;
+    invChart.data.datasets[4].data = cd.bEq;
+    invChart.data.datasets[5].data = cd.bLump;
+    invChart.data.datasets[6].data = cd.bInc;
+    invChart.update();
+  }
+  function toggleLine(btn) {
+    const i = +btn.dataset.i;
+    invVis[i] = !invVis[i];
+    btn.classList.toggle('on');
+    if (i === 0) {
+      invChart.data.datasets[0].hidden = !invVis[0];
+    } else if (i === 1) {
+      invChart.data.datasets[1].hidden = !invVis[1];
+      invChart.data.datasets[2].hidden = !invVis[1];
+      invChart.data.datasets[3].hidden = !invVis[1];
+    } else {
+      invChart.data.datasets[4].hidden = !invVis[2];
+      invChart.data.datasets[5].hidden = !invVis[2];
+      invChart.data.datasets[6].hidden = !invVis[2];
+    }
+    invChart.update();
+  }
+
+  // Tables
+  const MILES = [1, 3, 5, 7, 10, 15, 20, 25, 30];
+  function updateTables() {
+    const rows = MILES.filter(y => y <= IS.yrs);
+    let nt = '', tt = '', mt = '';
+    for (const y of rows) {
+      const c = iCalc(y);
+      const diff = c.nwB - c.nwA1;
+      nt += `<tr>
+        <td>Year ${y}</td><td>${f$(c.homeVal)}</td><td>${f$(c.aEq)}</td>
+        <td>${f$(c.aAT)}</td><td style="font-weight:700">${f$(c.nwA1)}</td>
+        <td>${f$(c.bEq)}</td><td>${f$(c.bAT)}</td>
+        <td style="font-weight:700">${f$(c.nwB)}</td>
+        <td class="${diff >= 0 ? 'inv-pos' : 'inv-neg'}">${diff >= 0 ? '+' : ''}${f$(diff)}</td>
+      </tr>`;
+      tt += `<tr>
+        <td>Year ${y}</td><td>${f$(c.bFV)}</td>
+        <td style="color:#94a3b8">${f$(c.bBasis)}</td>
+        <td style="color:#f59e0b">${f$(c.bGain)}</td>
+        <td class="inv-neg">-${f$(c.bTax)}</td>
+        <td class="inv-pos" style="font-weight:700">${f$(c.bAT)}</td>
+        <td class="inv-neg">${c.bTaxPct.toFixed(1)}%</td>
+      </tr>`;
+      const aI = c.aItem > IS.stdded;
+      mt += `<tr>
+        <td>Year ${y}</td><td>${f$(c.aInt)}</td>
+        <td style="color:${aI ? '#22c55e' : '#94a3b8'}">${aI ? 'Yes' : 'No'}</td>
+        <td class="inv-pos">${c.aMID > 0 ? f$(c.aMID) : '—'}</td>
+        <td>${f$(c.bInt)}</td>
+        <td style="color:#22c55e">Yes</td>
+        <td class="inv-pos">${f$(c.bMID)}</td>
+        <td class="${c.midAdv > 0 ? 'inv-pos' : 'inv-muted'}">+${f$(c.midAdv)}</td>
+      </tr>`;
+    }
+    document.getElementById('inv-nwTbody').innerHTML  = nt;
+    document.getElementById('inv-taxTbody').innerHTML = tt;
+    document.getElementById('inv-midTbody').innerHTML = mt;
+  }
+
+  // Break-even
+  function findBE(fnA, fnB) {
+    for (let y = 1; y <= IS.yrs; y++) if (fnB(y) > fnA(y)) return y + ' yrs';
+    return '> ' + IS.yrs + ' yrs';
+  }
+  function updateBreakeven() {
+    const r = [
+      findBE(y => iCalc(y).nwA0, y => iCalc(y).nwB),
+      findBE(y => iCalc(y).nwA1, y => iCalc(y).nwB)
+    ];
+    r.forEach((v, i) => {
+      const el = document.getElementById('inv-be' + i);
+      if (!el) return;
+      el.textContent   = v;
+      el.style.color     = v.startsWith('>') ? '#ef4444' : '#22c55e';
+      el.style.fontSize  = v.startsWith('>') ? '15px' : '20px';
+    });
+  }
+
+  // Scenario cards
+  function updateCards() {
+    const aDown = IS.proceeds, aLoan = Math.max(0, IS.price - aDown);
+    const bDown = IS.proceeds * IS.split / 100, bLoan = Math.max(0, IS.price - bDown);
+    const inv   = IS.proceeds - bDown;
+    const aPmt  = iPmt(aLoan, IS.rate, 30), bPmt = iPmt(bLoan, IS.rate, 30);
+    const diff  = bPmt - aPmt;
+    const blend = iBlend();
+    const ltcg  = IS.fedcg + IS.nystate + IS.nyc;
+    const bInt1 = iAnnInt(bLoan, IS.rate, 30, 1);
+    const SALT  = 10000, other = 2000;
+    const bItem1 = SALT + bInt1 * Math.min(bLoan, 750000) / Math.max(bLoan, 1) + other;
+    const bMID1  = Math.max(0, (bItem1 - IS.stdded) * IS.marginal / 100);
+    const netExtra = diff * 12 - bMID1;
+
+    iSet('inv-a-down',   f$(aDown));
+    iSet('inv-a-loan',   f$(aLoan));
+    iSet('inv-a-pmt',    f$(aPmt) + '/mo');
+    iSet('inv-a-ltv',    fPct(aLoan / IS.price * 100));
+    iSet('inv-b-down',   f$(bDown));
+    iSet('inv-b-loan',   f$(bLoan));
+    iSet('inv-b-pmt',    f$(bPmt) + '/mo');
+    iSet('inv-b-invest', f$(inv));
+    iSet('inv-b-blend',  fPct(blend) + '/yr');
+    iSet('inv-d-pmt',    (diff >= 0 ? '+' : '') + f$(diff) + '/mo');
+    iSet('inv-b-mid',    '~' + f$(bMID1) + '/yr');
+    iSet('inv-d-net',    '~' + f$(netExtra) + '/yr');
+    iSet('inv-d-ltcg',   fPct(ltcg));
+    iSet('inv-total-ltcg', fPct(ltcg));
+    iSet('inv-total-income', f$(IS.incWife + IS.incHusband) + '/yr');
+  }
+
+  // Allocation bar + labels
+  function updateAllocBar() {
+    document.getElementById('inv-bar-sp').style.width    = IS.spPct    + '%';
+    document.getElementById('inv-bar-bonds').style.width = IS.bondsPct + '%';
+    document.getElementById('inv-bar-tbill').style.width = IS.tbillPct + '%';
+    iSet('inv-lbl-spPct',    IS.spPct    + '%');
+    iSet('inv-lbl-bondsPct', IS.bondsPct + '%');
+    iSet('inv-lbl-tbillPct', IS.tbillPct + '%');
+    iSet('inv-lbl-blend',    fPct(iBlend()) + '/yr');
+  }
+
+  // Allocation slider auto-balance (always sums to 100%)
+  function syncAlloc(key, rawVal) {
+    const newVal = Math.min(100, Math.max(0, Math.round(parseFloat(rawVal) / 5) * 5));
+    const others  = ['spPct', 'bondsPct', 'tbillPct'].filter(k => k !== key);
+    const remaining = 100 - newVal;
+    const otherSum  = IS[others[0]] + IS[others[1]];
+    if (otherSum === 0) {
+      IS[others[0]] = Math.round(remaining / 2 / 5) * 5;
+      IS[others[1]] = 100 - newVal - IS[others[0]];
+    } else {
+      IS[others[0]] = Math.round((IS[others[0]] / otherSum) * remaining / 5) * 5;
+      IS[others[1]] = 100 - newVal - IS[others[0]];
+    }
+    IS[key]       = newVal;
+    IS[others[1]] = Math.max(0, Math.min(100, IS[others[1]]));
+    ['spPct', 'bondsPct', 'tbillPct'].forEach(k => {
+      const sl = document.getElementById('inv-sl-' + k);
+      const inp = document.getElementById('inv-in-' + k);
+      if (sl)  sl.value  = IS[k];
+      if (inp) inp.value = IS[k];
+    });
+    updateAllocBar();
+    iRefresh();
+  }
+
+  // Key insights panel
+  function updateInsights() {
+    const blend = iBlend();
+    const ltcg  = IS.fedcg + IS.nystate + IS.nyc;
+    const c10   = iCalc(10);
+    const c30   = iCalc(Math.min(30, IS.yrs));
+    const be0   = findBE(y => iCalc(y).nwA0, y => iCalc(y).nwB);
+    const be1   = findBE(y => iCalc(y).nwA1, y => iCalc(y).nwB);
+    const wins  = !be1.startsWith('>');
+    document.getElementById('inv-insights').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px">
+        <div style="background:#112240;border:1px solid #1e3a5f;border-radius:6px;padding:14px">
+          <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">If A Invests Savings</div>
+          <div style="font-size:22px;font-weight:700;color:${wins ? '#22c55e' : '#ef4444'};margin-bottom:6px">${be1}</div>
+          <div style="font-size:12px;color:#94a3b8;line-height:1.6">With ${fPct(blend)} blended return, B surpasses A (who also invests monthly savings) at <strong style="color:#e2e8f0">${be1}</strong>. ${wins ? 'Investing the lump sum wins long-term.' : "A's monthly investing + equity advantage holds throughout the horizon."}</div>
+        </div>
+        <div style="background:#112240;border:1px solid #1e3a5f;border-radius:6px;padding:14px">
+          <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">If A Does NOT Invest</div>
+          <div style="font-size:22px;font-weight:700;color:#22c55e;margin-bottom:6px">${be0}</div>
+          <div style="font-size:12px;color:#94a3b8;line-height:1.6">If A keeps the lower payment without investing, B's portfolio wins at <strong style="color:#e2e8f0">${be0}</strong>. The lump sum deployed upfront quickly overcomes A's equity lead.</div>
+        </div>
+        <div style="background:#112240;border:1px solid #1e3a5f;border-radius:6px;padding:14px">
+          <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Tax Drag @ Year 10</div>
+          <div style="font-size:22px;font-weight:700;color:#f59e0b;margin-bottom:6px">${c10.bTaxPct.toFixed(1)}% of value</div>
+          <div style="font-size:12px;color:#94a3b8;line-height:1.6">Capital gains tax on B's portfolio at yr-10 liquidation: <strong style="color:#e2e8f0">${f$(c10.bTax)}</strong>. The ${ltcg.toFixed(1)}% LTCG rate (Fed + NY + NYC) is B's biggest headwind.</div>
+        </div>
+      </div>
+      <div style="padding:12px 16px;background:#112240;border:1px solid #1e3a5f;border-radius:6px;font-size:12px;line-height:1.8;color:#e2e8f0">
+        <strong>Bottom line:</strong>
+        The key question is <strong>what you do with Scenario A's lower monthly payment</strong>.
+        If you invest the ~${f$(iCalc(1).diff)}/mo savings at the same ${fPct(blend)} blended return:
+        <strong>A ${wins ? 'eventually loses to' : 'wins against'} B over ${IS.yrs} years</strong>.
+        If you spend it: <strong>B wins at ${be0}</strong>.
+        Scenario B also earns a MID advantage (~${f$(c10.midAdv)}/yr at year 10) that A may not qualify for.
+        Both strategies also invest <strong style="color:#e2e8f0">${f$(IS.incWife + IS.incHusband)}/yr</strong> of household income (wife + husband) in the same blended mix, lifting both projections equally.
+        The ${ltcg.toFixed(1)}% LTCG rate consumes ${c30.bTaxPct.toFixed(1)}% of B's portfolio at year ${IS.yrs}.
+      </div>`;
+  }
+
+  // Sync helpers
+  function iSet(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+  function sync(key, raw) {
+    IS[key] = parseFloat(raw);
+    const sl  = document.getElementById('inv-sl-' + key);
+    const inp = document.getElementById('inv-in-' + key);
+    if (sl)  sl.value  = IS[key];
+    if (inp) inp.value = IS[key];
+    iRefresh();
+  }
+  function iRefresh() {
+    updateCards();
+    updateAllocBar();
+    updateChart();
+    updateTables();
+    updateBreakeven();
+    updateInsights();
+  }
+
+  // Live data from FRED (investment-rates.json)
+  async function loadLiveRates() {
+    try {
+      const res = await fetch('../data/investment-rates.json');
+      if (!res.ok) return;
+      const d = await res.json();
+
+      if (d.treasury && d.treasury.t10yr != null) {
+        sync('tbill', d.treasury.t10yr);
+        iSet('inv-tbill-asof', '— live ' + d.treasury.as_of);
+        const hint = document.getElementById('inv-tbill-hint');
+        if (hint) {
+          hint.style.display = 'block';
+          hint.innerHTML = 'FRED DGS10 &nbsp;|&nbsp; 2yr: <strong>' + d.treasury.t2yr + '%</strong> &nbsp;|&nbsp; 3mo: <strong>' + d.treasury.t3mo + '%</strong>';
+        }
+      }
+
+      if (d.corporate_bonds && d.corporate_bonds.blend != null) {
+        sync('bonds', d.corporate_bonds.blend);
+        iSet('inv-bond-asof', '— live ' + d.corporate_bonds.as_of);
+        const hint = document.getElementById('inv-bond-hint');
+        if (hint) {
+          hint.style.display = 'block';
+          hint.innerHTML = "Moody's Aaa <strong>" + d.corporate_bonds.aaa + '%</strong> / Baa <strong>' + d.corporate_bonds.baa + '%</strong> blend';
+        }
+      }
+
+      if (d.sp500 && d.sp500.returns) {
+        const r = d.sp500.returns;
+        iSet('inv-sp-asof', '— default 8% (click chip to apply)');
+        const chips = document.getElementById('inv-sp-chips');
+        if (chips) {
+          chips.style.display = 'flex';
+          [
+            { label: 'YTD',  val: r.ytd },
+            { label: '1yr',  val: r.r1yr },
+            { label: '5yr',  val: r.r5yr_annualized },
+            { label: '10yr', val: r.r10yr_annualized },
+            { label: '20yr', val: r.r20yr_annualized },
+            { label: '30yr', val: r.r30yr_annualized }
+          ].forEach(row => {
+            if (row.val == null) return;
+            const chip = document.createElement('span');
+            chip.className = 'inv-chip';
+            chip.title = 'Use ' + row.label + ' S&P return as assumption';
+            chip.innerHTML = row.label + ': <span class="inv-chip-val">' + row.val + '%</span>';
+            chip.addEventListener('click', () => sync('sp', row.val));
+            chips.appendChild(chip);
+          });
+        }
+      }
+
+      if (d.sp500) {
+        const bar = document.getElementById('inv-live-bar');
+        if (bar) bar.style.display = 'flex';
+        iSet('inv-lb-t10',  d.treasury && d.treasury.t10yr  != null ? d.treasury.t10yr + '%'          : '—');
+        iSet('inv-lb-baa',  d.corporate_bonds && d.corporate_bonds.baa != null ? d.corporate_bonds.baa + '%' : '—');
+        iSet('inv-lb-sp',   d.sp500.current ? d.sp500.current.toLocaleString() : '—');
+        const ytd = d.sp500.returns && d.sp500.returns.ytd;
+        iSet('inv-lb-ytd',  ytd != null ? (ytd > 0 ? '+' : '') + ytd + '%' : '—');
+        iSet('inv-lb-asof', 'Data as of ' + d.as_of + ' via FRED');
+      }
+
+      iRefresh();
+    } catch (e) {
+      console.log('INV: live rates unavailable, using defaults.', e.message);
+    }
+  }
+
+  // Lazy init (called on first tab click)
+  function init() {
+    if (initialized) return;
+    initialized = true;
+    updateCards();
+    updateAllocBar();
+    buildChart();
+    updateTables();
+    updateBreakeven();
+    updateInsights();
+    loadLiveRates();
+  }
+
+  return { init, sync, syncAlloc, toggleLine };
+})();
+</script>
+</body>
+</html>
+

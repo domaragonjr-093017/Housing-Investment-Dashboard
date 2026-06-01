@@ -1,0 +1,76 @@
+﻿# ============================================================================
+#  HOME-DIRECTORY SAFETY GUARD
+#  This git repo is rooted at the Windows user home folder (C:\Users\domar)
+#  and pushes to a PUBLIC GitHub repo. The rules below block sensitive system,
+#  credential, and personal files from ever being committed/uploaded.
+#  NOTE: this is a blocklist — it only protects what's listed. The proper fix
+#  is moving the project to its own folder (see CLAUDE.md "Option 2").
+# ============================================================================
+
+# --- Windows system / registry files ---
+NTUSER.DAT*
+ntuser.dat*
+ntuser.ini
+*.regtrans-ms
+*.blf
+
+# --- Credentials & app config that may hold tokens/passwords ---
+.claude.json
+.claude.json.backup
+.gitconfig
+*.env
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*credential*
+*secret*
+*token*
+*password*
+
+# --- Personal home-directory folders (not part of the project) ---
+AppData/
+Application Data/
+Contacts/
+Cookies/
+Desktop/
+Documents/
+Downloads/
+Favorites/
+Games/
+Links/
+Local Settings/
+Music/
+My Documents/
+NetHood/
+OneDrive/
+Pictures/
+PrintHood/
+Recent/
+Saved Games/
+Searches/
+SendTo/
+Start Menu/
+Templates/
+Videos/
+
+# ============================================================================
+#  PROJECT ARTIFACTS
+# ============================================================================
+
+# Logs
+exports/scheduled-run.log
+
+# Auto-generated weekly artifacts (regenerated on every refresh)
+exports/weekly_summary.md
+
+# Node
+node_modules/
+
+# Claude Code session data
+.claude/
+
+# OS
+Thumbs.db
+.DS_Store

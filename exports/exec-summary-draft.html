@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Housing Journey</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0d1117;
+    color: #e2e8f0;
+    padding: 40px 20px 60px;
+  }
+  .page { max-width: 800px; margin: 0 auto; }
+
+  /* ─── CHAPTER OPENER ─────────────────────────── */
+  .chapter {
+    text-align: center;
+    padding: 52px 32px 44px;
+    background: linear-gradient(160deg, #0f3460 0%, #16213e 55%, #0d1117 100%);
+    border-radius: 20px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .chapter::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(96,165,250,.13) 0%, transparent 60%);
+  }
+  .chapter-tag {
+    display: inline-block;
+    background: rgba(96,165,250,.15);
+    color: #60a5fa;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(96,165,250,.25);
+  }
+  .chapter-headline {
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .chapter-headline em { color: #60a5fa; font-style: normal; }
+  .chapter-story {
+    font-size: 1.05rem;
+    color: #94a3b8;
+    line-height: 1.8;
+    max-width: 540px;
+    margin: 0 auto 28px;
+  }
+  .chapter-story strong { color: #cbd5e1; }
+
+  /* ─── TIMELINE / JOURNEY ─────────────────────── */
+  .journey {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 32px;
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .journey-step {
+    flex: 1;
+    padding: 28px 22px;
+    border-right: 1px solid #21262d;
+    position: relative;
+  }
+  .journey-step:last-child { border-right: none; }
+  .journey-arrow {
+    position: absolute;
+    right: -13px; top: 50%;
+    transform: translateY(-50%);
+    width: 26px; height: 26px;
+    background: #21262d;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem;
+    color: #475569;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+  .step-icon {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .step-label {
+    font-size: .65rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #475569;
+    margin-bottom: 5px;
+  }
+  .step-title {
+    font-size: .95rem;
+    font-weight: 800;
+    color: #e2e8f0;
+    margin-bottom: 7px;
+    line-height: 1.25;
+  }
+  .step-body {
+    font-size: .75rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* ─── WHAT MATTERS MOST ──────────────────────── */
+  .pillars-intro {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .pillars-intro h2 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .pillars-intro p {
+    font-size: .88rem;
+    color: #64748b;
+    max-width: 460px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .pillar {
+    border-radius: 14px;
+    padding: 26px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar-bg-num {
+    position: absolute;
+    right: 14px; bottom: 8px;
+    font-size: 5rem;
+    font-weight: 900;
+    opacity: .07;
+    line-height: 1;
+    color: #fff;
+  }
+  .pillar-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+  .pillar-rank {
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: .7;
+  }
+  .pillar-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
+  .pillar-body  { font-size: .8rem; line-height: 1.65; opacity: .75; }
+
+  .p1 { background: linear-gradient(135deg, #1e3a5f, #0f2040); color: #93c5fd; }
+  .p2 { background: linear-gradient(135deg, #14352a, #0a2019); color: #6ee7b7; }
+  .p3 { background: linear-gradient(135deg, #312040, #1a1030); color: #c4b5fd; }
+  .p4 { background: linear-gradient(135deg, #3a2010, #1f1208); color: #fbbf24; }
+
+  /* ─── THE $658K MOMENT ───────────────────────── */
+  .money-moment {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+    text-align: center;
+  }
+  .money-col {}
+  .money-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #475569; margin-bottom: 8px; }
+  .money-val { font-size: 2rem; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+  .money-desc { font-size: .75rem; color: #475569; line-height: 1.5; }
+  .money-arrow { font-size: 2rem; color: #334155; }
+  .money-divider { border-left: 1px solid #21262d; border-right: 1px solid #21262d; padding: 0 24px; }
+
+  /* ─── WHERE WE'RE LOOKING ────────────────────── */
+  .markets-story {
+    margin-bottom: 32px;
+  }
+  .markets-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .markets-header h2 { font-size: 1.45rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .markets-header p  { font-size: .88rem; color: #64748b; line-height: 1.6; }
+
+  .market-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .mcard {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+    border-top: 3px solid;
+  }
+  .mcard.lirr  { border-top-color: #3b82f6; }
+  .mcard.mn    { border-top-color: #a855f7; }
+  .mcard.njt   { border-top-color: #22c55e; }
+  .mcard-transit { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: #475569; margin-bottom: 8px; }
+  .mcard-name  { font-size: .9rem; font-weight: 800; color: #e2e8f0; margin-bottom: 2px; }
+  .mcard-state { font-size: .7rem; color: #475569; margin-bottom: 12px; }
+  .mcard-price { font-size: 1.1rem; font-weight: 900; margin-bottom: 3px; }
+  .mcard-commute { font-size: .68rem; color: #475569; }
+
+  .transit-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: .72rem;
+    color: #475569;
+  }
+  .tleg { display: flex; align-items: center; gap: 6px; }
+  .tleg-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ─── THE BIG QUESTION ───────────────────────── */
+  .big-question {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 16px;
+    padding: 36px 32px;
+    margin-bottom: 32px;
+  }
+  .bq-header { text-align: center; margin-bottom: 28px; }
+  .bq-header h2 { font-size: 1.45rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .bq-header p  { font-size: .88rem; color: #64748b; line-height: 1.6; max-width: 480px; margin: 0 auto; }
+
+  .bq-scenarios {
+    display: grid;
+    grid-template-columns: 1fr 56px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .scenario {
+    border-radius: 12px;
+    padding: 22px 20px;
+  }
+  .sc-a { background: linear-gradient(135deg, #1e3a5f, #0f2040); }
+  .sc-b { background: linear-gradient(135deg, #14352a, #0a2019); }
+  .sc-label { font-size: .65rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 6px; opacity: .6; }
+  .sc-title { font-size: 1rem; font-weight: 800; margin-bottom: 10px; color: #fff; }
+  .sc-item { display: flex; justify-content: space-between; font-size: .75rem; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .sc-item:last-child { border-bottom: none; }
+  .sc-item-label { color: rgba(255,255,255,.45); }
+  .sc-item-val { font-weight: 700; color: rgba(255,255,255,.8); }
+  .vs-circle {
+    width: 44px; height: 44px;
+    background: #21262d;
+    border: 2px solid #30363d;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; font-weight: 800; color: #64748b;
+    margin: 0 auto;
+  }
+
+  /* ─── HOW IT WORKS ───────────────────────────── */
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .pipe-step {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+  }
+  .pipe-step::after {
+    content: '›';
+    position: absolute;
+    right: -8px; top: 50%;
+    transform: translateY(-50%);
+    color: #334155;
+    font-size: 1.2rem;
+    z-index: 2;
+  }
+  .pipe-step:last-child::after { display: none; }
+  .pipe-icon  { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+  .pipe-day   { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: #3b82f6; margin-bottom: 5px; }
+  .pipe-title { font-size: .82rem; font-weight: 800; color: #e2e8f0; margin-bottom: 5px; }
+  .pipe-body  { font-size: .7rem; color: #475569; line-height: 1.5; }
+
+  /* ─── CLOSING ────────────────────────────────── */
+  .closing {
+    text-align: center;
+    padding: 32px;
+    background: linear-gradient(135deg, #0f3460, #16213e);
+    border-radius: 16px;
+    border: 1px solid #1e3a5f;
+  }
+  .closing-title { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+  .closing-body  { font-size: .88rem; color: #94a3b8; line-height: 1.7; max-width: 480px; margin: 0 auto 22px; }
+  .closing-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cstat-val   { font-size: 1.5rem; font-weight: 900; color: #60a5fa; }
+  .cstat-label { font-size: .68rem; color: #475569; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- CHAPTER OPENER -->
+  <div class="chapter">
+    <div class="chapter-tag">Our Story</div>
+    <div class="chapter-headline">We're buying a home<br>that <em>fits our family.</em></div>
+    <div class="chapter-story">
+      We have a young family, a daily commute to Midtown Manhattan, and a home to sell. When we close, we'll have <strong>$658,000</strong> in proceeds and one big decision — which suburb gives our kids the right schools, keeps the commute manageable, and fits our budget?<br><br>
+      This dashboard is how we make that call. Not on instinct. On data.
+    </div>
+  </div>
+
+  <!-- JOURNEY STEPS -->
+  <div class="journey">
+    <div class="journey-step">
+      <div class="journey-arrow">›</div>
+      <span class="step-icon">🏡</span>
+      <div class="step-label">Where we are</div>
+      <div class="step-title">Selling our current home</div>
+      <div class="step-body">Estimated value ~$700K. After closing costs, we net ~$658K — the foundation of everything that follows.</div>
+    </div>
+
+    <div class="journey-step">
+      <div class="journey-arrow">›</div>
+      <span class="step-icon">🔍</span>
+      <div class="step-label">What we're doing</div>
+      <div class="step-title">Comparing 11 suburban markets</div>
+      <div class="step-body">Nassau County LI, Westchester NY, and NJ — each with different prices, taxes, commutes, and school districts.</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-arrow">›</div>
+      <span class="step-icon">📊</span>
+      <div class="step-label">How we track it</div>
+      <div class="step-title">Live data, every week</div>
+      <div class="step-body">Mortgage rates from FRED. Home prices from Zillow. An AI reads the data and writes a plain-English market brief — every Wednesday.</div>
+    </div>
+    <div class="journey-step">
+      <span class="step-icon">✅</span>
+      <div class="step-label">Where we're headed</div>
+      <div class="step-title">Move when the data says go</div>
+      <div class="step-body">No guessing, no panic-buying. We'll act when the right market, price, and rate align — and this dashboard will tell us when that is.</div>
+    </div>
+  </div>
+
+  <!-- WHAT MATTERS MOST -->
+  <div class="pillars-intro">
+    <h2>Four things that decide</h2>
+    <p>Every market we look at gets scored on the same four axes. No exceptions.</p>
+  </div>
+  <div class="pillars">
+    <div class="pillar p1">
+      <div class="pillar-bg-num">1</div>
+      <span class="pillar-icon">🎓</span>
+      <div class="pillar-rank">#1 Priority</div>
+      <div class="pillar-title">School District</div>
+      <div class="pillar-body">Two young kids in school means this is our absolute top filter. A great school district doesn't just improve education — it protects long-term home value. No compromises here.</div>
+    </div>
+    <div class="pillar p3">
+      <div class="pillar-bg-num">2</div>
+      <span class="pillar-icon">🚆</span>
+      <div class="pillar-rank">#2 Priority</div>
+      <div class="pillar-title">Commute to Midtown</div>
+      <div class="pillar-body">Thirty minutes of commute difference adds up to 125 extra hours a year. We track door-to-door time via LIRR, Metro-North, and NJ Transit — not just train schedules.</div>
+    </div>
+    <div class="pillar p2">
+      <div class="pillar-bg-num">3</div>
+      <span class="pillar-icon">💰</span>
+      <div class="pillar-rank">#3 Priority</div>
+      <div class="pillar-title">Monthly PITI</div>
+      <div class="pillar-body">The real number — Principal, Interest, Taxes, and Insurance combined. Our ceiling is $5,000/month. The dashboard recalculates this automatically every time rates move.</div>
+    </div>
+    <div class="pillar p4">
+      <div class="pillar-bg-num">4</div>
+      <span class="pillar-icon">🏷️</span>
+      <div class="pillar-rank">#4 Priority</div>
+      <div class="pillar-title">Purchase Price</div>
+      <div class="pillar-body">Our sweet spot is $700K–$1M. Above $832K, we cross into jumbo loan territory and pay a rate premium. So price matters — but it's the last filter, not the first.</div>
+    </div>
+  </div>
+
+  <!-- THE $658K MOMENT -->
+  <div class="money-moment">
+    <div class="money-col">
+      <div class="money-label">We sell for</div>
+      <div class="money-val" style="color:#94a3b8">~$700K</div>
+      <div class="money-desc">Current home estimated value</div>
+    </div>
+    <div class="money-arrow money-divider">
+      <div style="font-size:1rem;color:#334155;margin-bottom:6px">→</div>
+      <div style="font-size:.65rem;color:#334155;letter-spacing:.5px">after costs</div>
+    </div>
+    <div class="money-col">
+      <div class="money-label">We walk away with</div>
+      <div class="money-val" style="color:#60a5fa">$658K</div>
+      <div class="money-desc">Net proceeds — our down payment source</div>
+    </div>
+    <div class="money-arrow" style="padding:0 8px">
+      <div style="font-size:1rem;color:#334155;margin-bottom:6px">→</div>
+      <div style="font-size:.65rem;color:#334155;letter-spacing:.5px">applied to</div>
+    </div>
+    <div class="money-col">
+      <div class="money-label">Monthly PITI target</div>
+      <div class="money-val" style="color:#34d399">≤ $5K</div>
+      <div class="money-desc">All-in monthly ceiling we can comfortably live with</div>
+    </div>
+  </div>
+
+  <!-- WHERE WE'RE LOOKING -->
+  <div class="markets-story">
+    <div class="markets-header">
+      <h2>Where we're looking</h2>
+      <p>Four markets we're seriously considering. Seven more we're benchmarking against. All updated automatically every week.</p>
+    </div>
+    <div class="market-cards">
+      <div class="mcard lirr">
+        <div class="mcard-transit">LIRR</div>
+        <div class="mcard-name">Floral Park</div>
+        <div class="mcard-state">Nassau, NY</div>
+        <div class="mcard-price" style="color:#60a5fa">$790K</div>
+        <div class="mcard-commute">35–45 min to Penn</div>
+      </div>
+      <div class="mcard lirr">
+        <div class="mcard-transit">LIRR</div>
+        <div class="mcard-name">Rockville Centre</div>
+        <div class="mcard-state">Nassau, NY</div>
+        <div class="mcard-price" style="color:#60a5fa">$850K</div>
+        <div class="mcard-commute">40–45 min to Penn</div>
+      </div>
+      <div class="mcard njt">
+        <div class="mcard-transit">NJ Transit</div>
+        <div class="mcard-name">Maplewood</div>
+        <div class="mcard-state">Essex, NJ</div>
+        <div class="mcard-price" style="color:#22c55e">$840K</div>
+        <div class="mcard-commute">45–55 min to Penn</div>
+      </div>
+      <div class="mcard mn">
+        <div class="mcard-transit">Metro-North</div>
+        <div class="mcard-name">Pelham</div>
+        <div class="mcard-state">Westchester, NY</div>
+        <div class="mcard-price" style="color:#c084fc">$1.07M</div>
+        <div class="mcard-commute">33 min to GCT</div>
+      </div>
+    </div>
+    <div class="transit-legend">
+      <div class="tleg"><div class="tleg-dot" style="background:#3b82f6"></div> LIRR → Penn Station</div>
+      <div class="tleg"><div class="tleg-dot" style="background:#22c55e"></div> NJ Transit → Penn Station</div>
+      <div class="tleg"><div class="tleg-dot" style="background:#a855f7"></div> Metro-North → Grand Central</div>
+    </div>
+  </div>
+
+  <!-- THE BIG QUESTION -->
+  <div class="big-question">
+    <div class="bq-header">
+      <h2>The question inside the question</h2>
+      <p>Once we pick a home, we face a second decision: do we put all $658K into the house, or split it — and invest the rest in the market?</p>
+    </div>
+    <div class="bq-scenarios">
+      <div class="scenario sc-a">
+        <div class="sc-label" style="color:#93c5fd">Scenario A</div>
+        <div class="sc-title">All in on the house</div>
+        <div class="sc-item"><span class="sc-item-label">Down payment</span><span class="sc-item-val">$658K</span></div>
+        <div class="sc-item"><span class="sc-item-label">Amount invested</span><span class="sc-item-val">$0</span></div>
+        <div class="sc-item"><span class="sc-item-label">Benefit</span><span class="sc-item-val">Lower PITI</span></div>
+        <div class="sc-item"><span class="sc-item-label">Bet</span><span class="sc-item-val">Home appreciation</span></div>
+      </div>
+      <div class="vs-circle">VS</div>
+      <div class="scenario sc-b">
+        <div class="sc-label" style="color:#6ee7b7">Scenario B</div>
+        <div class="sc-title">Split it — house + market</div>
+        <div class="sc-item"><span class="sc-item-label">Down payment</span><span class="sc-item-val">~$329K</span></div>
+        <div class="sc-item"><span class="sc-item-label">Amount invested</span><span class="sc-item-val">~$329K</span></div>
+        <div class="sc-item"><span class="sc-item-label">Cost</span><span class="sc-item-val">Higher PITI</span></div>
+        <div class="sc-item"><span class="sc-item-label">Bet</span><span class="sc-item-val">Diversified growth</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="pipeline">
+    <div class="pipe-step">
+      <span class="pipe-icon">📡</span>
+      <div class="pipe-day">Every Wednesday</div>
+      <div class="pipe-title">Live data pulled</div>
+      <div class="pipe-body">Rates from the Fed. Prices from Zillow. Always current, never stale.</div>
+    </div>
+    <div class="pipe-step">
+      <span class="pipe-icon">⚡</span>
+      <div class="pipe-day">Instantly</div>
+      <div class="pipe-title">Alerts fire</div>
+      <div class="pipe-body">If rates move 25+ bps or a market price drops 5%, we know within minutes.</div>
+    </div>
+    <div class="pipe-step">
+      <span class="pipe-icon">🤖</span>
+      <div class="pipe-day">Auto-generated</div>
+      <div class="pipe-title">AI writes the brief</div>
+      <div class="pipe-body">Claude reads the numbers and writes a plain-English market take — every week.</div>
+    </div>
+    <div class="pipe-step">
+      <span class="pipe-icon">📬</span>
+      <div class="pipe-day">Same day</div>
+      <div class="pipe-title">Email + live link</div>
+      <div class="pipe-body">Full summary email with a link to the interactive dashboard. No login required.</div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <div class="closing-title">We're not guessing. We're watching.</div>
+    <div class="closing-body">
+      The right home, in the right town, at the right moment — that's what this dashboard exists to find. When the market moves in our favor, we'll know before anyone else does.
+    </div>
+    <div class="closing-stats">
+      <div>
+        <div class="cstat-val">11</div>
+        <div class="cstat-label">Markets Tracked</div>
+      </div>
+      <div>
+        <div class="cstat-val">52×</div>
+        <div class="cstat-label">Per Year, Auto-Updated</div>
+      </div>
+      <div>
+        <div class="cstat-val">30yr</div>
+        <div class="cstat-label">Net Worth Modeled</div>
+      </div>
+      <div>
+        <div class="cstat-val">$0</div>
+        <div class="cstat-label">Guesswork</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

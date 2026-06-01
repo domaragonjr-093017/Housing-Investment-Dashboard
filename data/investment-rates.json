@@ -1,0 +1,31 @@
+﻿{
+    "as_of":  "2026-05-23",
+    "source":  "FRED - Federal Reserve Bank of St. Louis (api.stlouisfed.org)",
+    "treasury":  {
+                     "t10yr":  4.57,
+                     "t2yr":  4.08,
+                     "t3mo":  3.68,
+                     "as_of":  "2026-05-21",
+                     "note":  "DGS10 / DGS2 / DGS3MO constant-maturity Treasury yields"
+                 },
+    "corporate_bonds":  {
+                            "aaa":  5.42,
+                            "baa":  6.03,
+                            "blend":  5.72,
+                            "as_of":  "2026-04-01",
+                            "note":  "Moody\u0027s Aaa / Baa yields (FRED: AAA / BAA). Proxy for investment-grade bond fund yield."
+                        },
+    "sp500":  {
+                  "current":  6957.01,
+                  "returns":  {
+                                  "ytd":  0.4,
+                                  "r1yr":  15.37,
+                                  "r5yr_annualized":  10.42,
+                                  "r10yr_annualized":  12.81,
+                                  "r20yr_annualized":  6.21,
+                                  "r30yr_annualized":  4.1
+                              },
+                  "as_of":  "2026-04-01",
+                  "note":  "FRED SP500 series (price return only). Add ~1.5-2%/yr for estimated total return including dividends."
+              }
+}

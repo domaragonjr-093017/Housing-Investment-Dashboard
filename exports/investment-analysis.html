@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment vs. Down Payment Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0a1628; --card: #0d1f3c; --card2: #112240;
+  --border: #1e3a5f; --text: #e2e8f0; --muted: #94a3b8;
+  --blue: #3b82f6; --green: #22c55e; --red: #ef4444;
+  --yellow: #f59e0b; --purple: #a855f7; --gray: #64748b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; }
+.header { background: #060f1f; border-bottom: 2px solid var(--border); padding: 18px 24px; }
+.header h1 { font-size: 20px; font-weight: 700; }
+.header p { color: var(--muted); margin-top: 4px; font-size: 12px; }
+.main { max-width: 1440px; margin: 0 auto; padding: 18px 20px; }
+.section { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 18px; }
+.section-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.section-sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+
+/* Scenario bar */
+.sc-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+.sc-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.sc-card.a { border-left: 3px solid var(--blue); }
+.sc-card.b { border-left: 3px solid var(--green); }
+.sc-card.d { border-left: 3px solid var(--yellow); }
+.sc-lbl { font-size: 10px; text-transform: uppercase; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 6px; }
+.sc-ttl { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.row { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 13px; }
+.row span:last-child { font-weight: 600; }
+
+/* Inputs */
+.ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.ig-col-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+.ig { margin-bottom: 12px; }
+.ig label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+.ig-row { display: flex; align-items: center; gap: 6px; }
+input[type="range"] { flex: 1; accent-color: var(--blue); cursor: pointer; height: 4px; }
+input[type="number"] { width: 86px; background: var(--card2); border: 1px solid var(--border); color: var(--text); padding: 3px 6px; border-radius: 4px; font-size: 12px; text-align: right; }
+.unit { color: var(--muted); font-size: 11px; min-width: 22px; }
+.calc-disp { padding: 5px 10px; background: var(--card2); border: 1px solid var(--border); border-radius: 4px; font-size: 14px; font-weight: 700; }
+
+/* Alloc bar */
+.alloc-bar { height: 10px; border-radius: 5px; overflow: hidden; display: flex; margin-top: 6px; margin-bottom: 2px; }
+.alloc-sp    { background: var(--green); }
+.alloc-bonds { background: var(--yellow); }
+.alloc-tbill { background: var(--purple); }
+.alloc-legend { display: flex; gap: 12px; font-size: 10px; color: var(--muted); margin-top: 4px; }
+.alloc-legend span { display: flex; align-items: center; gap: 4px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+/* Break-even */
+.be-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.be-item { text-align: center; padding: 12px; background: var(--card2); border-radius: 6px; border: 1px solid var(--border); }
+.be-lbl { font-size: 10px; color: var(--muted); margin-bottom: 6px; line-height: 1.4; }
+.be-val { font-size: 20px; font-weight: 700; }
+
+/* Chart */
+.chart-wrap { position: relative; height: 380px; }
+.toggle-grp { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+.tb { padding: 3px 12px; border-radius: 16px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 11px; transition: all 0.15s; white-space: nowrap; }
+.tb.on { color: #fff; }
+.tb.on.c0 { background: var(--gray);  border-color: var(--gray); }
+.tb.on.c1 { background: var(--blue);  border-color: var(--blue); }
+.tb.on.c2 { background: var(--green); border-color: var(--green); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { background: var(--card2); color: var(--muted); font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; padding: 7px 10px; text-align: right; border-bottom: 2px solid var(--border); white-space: nowrap; }
+th:first-child { text-align: left; }
+td { padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--border); white-space: nowrap; }
+td:first-child { text-align: left; font-weight: 600; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.pos { color: var(--green); }
+.neg { color: var(--red); }
+.muted { color: var(--muted); }
+.ov-x { overflow-x: auto; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.footnote { color: var(--muted); font-size: 11px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.6; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+/* Live data banner */
+.live-bar { background: #0a1f10; border-bottom: 1px solid #1a4a2a; padding: 7px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 11px; color: #4ade80; }
+.live-bar .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block; margin-right: 4px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.live-bar .live-item { color: var(--muted); }
+.live-bar .live-item strong { color: #e2e8f0; margin-left: 4px; }
+.live-bar .live-stale { color: #64748b; font-style: italic; }
+
+/* Historical chips under S&P slider */
+.hist-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
+.chip { font-size: 10px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--border); background: var(--card2); color: var(--muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--green); color: var(--green); }
+.chip .chip-val { font-weight: 700; color: var(--text); }
+
+@media (max-width: 960px) {
+  .ig-grid { grid-template-columns: 1fr 1fr; }
+  .sc-bar, .two-col { grid-template-columns: 1fr; }
+  .be-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) { .ig-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 Investment vs. Down Payment Analysis</h1>
+  <p>Scenario A: All proceeds as down payment &nbsp;|&nbsp; Scenario B: Partial down payment + remainder invested in a mixed portfolio (S&P 500 / Bonds / Treasuries)</p>
+</div>
+
+<!-- Live data bar -->
+<div class="live-bar" id="live-bar" style="display:none">
+  <span><span class="live-dot"></span>Live Market Data — FRED</span>
+  <span class="live-item">10yr Treasury: <strong id="lb-t10">—</strong></span>
+  <span class="live-item">Moody's Baa Bond: <strong id="lb-baa">—</strong></span>
+  <span class="live-item">S&amp;P 500: <strong id="lb-sp">—</strong></span>
+  <span class="live-item">S&amp;P YTD: <strong id="lb-ytd">—</strong></span>
+  <span class="live-stale" id="lb-asof"></span>
+</div>
+
+<div class="main">
+
+<!-- Key Insights -->
+<div class="section">
+  <div class="section-title">Key Insights</div>
+  <div id="insights" style="font-size:13px;line-height:1.8;color:var(--muted)"></div>
+</div>
+
+<!-- Net Worth Chart -->
+<div class="section">
+  <div class="section-title">Net Worth Projection</div>
+  <div class="section-sub">Home equity + after-tax investment portfolio over time. Portfolio gains taxed at combined LTCG rate at hypothetical liquidation.</div>
+  <div class="toggle-grp">
+    <button class="tb on c0" data-i="0" onclick="toggleLine(this)">A: Full Down (no investing)</button>
+    <button class="tb on c1" data-i="1" onclick="toggleLine(this)">A: Full Down + Invest Savings (same mix)</button>
+    <button class="tb on c2" data-i="2" onclick="toggleLine(this)">B: Partial Down + Mixed Portfolio</button>
+  </div>
+  <div class="chart-wrap"><canvas id="nwChart"></canvas></div>
+</div>
+
+<!-- Scenario Cards -->
+<div class="sc-bar">
+  <div class="sc-card a">
+    <div class="sc-lbl">Scenario A — Full Down Payment</div>
+    <div class="sc-ttl" style="color:#93c5fd">Maximum Equity, Minimum Debt</div>
+    <div class="row"><span style="color:var(--muted)">Down Payment</span><span id="a-down">$658,000</span></div>
+    <div class="row"><span style="color:var(--muted)">Loan Amount</span><span id="a-loan">$250,000</span></div>
+    <div class="row"><span style="color:var(--muted)">Monthly P&amp;I</span><span id="a-pmt">$1,582/mo</span></div>
+    <div class="row"><span style="color:var(--muted)">LTV Ratio</span><span id="a-ltv">27.5%</span></div>
+    <div class="row"><span style="color:var(--muted)">PMI Required</span><span style="color:var(--green)">No</span></div>
+  </div>
+  <div class="sc-card b">
+    <div class="sc-lbl">Scenario B — Partial Down + Invest Remainder</div>
+    <div class="sc-ttl" style="color:#86efac">Lower Equity, Mixed Portfolio Growth</div>
+    <div class="row"><span style="color:var(--muted)">Down Payment</span><span id="b-down">$329,000</span></div>
+    <div class="row"><span style="color:var(--muted)">Loan Amount</span><span id="b-loan">$579,000</span></div>
+    <div class="row"><span style="color:var(--muted)">Monthly P&amp;I</span><span id="b-pmt">$3,663/mo</span></div>
+    <div class="row"><span style="color:var(--muted)">LTV Ratio</span><span id="b-ltv">63.8%</span></div>
+    <div class="row"><span style="color:var(--muted)">Amount Invested</span><span id="b-invest" style="color:var(--green)">$329,000</span></div>
+    <div class="row"><span style="color:var(--muted)">Blended Return</span><span id="b-blend" style="color:var(--green)">6.73%/yr</span></div>
+  </div>
+  <div class="sc-card d">
+    <div class="sc-lbl">Key Tradeoffs</div>
+    <div class="sc-ttl" style="color:#fcd34d">B Costs More Monthly, But Invests</div>
+    <div class="row"><span style="color:var(--muted)">Extra Monthly (B vs A)</span><span id="d-pmt" style="color:var(--red)">+$2,081/mo</span></div>
+    <div class="row"><span style="color:var(--muted)">Extra Yr-1 Interest</span><span id="d-int" style="color:var(--red)">~$21,400/yr</span></div>
+    <div class="row"><span style="color:var(--muted)">Scenario B MID Benefit</span><span id="b-mid" style="color:var(--green)">~$6,300/yr</span></div>
+    <div class="row"><span style="color:var(--muted)">Net Extra Cost (B, yr 1)</span><span id="d-net" style="color:var(--red)">~$19,600</span></div>
+    <div class="row"><span style="color:var(--muted)">Total LTCG Tax Rate</span><span id="d-ltcg" style="color:var(--yellow)">36.50%</span></div>
+  </div>
+</div>
+
+<!-- Inputs -->
+<div class="section">
+  <div class="section-title">Assumptions</div>
+  <div class="ig-grid">
+
+    <!-- Column 1: Property -->
+    <div>
+      <div class="ig-col-lbl" style="color:#93c5fd">Property &amp; Down Payment</div>
+      <div class="ig">
+        <label>Home Price</label>
+        <div class="ig-row">
+          <input type="range" id="sl-price" min="500000" max="2000000" step="10000" value="908000" oninput="sync('price',this.value)">
+          <input type="number" id="in-price" value="908000" onchange="sync('price',this.value)">
+          <span class="unit">$</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Net Proceeds (total capital available)</label>
+        <div class="ig-row">
+          <input type="range" id="sl-proceeds" min="100000" max="1500000" step="10000" value="658000" oninput="sync('proceeds',this.value)">
+          <input type="number" id="in-proceeds" value="658000" onchange="sync('proceeds',this.value)">
+          <span class="unit">$</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Scenario B: % of Proceeds Used as Down Payment</label>
+        <div class="ig-row">
+          <input type="range" id="sl-split" min="10" max="90" step="5" value="50" oninput="sync('split',this.value)">
+          <input type="number" id="in-split" value="50" onchange="sync('split',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Home Appreciation Rate</label>
+        <div class="ig-row">
+          <input type="range" id="sl-apprec" min="0" max="8" step="0.1" value="3.5" oninput="sync('apprec',this.value)">
+          <input type="number" id="in-apprec" value="3.5" step="0.1" onchange="sync('apprec',this.value)">
+          <span class="unit">%/yr</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Projection Horizon</label>
+        <div class="ig-row">
+          <input type="range" id="sl-yrs" min="5" max="30" step="1" value="30" oninput="sync('yrs',this.value)">
+          <input type="number" id="in-yrs" value="30" onchange="sync('yrs',this.value)">
+          <span class="unit">yr</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2: Returns + Allocation -->
+    <div>
+      <div class="ig-col-lbl" style="color:#86efac">Investment Returns &amp; Portfolio Mix</div>
+      <div class="ig">
+        <label>S&amp;P 500 Assumed Annual Return <span id="sp-asof" style="color:var(--muted);font-weight:400"></span></label>
+        <div class="ig-row">
+          <input type="range" id="sl-sp" min="0" max="15" step="0.1" value="8.0" oninput="sync('sp',this.value)">
+          <input type="number" id="in-sp" value="8.0" step="0.1" onchange="sync('sp',this.value)">
+          <span class="unit">%</span>
+        </div>
+        <!-- Historical return chips — click to use as slider value -->
+        <div class="hist-chips" id="sp-chips" style="display:none">
+          <span style="font-size:10px;color:var(--muted);align-self:center">Historical (price return):</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Bond Fund Annual Return <span id="bond-asof" style="color:var(--muted);font-weight:400"></span></label>
+        <div class="ig-row">
+          <input type="range" id="sl-bonds" min="0" max="10" step="0.1" value="4.5" oninput="sync('bonds',this.value)">
+          <input type="number" id="in-bonds" value="4.5" step="0.1" onchange="sync('bonds',this.value)">
+          <span class="unit">%</span>
+        </div>
+        <div id="bond-hint" style="font-size:10px;color:var(--muted);margin-top:4px;display:none"></div>
+      </div>
+      <div class="ig">
+        <label>Treasury Yield <span id="tbill-asof" style="color:var(--muted);font-weight:400"></span></label>
+        <div class="ig-row">
+          <input type="range" id="sl-tbill" min="0" max="8" step="0.1" value="4.2" oninput="sync('tbill',this.value)">
+          <input type="number" id="in-tbill" value="4.2" step="0.1" onchange="sync('tbill',this.value)">
+          <span class="unit">%</span>
+        </div>
+        <div id="tbill-hint" style="font-size:10px;color:var(--muted);margin-top:4px;display:none"></div>
+      </div>
+      <hr class="divider">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Portfolio Allocation — Scenario B (must total 100%)</div>
+      <div class="ig">
+        <label>S&amp;P 500 Allocation</label>
+        <div class="ig-row">
+          <input type="range" id="sl-spPct" min="0" max="100" step="5" value="60" oninput="syncAlloc('spPct',this.value)">
+          <input type="number" id="in-spPct" value="60" onchange="syncAlloc('spPct',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Bonds Allocation</label>
+        <div class="ig-row">
+          <input type="range" id="sl-bondsPct" min="0" max="100" step="5" value="30" oninput="syncAlloc('bondsPct',this.value)">
+          <input type="number" id="in-bondsPct" value="30" onchange="syncAlloc('bondsPct',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Treasuries Allocation</label>
+        <div class="ig-row">
+          <input type="range" id="sl-tbillPct" min="0" max="100" step="5" value="10" oninput="syncAlloc('tbillPct',this.value)">
+          <input type="number" id="in-tbillPct" value="10" onchange="syncAlloc('tbillPct',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <!-- Allocation visual bar -->
+      <div class="alloc-bar">
+        <div class="alloc-sp"    id="bar-sp"    style="width:60%"></div>
+        <div class="alloc-bonds" id="bar-bonds" style="width:30%"></div>
+        <div class="alloc-tbill" id="bar-tbill" style="width:10%"></div>
+      </div>
+      <div class="alloc-legend">
+        <span><span class="dot" style="background:var(--green)"></span>S&amp;P <span id="lbl-spPct">60%</span></span>
+        <span><span class="dot" style="background:var(--yellow)"></span>Bonds <span id="lbl-bondsPct">30%</span></span>
+        <span><span class="dot" style="background:var(--purple)"></span>T-Bills <span id="lbl-tbillPct">10%</span></span>
+        <span style="margin-left:auto">Blended: <strong id="lbl-blend" style="color:var(--green)">6.73%/yr</strong></span>
+      </div>
+      <div class="ig" style="margin-top:10px">
+        <label>Mortgage Rate (30yr fixed)</label>
+        <div class="ig-row">
+          <input type="range" id="sl-rate" min="2" max="10" step="0.01" value="6.51" oninput="sync('rate',this.value)">
+          <input type="number" id="in-rate" value="6.51" step="0.01" onchange="sync('rate',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 3: Taxes -->
+    <div>
+      <div class="ig-col-lbl" style="color:#fcd34d">Tax Assumptions</div>
+      <div class="ig">
+        <label>Federal LTCG Rate (20%) + NIIT (3.8%)</label>
+        <div class="ig-row">
+          <input type="range" id="sl-fedcg" min="0" max="30" step="0.1" value="23.8" oninput="sync('fedcg',this.value)">
+          <input type="number" id="in-fedcg" value="23.8" step="0.1" onchange="sync('fedcg',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>NY State Income Tax (cap gains = ordinary)</label>
+        <div class="ig-row">
+          <input type="range" id="sl-nystate" min="0" max="15" step="0.1" value="8.82" oninput="sync('nystate',this.value)">
+          <input type="number" id="in-nystate" value="8.82" step="0.1" onchange="sync('nystate',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>NYC Income Tax</label>
+        <div class="ig-row">
+          <input type="range" id="sl-nyc" min="0" max="6" step="0.1" value="3.876" oninput="sync('nyc',this.value)">
+          <input type="number" id="in-nyc" value="3.876" step="0.1" onchange="sync('nyc',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Total LTCG Rate (auto-calculated)</label>
+        <div class="calc-disp" id="total-ltcg" style="color:var(--yellow)">36.50%</div>
+      </div>
+      <hr class="divider">
+      <div class="ig">
+        <label>Federal Marginal Rate (for MID benefit)</label>
+        <div class="ig-row">
+          <input type="range" id="sl-marginal" min="10" max="45" step="1" value="32" oninput="sync('marginal',this.value)">
+          <input type="number" id="in-marginal" value="32" onchange="sync('marginal',this.value)">
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <div class="ig">
+        <label>Standard Deduction MFJ (2026 est.)</label>
+        <div class="ig-row">
+          <input type="range" id="sl-stdded" min="10000" max="50000" step="500" value="30000" oninput="sync('stdded',this.value)">
+          <input type="number" id="in-stdded" value="30000" onchange="sync('stdded',this.value)">
+          <span class="unit">$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Break-even -->
+<div class="section">
+  <div class="section-title">Break-Even Analysis</div>
+  <div class="section-sub">First year Scenario B net worth surpasses Scenario A</div>
+  <div class="be-grid">
+    <div class="be-item">
+      <div class="be-lbl">B (Mixed Portfolio)<br>vs A — no investing (pure equity only)</div>
+      <div class="be-val" id="be0">—</div>
+    </div>
+    <div class="be-item">
+      <div class="be-lbl">B (Mixed Portfolio)<br>vs A — invests $2K+/mo savings in same mix</div>
+      <div class="be-val" id="be1">—</div>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-top:10px">
+    "A invests savings" = Scenario A reinvests the monthly mortgage payment difference ($2K+/mo) into the same portfolio allocation. The fairest apples-to-apples comparison.
+  </div>
+</div>
+
+
+<!-- Net Worth Table -->
+<div class="section">
+  <div class="section-title">Net Worth Detail by Year</div>
+  <div class="section-sub">After-tax portfolio values at hypothetical liquidation. Both scenarios own the same home.</div>
+  <div class="ov-x">
+  <table>
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Home Value</th>
+        <th>A: Equity</th>
+        <th>A: Savings Portfolio (AT)</th>
+        <th>A: Net Worth</th>
+        <th>B: Equity</th>
+        <th>B: Mixed Portfolio (AT)</th>
+        <th>B: Net Worth</th>
+        <th>Diff (B − A)</th>
+      </tr>
+    </thead>
+    <tbody id="nwTbody"></tbody>
+  </table>
+  </div>
+  <div class="footnote">AT = After-Tax. Gains taxed at combined LTCG rate at liquidation; original principal returned tax-free. A's savings = monthly mortgage payment difference, invested in the same portfolio mix. Home value compounded at appreciation rate from purchase price.</div>
+</div>
+
+<!-- Tax + MID -->
+<div class="section">
+  <div class="section-title">Capital Gains Tax &amp; Mortgage Interest Deduction</div>
+  <div class="section-sub">Scenario B portfolio tax breakdown and annual MID benefit comparison</div>
+  <div class="two-col">
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--yellow);margin-bottom:10px">Capital Gains Tax — Scenario B Mixed Portfolio at Liquidation</div>
+      <div class="ov-x">
+      <table>
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Portfolio Value</th>
+            <th>Original Basis</th>
+            <th>Total Gain</th>
+            <th>Total Tax</th>
+            <th>After-Tax Value</th>
+            <th>Tax as % of Value</th>
+          </tr>
+        </thead>
+        <tbody id="taxTbody"></tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--blue);margin-bottom:10px">Mortgage Interest Deduction — Annual Tax Savings</div>
+      <div class="ov-x">
+      <table>
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>A: Interest</th>
+            <th>A: Itemize?</th>
+            <th>A: MID Benefit</th>
+            <th>B: Interest</th>
+            <th>B: Itemize?</th>
+            <th>B: MID Benefit</th>
+            <th>B Advantage</th>
+          </tr>
+        </thead>
+        <tbody id="midTbody"></tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    <strong>Cap Gains:</strong> NY &amp; NYC tax capital gains as ordinary income. Total rate = Fed 23.8% + NY 8.82% + NYC 3.876% ≈ 36.5%. Applied only to gains above original principal. &nbsp;|&nbsp;
+    <strong>MID:</strong> Interest deductible on first $750K of mortgage (TCJA). SALT cap $10K. Other deductions $2K. Scenario B's larger loan often clears the standard deduction threshold; Scenario A's smaller loan may not, giving B a meaningful annual tax advantage.
+  </div>
+</div>
+
+
+</div><!-- /main -->
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────────
+const S = {
+  price: 908000, proceeds: 658000, split: 50,
+  apprec: 3.5, yrs: 30, rate: 6.51,
+  sp: 8.0, bonds: 4.5, tbill: 4.2,
+  spPct: 60, bondsPct: 30, tbillPct: 10,
+  fedcg: 23.8, nystate: 8.82, nyc: 3.876,
+  marginal: 32, stdded: 30000
+};
+const vis = [true, true, true];
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const f$ = n => (n < 0 ? '-$' : '$') + Math.abs(Math.round(n)).toLocaleString();
+const fPct = n => (+n).toFixed(2) + '%';
+const blendedRate = () => (S.sp * S.spPct + S.bonds * S.bondsPct + S.tbill * S.tbillPct) / 100;
+
+// ── Finance ───────────────────────────────────────────────────────────────────
+function pmt(principal, annualRatePct, years) {
+  if (principal <= 0) return 0;
+  const r = annualRatePct / 100 / 12, n = years * 12;
+  if (r === 0) return principal / n;
+  return principal * r * Math.pow(1+r,n) / (Math.pow(1+r,n) - 1);
+}
+function bal(principal, annualRatePct, years, yearsPaid) {
+  if (yearsPaid <= 0) return principal;
+  if (yearsPaid >= years || principal <= 0) return 0;
+  const r = annualRatePct / 100 / 12, n = years * 12, p = yearsPaid * 12;
+  const m = pmt(principal, annualRatePct, years);
+  if (r === 0) return principal - m * p;
+  return principal * Math.pow(1+r,p) - m * (Math.pow(1+r,p) - 1) / r;
+}
+function annInt(principal, annualRatePct, years, yr) {
+  if (yr < 1 || yr > years || principal <= 0) return 0;
+  const m = pmt(principal, annualRatePct, years);
+  return m * 12 - (bal(principal, annualRatePct, years, yr-1) - bal(principal, annualRatePct, years, yr));
+}
+function fvAnn(monthly, annualRatePct, years) {
+  if (years <= 0 || monthly <= 0) return 0;
+  const r = annualRatePct / 100 / 12, n = years * 12;
+  if (r === 0) return monthly * n;
+  return monthly * (Math.pow(1+r,n) - 1) / r;
+}
+function atVal(fv, basis, ltcgPct) {
+  return fv - Math.max(0, fv - basis) * ltcgPct / 100;
+}
+
+// ── Core calc per year ────────────────────────────────────────────────────────
+function calc(yr) {
+  const aDown = S.proceeds;
+  const aLoan = Math.max(0, S.price - aDown);
+  const bDown = S.proceeds * S.split / 100;
+  const bLoan = Math.max(0, S.price - bDown);
+  const inv   = S.proceeds - bDown;
+  const aPmt  = pmt(aLoan, S.rate, 30);
+  const bPmt  = pmt(bLoan, S.rate, 30);
+  const diff  = Math.max(0, bPmt - aPmt);
+  const ltcg  = S.fedcg + S.nystate + S.nyc;
+  const blend = blendedRate();
+
+  const homeVal = S.price * Math.pow(1 + S.apprec/100, yr);
+  const aEq = homeVal - bal(aLoan, S.rate, 30, yr);
+  const bEq = homeVal - bal(bLoan, S.rate, 30, yr);
+
+  // Scenario A: invests monthly savings in same blended portfolio
+  const aFV   = fvAnn(diff, blend, yr);
+  const aBasis = diff * 12 * yr;
+  const aAT   = atVal(aFV, aBasis, ltcg);
+
+  // Scenario B: lump sum in blended portfolio
+  const bFV   = inv * Math.pow(1 + blend/100, yr);
+  const bAT   = atVal(bFV, inv, ltcg);
+
+  // Net worth
+  const nwA0  = aEq;          // A: pure equity, no investing
+  const nwA1  = aEq + aAT;   // A: invest savings
+  const nwB   = bEq + bAT;   // B: mixed portfolio
+
+  // MID
+  const SALT = 10000, other = 2000;
+  const aInt  = annInt(aLoan, S.rate, 30, yr);
+  const bInt  = annInt(bLoan, S.rate, 30, yr);
+  const aItem = SALT + aInt * Math.min(aLoan, 750000) / Math.max(aLoan, 1) + other;
+  const bItem = SALT + bInt * Math.min(bLoan, 750000) / Math.max(bLoan, 1) + other;
+  const aMID  = Math.max(0, (aItem - S.stdded) * S.marginal / 100);
+  const bMID  = Math.max(0, (bItem - S.stdded) * S.marginal / 100);
+
+  // Tax breakdown for B
+  const bGain = Math.max(0, bFV - inv);
+  const bTax  = bGain * ltcg / 100;
+  const bTaxPct = bFV > 0 ? bTax / bFV * 100 : 0;
+
+  return {
+    homeVal, aEq, bEq, inv, aPmt, bPmt, diff, ltcg, blend,
+    aLoan, bLoan, aFV, aAT, aBasis, bFV, bAT,
+    nwA0, nwA1, nwB,
+    aInt, bInt, aItem, bItem, aMID, bMID, midAdv: bMID - aMID,
+    bGain, bTax, bTaxPct
+  };
+}
+
+// ── Chart ─────────────────────────────────────────────────────────────────────
+let chart;
+function chartData() {
+  const maxY = S.yrs, labels = [], d = [[],[],[]];
+  const y0 = S.proceeds;
+  for (let y = 0; y <= maxY; y++) {
+    labels.push(y === 0 ? 'Start' : 'Yr ' + y);
+    if (y === 0) { d.forEach(a => a.push(y0)); continue; }
+    const c = calc(y);
+    d[0].push(c.nwA0);
+    d[1].push(c.nwA1);
+    d[2].push(c.nwB);
+  }
+  return { labels, d };
+}
+function initChart() {
+  const { labels, d } = chartData();
+  chart = new Chart(document.getElementById('nwChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'A: Full Down (no investing)',       data: d[0], borderColor: '#64748b', backgroundColor: 'rgba(100,116,139,0.08)', borderWidth: 1.8, borderDash: [6,3], pointRadius: 0, tension: 0.35, hidden: !vis[0] },
+        { label: 'A: Full Down + Invest Savings',     data: d[1], borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.08)',   borderWidth: 2,   pointRadius: 0, tension: 0.35, hidden: !vis[1] },
+        { label: 'B: Partial Down + Mixed Portfolio', data: d[2], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.08)',    borderWidth: 2.5, pointRadius: 0, tension: 0.35, hidden: !vis[2] },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { labels: { color: '#94a3b8', font: { size: 12 }, boxWidth: 24 } },
+        tooltip: {
+          backgroundColor: '#0d1f3c', borderColor: '#1e3a5f', borderWidth: 1,
+          titleColor: '#e2e8f0', bodyColor: '#94a3b8',
+          callbacks: { label: ctx => '  ' + ctx.dataset.label + ':  ' + f$(ctx.parsed.y) }
+        }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748b', maxTicksLimit: 11 } },
+        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748b', callback: v => '$' + (v/1e6).toFixed(2) + 'M' } }
+      }
+    }
+  });
+}
+function updateChart() {
+  const { labels, d } = chartData();
+  chart.data.labels = labels;
+  d.forEach((arr, i) => chart.data.datasets[i].data = arr);
+  chart.update();
+}
+function toggleLine(btn) {
+  const i = +btn.dataset.i;
+  vis[i] = !vis[i];
+  btn.classList.toggle('on');
+  chart.data.datasets[i].hidden = !vis[i];
+  chart.update();
+}
+
+// ── Tables ────────────────────────────────────────────────────────────────────
+const MILES = [1, 3, 5, 7, 10, 15, 20, 25, 30];
+function updateTables() {
+  const rows = MILES.filter(y => y <= S.yrs);
+  let nt = '', tt = '', mt = '';
+  for (const y of rows) {
+    const c = calc(y);
+    const diff = c.nwB - c.nwA1;
+    // NW table
+    nt += `<tr>
+      <td>Year ${y}</td>
+      <td>${f$(c.homeVal)}</td>
+      <td>${f$(c.aEq)}</td>
+      <td>${f$(c.aAT)}</td>
+      <td style="font-weight:700">${f$(c.nwA1)}</td>
+      <td>${f$(c.bEq)}</td>
+      <td>${f$(c.bAT)}</td>
+      <td style="font-weight:700">${f$(c.nwB)}</td>
+      <td class="${diff >= 0 ? 'pos' : 'neg'}">${diff >= 0 ? '+' : ''}${f$(diff)}</td>
+    </tr>`;
+    // Tax table
+    tt += `<tr>
+      <td>Year ${y}</td>
+      <td>${f$(c.bFV)}</td>
+      <td style="color:var(--muted)">${f$(c.inv)}</td>
+      <td style="color:var(--yellow)">${f$(c.bGain)}</td>
+      <td class="neg">-${f$(c.bTax)}</td>
+      <td class="pos" style="font-weight:700">${f$(c.bAT)}</td>
+      <td class="neg">${c.bTaxPct.toFixed(1)}%</td>
+    </tr>`;
+    // MID table
+    const aI = c.aItem > S.stdded, bI = c.bItem > S.stdded;
+    mt += `<tr>
+      <td>Year ${y}</td>
+      <td>${f$(c.aInt)}</td>
+      <td style="color:${aI ? 'var(--green)' : 'var(--muted)'}">${aI ? 'Yes' : 'No'}</td>
+      <td class="pos">${c.aMID > 0 ? f$(c.aMID) : '—'}</td>
+      <td>${f$(c.bInt)}</td>
+      <td style="color:var(--green)">Yes</td>
+      <td class="pos">${f$(c.bMID)}</td>
+      <td class="${c.midAdv > 0 ? 'pos' : 'muted'}">+${f$(c.midAdv)}</td>
+    </tr>`;
+  }
+  document.getElementById('nwTbody').innerHTML  = nt;
+  document.getElementById('taxTbody').innerHTML = tt;
+  document.getElementById('midTbody').innerHTML = mt;
+}
+
+// ── Break-even ────────────────────────────────────────────────────────────────
+function findBE(fnA, fnB) {
+  for (let y = 1; y <= S.yrs; y++) if (fnB(y) > fnA(y)) return y + ' yrs';
+  return '> ' + S.yrs + ' yrs';
+}
+function updateBreakeven() {
+  const r = [
+    findBE(y => calc(y).nwA0, y => calc(y).nwB),
+    findBE(y => calc(y).nwA1, y => calc(y).nwB),
+  ];
+  r.forEach((v, i) => {
+    const el = document.getElementById('be' + i);
+    el.textContent = v;
+    el.style.color  = v.startsWith('>') ? 'var(--red)' : 'var(--green)';
+    el.style.fontSize = v.startsWith('>') ? '15px' : '20px';
+  });
+}
+
+// ── Cards ─────────────────────────────────────────────────────────────────────
+function updateCards() {
+  const aDown = S.proceeds, aLoan = Math.max(0, S.price - aDown);
+  const bDown = S.proceeds * S.split / 100, bLoan = Math.max(0, S.price - bDown);
+  const inv = S.proceeds - bDown;
+  const aPmt = pmt(aLoan, S.rate, 30), bPmt = pmt(bLoan, S.rate, 30);
+  const diff = bPmt - aPmt;
+  const ltcg = S.fedcg + S.nystate + S.nyc;
+  const blend = blendedRate();
+  const aInt1 = annInt(aLoan, S.rate, 30, 1);
+  const bInt1 = annInt(bLoan, S.rate, 30, 1);
+  const SALT = 10000, other = 2000;
+  const bItemized1 = SALT + bInt1 * Math.min(bLoan, 750000) / Math.max(bLoan, 1) + other;
+  const bMID1 = Math.max(0, (bItemized1 - S.stdded) * S.marginal / 100);
+  const netExtra = diff * 12 - bMID1;
+
+  set('a-down', f$(aDown)); set('a-loan', f$(aLoan));
+  set('a-pmt', f$(aPmt) + '/mo'); set('a-ltv', fPct(aLoan / S.price * 100));
+  set('b-down', f$(bDown)); set('b-loan', f$(bLoan));
+  set('b-pmt', f$(bPmt) + '/mo'); set('b-ltv', fPct(bLoan / S.price * 100));
+  set('b-invest', f$(inv)); set('b-blend', fPct(blend) + '/yr');
+  set('d-pmt', '+' + f$(diff) + '/mo');
+  set('d-int', '~' + f$(bInt1 - aInt1) + '/yr');
+  set('b-mid', '~' + f$(bMID1) + '/yr');
+  set('d-net', '~' + f$(netExtra) + '/yr');
+  set('d-ltcg', fPct(ltcg));
+  set('total-ltcg', fPct(ltcg));
+}
+
+// ── Alloc UI ──────────────────────────────────────────────────────────────────
+function syncAlloc(key, rawVal) {
+  const newVal = Math.min(100, Math.max(0, Math.round(parseFloat(rawVal) / 5) * 5));
+  const others = ['spPct', 'bondsPct', 'tbillPct'].filter(k => k !== key);
+  const remaining = 100 - newVal;
+  const otherSum = S[others[0]] + S[others[1]];
+  if (otherSum === 0) {
+    S[others[0]] = Math.round(remaining / 2 / 5) * 5;
+    S[others[1]] = 100 - newVal - S[others[0]];
+  } else {
+    S[others[0]] = Math.round((S[others[0]] / otherSum) * remaining / 5) * 5;
+    S[others[1]] = 100 - newVal - S[others[0]];
+  }
+  S[key] = newVal;
+  // Clamp to 0-100
+  S[others[1]] = Math.max(0, Math.min(100, S[others[1]]));
+
+  ['spPct','bondsPct','tbillPct'].forEach(k => {
+    document.getElementById('sl-' + k).value = S[k];
+    document.getElementById('in-' + k).value = S[k];
+  });
+  updateAllocBar();
+  refresh();
+}
+
+function updateAllocBar() {
+  document.getElementById('bar-sp').style.width    = S.spPct    + '%';
+  document.getElementById('bar-bonds').style.width = S.bondsPct + '%';
+  document.getElementById('bar-tbill').style.width = S.tbillPct + '%';
+  set('lbl-spPct',    S.spPct    + '%');
+  set('lbl-bondsPct', S.bondsPct + '%');
+  set('lbl-tbillPct', S.tbillPct + '%');
+  set('lbl-blend', fPct(blendedRate()) + '/yr');
+}
+
+// ── Insights ──────────────────────────────────────────────────────────────────
+function updateInsights() {
+  const blend = blendedRate();
+  const ltcg  = S.fedcg + S.nystate + S.nyc;
+  const c10   = calc(10);
+  const c30   = calc(Math.min(30, S.yrs));
+  const be0   = findBE(y => calc(y).nwA0, y => calc(y).nwB);
+  const be1   = findBE(y => calc(y).nwA1, y => calc(y).nwB);
+  const wins  = !be1.startsWith('>');
+
+  document.getElementById('insights').innerHTML = `
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px">
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:14px">
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">If A Invests Savings</div>
+      <div style="font-size:22px;font-weight:700;color:${wins ? 'var(--green)' : 'var(--red)'};margin-bottom:6px">${be1}</div>
+      <div>With blended return of ${fPct(blend)}, B surpasses A (who also invests the monthly savings) at <strong>${be1}</strong>. ${wins ? 'Investing the lump sum wins long-term.' : 'A\'s monthly investing + home equity advantage holds throughout the horizon.'}</div>
+    </div>
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:14px">
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">If A Does NOT Invest</div>
+      <div style="font-size:22px;font-weight:700;color:var(--green);margin-bottom:6px">${be0}</div>
+      <div>If Scenario A just keeps the lower payment (no investing), B's portfolio wins at <strong>${be0}</strong>. The lump sum deployed upfront quickly overcomes A's equity lead when A doesn't redeploy the cash flow.</div>
+    </div>
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:14px">
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Tax Drag @ Year 10</div>
+      <div style="font-size:22px;font-weight:700;color:var(--yellow);margin-bottom:6px">${c10.bTaxPct.toFixed(1)}% of value</div>
+      <div>At year 10, capital gains tax on B's portfolio would consume <strong>${f$(c10.bTax)}</strong> (${c10.bTaxPct.toFixed(1)}% of gross value) if liquidated. The ${ltcg.toFixed(1)}% LTCG rate creates meaningful drag on the lump-sum strategy.</div>
+    </div>
+  </div>
+  <div style="padding:12px 16px;background:var(--card2);border:1px solid var(--border);border-radius:6px;font-size:12px;line-height:1.8">
+    <strong style="color:var(--text)">Bottom line:</strong>
+    The key question is <strong>what you do with Scenario A's lower monthly payment</strong>.
+    If you invest the ~${f$(calc(1).diff)}/mo savings into the same ${fPct(blend)} blended portfolio: <strong>A ${wins ? 'eventually loses to' : 'wins against'} B over ${S.yrs} years</strong>.
+    If you spend it: <strong>B wins at ${be0}</strong>.
+    Scenario B also gets a meaningful MID tax advantage (~${f$(c10.midAdv)}/yr in year 10) that Scenario A may not receive, partially offsetting B's higher mortgage cost.
+    The ${ltcg.toFixed(1)}% capital gains tax is the biggest headwind for B — it consumes ${c30.bTaxPct.toFixed(1)}% of the portfolio value at year ${S.yrs}.
+  </div>`;
+}
+
+// ── Sync helpers ──────────────────────────────────────────────────────────────
+function set(id, val) { document.getElementById(id).textContent = val; }
+function sync(key, raw) {
+  S[key] = parseFloat(raw);
+  document.getElementById('sl-' + key).value = S[key];
+  document.getElementById('in-' + key).value = S[key];
+  refresh();
+}
+function refresh() {
+  updateCards();
+  updateAllocBar();
+  updateChart();
+  updateTables();
+  updateBreakeven();
+  updateInsights();
+}
+
+// ── Live data loader ──────────────────────────────────────────────────────────
+async function loadLiveRates() {
+  try {
+    const res = await fetch('../data/investment-rates.json');
+    if (!res.ok) return;
+    const d = await res.json();
+
+    // ── Pre-fill sliders with live values ──────────────────────────────────
+    // Treasury: use 10yr yield
+    if (d.treasury && d.treasury.t10yr) {
+      sync('tbill', d.treasury.t10yr);
+      document.getElementById('tbill-asof').textContent =
+        '— live ' + d.treasury.as_of;
+      const hint = document.getElementById('tbill-hint');
+      hint.style.display = 'block';
+      hint.innerHTML = 'Live FRED DGS10 &nbsp;|&nbsp; 2yr: <strong>' + d.treasury.t2yr + '%</strong> &nbsp;|&nbsp; 3mo: <strong>' + d.treasury.t3mo + '%</strong>';
+    }
+
+    // Bonds: use Aaa/Baa blend as yield proxy
+    if (d.corporate_bonds && d.corporate_bonds.blend) {
+      sync('bonds', d.corporate_bonds.blend);
+      document.getElementById('bond-asof').textContent =
+        '— live ' + d.corporate_bonds.as_of;
+      const hint = document.getElementById('bond-hint');
+      hint.style.display = 'block';
+      hint.innerHTML = "Moody's Aaa <strong>" + d.corporate_bonds.aaa + '%</strong> / Baa <strong>' + d.corporate_bonds.baa + '%</strong> blend (yield proxy)';
+    }
+
+    // S&P 500: keep default 8% assumption, show historical as chips
+    if (d.sp500 && d.sp500.returns) {
+      const r = d.sp500.returns;
+      document.getElementById('sp-asof').textContent =
+        '— default 8% (historical below)';
+
+      // Build clickable historical chips
+      const chips = document.getElementById('sp-chips');
+      chips.style.display = 'flex';
+      const rows = [
+        { label: 'YTD',  val: r.ytd,              note: 'year-to-date' },
+        { label: '1yr',  val: r.r1yr,             note: '1yr price return' },
+        { label: '5yr',  val: r.r5yr_annualized,  note: '5yr annualized' },
+        { label: '10yr', val: r.r10yr_annualized, note: '10yr annualized' },
+        { label: '20yr', val: r.r20yr_annualized, note: '20yr annualized' },
+        { label: '30yr', val: r.r30yr_annualized, note: '30yr annualized' },
+      ];
+      rows.forEach(row => {
+        if (row.val === null || row.val === undefined) return;
+        const chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.title = 'Click to use ' + row.label + ' return (' + row.note + ') as S&P assumption';
+        chip.innerHTML = row.label + ': <span class="chip-val">' + row.val + '%</span>';
+        chip.addEventListener('click', () => sync('sp', row.val));
+        chips.appendChild(chip);
+      });
+    }
+
+    // ── Live data banner ───────────────────────────────────────────────────
+    if (d.sp500) {
+      const bar = document.getElementById('live-bar');
+      bar.style.display = 'flex';
+      document.getElementById('lb-t10').textContent  = (d.treasury?.t10yr ?? '—') + '%';
+      document.getElementById('lb-baa').textContent  = (d.corporate_bonds?.baa ?? '—') + '%';
+      document.getElementById('lb-sp').textContent   = d.sp500.current ? d.sp500.current.toLocaleString() : '—';
+      const ytd = d.sp500.returns?.ytd;
+      document.getElementById('lb-ytd').textContent  = ytd !== null && ytd !== undefined ? (ytd > 0 ? '+' : '') + ytd + '%' : '—';
+      document.getElementById('lb-asof').textContent = 'Data as of ' + d.as_of + ' via FRED';
+    }
+
+    // Refresh display with new defaults
+    refresh();
+  } catch (e) {
+    // Silently fall back to hardcoded defaults (e.g. opened as file://)
+    console.log('Live rates not available — using defaults.', e.message);
+  }
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  updateCards();
+  updateAllocBar();
+  initChart();
+  updateTables();
+  updateBreakeven();
+  updateInsights();
+  loadLiveRates(); // async — updates sliders once data loads
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f4f8;color:#1a202c}
+header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:1.4rem;font-weight:700;letter-spacing:-.3px}
+header .sub{font-size:.78rem;opacity:.7;margin-top:2px}
+header .meta{font-size:.72rem;opacity:.7;text-align:right;line-height:1.6}
+.rates-bar{background:#16213e;color:#fff;padding:8px 28px;display:flex;gap:22px;font-size:.78rem;flex-wrap:wrap;align-items:center}
+.rates-bar span{opacity:.7}.rates-bar strong{color:#63b3ed}
+.rates-bar .driver{margin-left:auto;opacity:.5;font-size:.72rem}
+.rate-chg{font-size:.65rem;color:#fc8181;margin-left:3px}
+nav{background:#fff;border-bottom:2px solid #e2e8f0;padding:0 28px;display:flex;gap:2px}
+.tab{padding:12px 18px;font-size:.85rem;font-weight:500;color:#718096;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tab.active{color:#0f3460;border-bottom-color:#e94560;font-weight:600}
+.wrap{padding:22px 28px;max-width:780px;margin:0 auto}
+.rate-alert{background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:10px 14px;margin-bottom:18px;font-size:.78rem;color:#c53030;display:flex;align-items:center;gap:8px}
+.attach-note{background:#ebf8ff;border:1px solid #bee3f8;border-radius:8px;padding:10px 14px;margin-bottom:18px;font-size:.78rem;color:#2b6cb0;display:flex;align-items:center;gap:8px}
+.exec{background:linear-gradient(135deg,#0f3460 0%,#16213e 100%);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:20px;box-shadow:0 4px 20px rgba(15,52,96,.25)}
+.exec-hdr{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.exec-title{font-size:.98rem;font-weight:800;letter-spacing:-.2px;margin-bottom:2px}
+.exec-sub{font-size:.7rem;opacity:.5;line-height:1.5}
+.exec-count{font-size:.7rem;opacity:.4;white-space:nowrap}
+.picks{display:flex;gap:12px;flex-wrap:wrap}
+.pick{background:rgba(255,255,255,.12);border-radius:11px;padding:15px 17px;flex:1;min-width:200px;display:flex;flex-direction:column;gap:8px}
+.pick-1{border:1.5px solid rgba(255,215,0,.45);background:rgba(255,255,255,.16)}
+.pick-2{border:1.5px solid rgba(192,192,192,.35)}
+.pick-3{border:1.5px solid rgba(205,127,50,.3)}
+.pick-top{display:flex;align-items:flex-start;gap:8px}
+.pick-medal{font-size:1.4rem;line-height:1}
+.pick-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;opacity:.5;margin-bottom:1px}
+.pick-name{font-size:1rem;font-weight:800;letter-spacing:-.2px}
+.pick-price{font-size:1.05rem;font-weight:900;color:#63b3ed;white-space:nowrap;margin-left:auto}
+.badges{display:flex;flex-wrap:wrap;gap:4px}
+.bdg{background:rgba(255,255,255,.1);border-radius:99px;padding:2px 8px;font-size:.62rem;font-weight:600}
+.bdg-green{background:rgba(56,161,105,.22);color:#9ae6b4}
+.bdg-blue{background:rgba(99,179,237,.18);color:#90cdf4}
+.pick-verdict{font-size:.69rem;color:rgba(255,255,255,.62);line-height:1.5;border-top:1px solid rgba(255,255,255,.1);padding-top:7px}
+.above-budget{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);font-size:.67rem;line-height:1.6}
+.above-lbl{font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em;margin-right:6px}
+.sec-label{font-size:.78rem;font-weight:700;color:#0f3460;text-transform:uppercase;letter-spacing:.07em;margin:20px 0 10px;padding-left:4px;border-left:3px solid #3182ce}
+.tbl-wrap{border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:.79rem}
+thead tr{background:#0f3460;color:#fff}
+th{padding:9px 11px;text-align:left;font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;border-right:1px solid #1a3a6e}
+th:last-child{border-right:none}
+td{padding:8px 11px;border-bottom:1px solid #f0f4f8;border-right:1px solid #f4f7fa;vertical-align:middle}
+td:last-child{border-right:none}
+tr:last-child td{border-bottom:none}
+tr.odd td{background:#f7fafc}
+tr.even td{background:#fff}
+.mkt-cell{font-weight:700;color:#1a202c;white-space:nowrap}
+.mkt-sub{font-size:.68rem;color:#718096;font-weight:400;display:block;margin-top:1px}
+.bb-in{font-size:.6rem;font-weight:700;background:#c6f6d5;color:#276749;border-radius:3px;padding:1px 4px;margin-left:4px}
+.bb-over{font-size:.6rem;font-weight:700;background:#fed7d7;color:#9b2c2c;border-radius:3px;padding:1px 4px;margin-left:4px}
+.hi{color:#276749;font-weight:700}
+.med{color:#744210;font-weight:600}
+.lo{color:#c53030;font-weight:700}
+.muted{color:#a0aec0}
+.divider-row td{background:#edf2f7;font-size:.68rem;font-weight:700;color:#4a5568;text-transform:uppercase;letter-spacing:.06em;padding:5px 11px}
+.ftr{background:#16213e;color:#fff;padding:12px 28px;font-size:.7rem;opacity:.65;text-align:center}
+</style>
+</head><body>
+<header>
+  <div><h1>Housing Market Dashboard</h1><div class="sub">NYC Suburban Markets — Home Purchase Research</div></div>
+  <div class="meta">Weekly Update<br><strong style="color:#63b3ed;font-size:.88rem">May 22, 2026</strong></div>
+</header>
+<div class="rates-bar">
+  <div><span>30 yr fixed </span><strong>6.51%</strong><span class="rate-chg">&#9650; +0.01%</span></div>
+  <div><span>20 yr fixed </span><strong>6.54%</strong><span class="rate-chg">&#9650; +0.15%</span></div>
+  <div><span>15 yr fixed </span><strong>5.85%</strong><span class="rate-chg">&#9650; +0.06%</span></div>
+  <div><span>Source: </span><strong style="color:#fff">Freddie Mac PMMS</strong></div>
+  <div class="driver">Iran conflict + May CPI 3.8% &mdash; rates up week-over-week</div>
+</div>
+<nav>
+  <div class="tab">Overview</div>
+  <div class="tab active">Compare</div>
+  <div class="tab">Weekly Changes</div>
+  <div class="tab">Watchlist</div>
+</nav>
+<div class="wrap">
+<div class="attach-note">&#128206; <strong>Attachment:</strong> Open <strong>dashboard.html</strong> in any browser for the full interactive dashboard &mdash; live PITI calculator, charts, and all 4 tabs.</div>
+<div class="rate-alert">&#9888;&#65039; <strong>Rates moved this week:</strong> 30yr up to 6.51% &middot; 15yr up to 5.85% &middot; 20yr up to 6.54%. PITI adds ~$1&ndash;5/mo across markets.</div>
+<div class="exec">
+  <div class="exec-hdr">
+    <div><div class="exec-title">Executive Summary</div><div class="exec-sub">Budget $700,000&ndash;$1,000,000 &nbsp;&middot;&nbsp; Priorities: schools &middot; walkable to coffee &amp; restaurants &middot; commute to Midtown</div></div>
+    <div class="exec-count">7 in range &nbsp;&middot;&nbsp; 4 above budget</div>
+  </div>
+  <div class="picks">
+    <div class="pick pick-1">
+      <div class="pick-top"><div class="pick-medal">&#127945;</div><div><div class="pick-lbl">Top Pick</div><div class="pick-name">Mamaroneck, <span style="font-weight:500;opacity:.7">NY</span></div></div><div class="pick-price">$908,000</div></div>
+      <div class="badges"><span class="bdg">&#127979; 9/10</span><span class="bdg">&#128694; 86/8/10</span><span class="bdg">&#128649; 45&ndash;55 min</span><span class="bdg bdg-blue">Walkable evenings</span></div>
+      <div class="pick-verdict">Best value in Westchester &mdash; A+ schools at ~$550K below Larchmont. Harbor waterfront, vibrant main street. Tax trajectory rising is the key watch item.</div>
+    </div>
+    <div class="pick pick-2">
+      <div class="pick-top"><div class="pick-medal">&#127946;</div><div><div class="pick-lbl">Runner-Up</div><div class="pick-name">Maplewood, <span style="font-weight:500;opacity:.7">NJ</span></div></div><div class="pick-price">$840,000</div></div>
+      <div class="badges"><span class="bdg">&#127979; &mdash;</span><span class="bdg">&#128694; 87/9/10</span><span class="bdg">&#128649; 45&ndash;55 min</span><span class="bdg bdg-green">Car-optional village</span></div>
+      <div class="pick-verdict">Best downtown of all 11 markets. Car-optional evenings. Village feel with Lorena&apos;s, jazz, farmer&apos;s market. NJ tax burden ($18K) is the trade-off.</div>
+    </div>
+    <div class="pick pick-3">
+      <div class="pick-top"><div class="pick-medal">&#127947;</div><div><div class="pick-lbl">#3 Pick</div><div class="pick-name">Floral Park, <span style="font-weight:500;opacity:.7">NY</span></div></div><div class="pick-price">$790,000</div></div>
+      <div class="badges"><span class="bdg">&#127979; &mdash;</span><span class="bdg">&#128694; 79/7/10</span><span class="bdg">&#128649; 35&ndash;45 min</span><span class="bdg">Walkable errands</span></div>
+      <div class="pick-verdict">Lowest PITI of all in-budget markets (~$2,118/mo on $658K down). Fast LIRR, manageable $13K tax. Confirm schools before committing.</div>
+    </div>
+  </div>
+  <div class="above-budget"><span class="above-lbl">Above budget</span><span style="opacity:.7">Pelham</span> <span style="color:rgba(255,255,255,.3)">$1,070,000</span> &nbsp;&middot;&nbsp; <span style="opacity:.7">Sea Cliff</span> <span style="color:rgba(255,255,255,.3)">$1,070,000</span> &nbsp;&middot;&nbsp; <span style="opacity:.7">Bronxville</span> <span style="color:rgba(255,255,255,.3)">$1,450,000</span> &nbsp;&middot;&nbsp; <span style="opacity:.7">Larchmont</span> <span style="color:rgba(255,255,255,.3)">$1,470,000</span></div>
+</div>
+<div class="sec-label">All Markets &mdash; Key Metrics</div>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Market</th><th>Price</th><th>Schools</th><th>Transit / Commute</th><th>Walk Score</th><th>Downtown Walk</th><th>Ann. Tax</th><th>PITI / mo</th></tr></thead>
+<tbody>
+<tr><td colspan="8" class="divider-row">&#10003; In Budget ($700K &ndash; $1M)</td></tr>
+<tr class="odd"><td><span class="mkt-cell">Rockaway Park <span class="bb-in">IN</span></span><span class="mkt-sub">NY &middot; MTA A train</span></td><td>$700,000</td><td><span class="med">5/10 &middot; B+</span></td><td>60&ndash;75 min</td><td><strong>83</strong>/100</td><td><span class="lo">6/10</span></td><td>$8,700</td><td>$1,190</td></tr>
+<tr class="even"><td><span class="mkt-cell">Floral Park <span class="bb-in">IN</span></span><span class="mkt-sub">NY &middot; LIRR</span></td><td>$790,000</td><td class="muted">&mdash;</td><td>35&ndash;45 min</td><td><strong>79</strong>/100</td><td><span class="med">7/10</span></td><td>$13,000</td><td>$2,118</td></tr>
+<tr class="odd"><td><span class="mkt-cell">Maplewood <span class="bb-in">IN</span></span><span class="mkt-sub">NJ &middot; NJ Transit</span></td><td>$840,000</td><td class="muted">&mdash;</td><td>45&ndash;55 min</td><td><strong>87</strong>/100</td><td><span class="hi">9/10</span></td><td>$18,000</td><td>$2,851</td></tr>
+<tr class="even"><td><span class="mkt-cell">Rockville Centre <span class="bb-in">IN</span></span><span class="mkt-sub">NY &middot; LIRR</span></td><td>$850,000</td><td class="muted">&mdash;</td><td>40&ndash;45 min</td><td><strong>82</strong>/100</td><td><span class="med">8/10</span></td><td>$17,000</td><td>$2,832</td></tr>
+<tr class="odd"><td><span class="mkt-cell">Mamaroneck <span class="bb-in">IN</span></span><span class="mkt-sub">NY &middot; Metro-North</span></td><td>$908,000</td><td><span class="hi">9/10 &middot; A+</span></td><td>45&ndash;55 min</td><td><strong>86</strong>/100</td><td><span class="med">8/10</span></td><td>$12,615</td><td>$2,833</td></tr>
+<tr class="even"><td><span class="mkt-cell">Chatham <span class="bb-in">IN</span></span><span class="mkt-sub">NJ &middot; NJ Transit</span></td><td>$950,000</td><td><span class="hi">8/10 &middot; A+</span></td><td>40&ndash;50 min</td><td><strong>72</strong>/100</td><td><span class="med">7/10</span></td><td>$22,000</td><td>$3,880</td></tr>
+<tr class="odd"><td><span class="mkt-cell">Montclair <span class="bb-in">IN</span></span><span class="mkt-sub">NJ &middot; NJ Transit</span></td><td>$975,000</td><td><span class="med">6/10 &middot; A</span></td><td>35&ndash;45 min</td><td><strong>80</strong>/100</td><td><span class="hi">9/10</span></td><td>$22,487</td><td>$4,080</td></tr>
+<tr><td colspan="8" class="divider-row">&#10007; Above Budget (reference only)</td></tr>
+<tr class="even"><td><span class="mkt-cell">Pelham <span class="bb-over">OVER</span></span><span class="mkt-sub">NY &middot; Metro-North</span></td><td>$1,070,000</td><td class="muted">&mdash;</td><td>33 min &#9889;</td><td><strong>76</strong>/100</td><td><span class="med">8/10</span></td><td>$22,000</td><td>$4,640</td></tr>
+<tr class="odd"><td><span class="mkt-cell">Sea Cliff <span class="bb-over">OVER</span></span><span class="mkt-sub">NY &middot; LIRR</span></td><td>$1,070,000</td><td><span class="hi">10/10 &middot; A</span></td><td>65&ndash;75 min &#9888;&#65039;</td><td><strong>77</strong>/100</td><td><span class="med">7/10</span></td><td>$13,125</td><td>$3,901</td></tr>
+<tr class="even"><td><span class="mkt-cell">Bronxville <span class="bb-over">OVER</span></span><span class="mkt-sub">NY &middot; Metro-North</span></td><td>$1,450,000</td><td><span class="hi">10/10 &middot; A+</span></td><td>45&ndash;55 min</td><td><strong>94</strong>/100</td><td><span class="hi">9/10</span></td><td>$10,759</td><td>$6,108</td></tr>
+<tr class="odd"><td><span class="mkt-cell">Larchmont <span class="bb-over">OVER</span></span><span class="mkt-sub">NY &middot; Metro-North</span></td><td>$1,470,000</td><td><span class="hi">9/10 &middot; A+</span></td><td>40&ndash;50 min</td><td><strong>92</strong>/100</td><td><span class="hi">9/10</span></td><td>$24,345</td><td>$7,366</td></tr>
+</tbody></table></div>
+<p style="font-size:.7rem;color:#a0aec0;margin-top:8px">PITI: 30yr @ 6.51% &middot; $658K down &middot; $200/mo ins. Schools: GreatSchools / Niche. Walk Score /100. Downtown Walk /10.</p>
+</div>
+<div class="ftr">Rates: Freddie Mac PMMS May 22, 2026 &nbsp;&middot;&nbsp; Data: Zillow &middot; GreatSchools &middot; Niche &nbsp;&middot;&nbsp; Open dashboard.html attachment for full interactive experience</div>
+</body></html>

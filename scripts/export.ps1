@@ -1,0 +1,195 @@
+# export.ps1 - Housing Market Dashboard Exporter
+#
+# Reads data/markets.json and writes:
+#   exports/dashboard.md   - full markdown report
+#   exports/dashboard.html - styled HTML (open in browser)
+#
+# Usage:
+#   .\scripts\export.ps1
+#   .\scripts\export.ps1 -MdOnly
+#   .\scripts\export.ps1 -HtmlOnly
+
+param(
+    [switch]$MdOnly,
+    [switch]$HtmlOnly
+)
+
+$ROOT        = Split-Path $PSScriptRoot -Parent
+$DATA_FILE   = Join-Path $ROOT "data\markets.json"
+$EXPORTS_DIR = Join-Path $ROOT "exports"
+
+if (-not (Test-Path $DATA_FILE)) {
+    Write-Error "[export] ERROR: $DATA_FILE not found. Run refresh.ps1 first."
+    exit 1
+}
+
+$data = Get-Content $DATA_FILE -Raw | ConvertFrom-Json
+New-Item -ItemType Directory -Force -Path $EXPORTS_DIR | Out-Null
+
+# ── Helpers ────────────────────────────────────────────────────────────────────
+function FmtMoney([double]$n)    { if ($null -eq $n -or $n -eq 0) { "-" } else { "`$$([math]::Round($n).ToString('N0'))" } }
+function FmtPct([double]$n)  { if ($null -eq $n) { "-" } else { "{0:F2}%" -f $n } }
+function FmtRate([double]$r) { if ($null -eq $r) { "-" } else { "{0:F2}%" -f ($r * 100) } }
+function FmtMin($c)          { if ($null -eq $c) { "-" } else { "$($c.low)-$($c.high) min" } }
+function FmtSchool($gs, $n)  {
+    $parts = @()
+    if ($null -ne $gs) { $parts += "$gs/10 GS" }
+    if ($n)            { $parts += "Niche $n" }
+    if ($parts.Count)  { $parts -join ", " } else { "-" }
+}
+
+function PITI([double]$price, [double]$down, [double]$rate, [int]$years, [double]$tax, [double]$ins = 2400) {
+    $loan = $price - $down
+    $r    = $rate / 12
+    $n    = $years * 12
+    $pi   = if ($r -eq 0) { $loan / $n } else { ($loan * $r * [math]::Pow(1+$r,$n)) / ([math]::Pow(1+$r,$n) - 1) }
+    [math]::Round($pi + $tax/12 + $ins/12)
+}
+
+# ── Build Markdown ─────────────────────────────────────────────────────────────
+$down    = $data.meta.owner_context.net_proceeds
+$rate30  = $data.mortgage_rates.rates."30yr_fixed"
+$asOf    = $data.mortgage_rates.as_of
+$updated = $data.meta.last_updated
+
+function MarketRow($m) {
+    $piti    = PITI $m.median_price $down $rate30 30 $m.annual_tax
+    $school  = FmtSchool $m.school_rating_greatschools $m.school_rating_niche
+    $commute = if ($m.commute_min) { FmtMin $m.commute_min } elseif ($m.dom) { "$($m.dom)d DOM" } else { "-" }
+    "| **$($m.name)** | $($m.state) | $(FmtMoney $m.median_price) | $(FmtPct $m.tax_rate_pct) | $(FmtMoney $m.annual_tax)/yr | $(FmtMoney $piti)/mo | $school | $commute |"
+}
+
+$primaryRows  = ($data.primary_markets  | ForEach-Object { MarketRow $_ }) -join "`n"
+$researchRows = ($data.research_markets | ForEach-Object { MarketRow $_ }) -join "`n"
+
+$allMarkets = @($data.primary_markets) + @($data.research_markets)
+
+$affordabilityList = $allMarkets |
+    Sort-Object { PITI $_.median_price $down $rate30 30 $_.annual_tax } |
+    ForEach-Object -Begin { $i = 1 } -Process {
+        $piti = PITI $_.median_price $down $rate30 30 $_.annual_tax
+        "$i. **$($_.name), $($_.state)** - $(FmtMoney $piti)/mo PITI ($(FmtMoney $_.median_price) price, $(FmtMoney $_.annual_tax)/yr tax)"
+        $i++
+    }
+
+$schoolList = $allMarkets |
+    Where-Object { $null -ne $_.school_rating_greatschools } |
+    Sort-Object school_rating_greatschools -Descending |
+    ForEach-Object {
+        $rank = if ($_.niche_rank) { " · $($_.niche_rank)" } else { "" }
+        "- **$($_.name), $($_.state)** - $(FmtSchool $_.school_rating_greatschools $_.school_rating_niche)$rank"
+    }
+
+$commuteList = $data.primary_markets |
+    Where-Object { $_.commute_min } |
+    Sort-Object { $_.commute_min.low } |
+    ForEach-Object { "- **$($_.name)** ($($_.transit)) - $(FmtMin $_.commute_min) to $($_.transit_terminal)" }
+
+$markdown = @"
+# Housing Market Dashboard
+*Last updated: $updated*
+
+---
+
+## Mortgage Rates ($asOf)
+
+| Term | Rate | Notes |
+|------|------|-------|
+| 30yr fixed | **$(FmtRate $data.mortgage_rates.rates."30yr_fixed")** | $($data.mortgage_rates.notes) |
+| 20yr fixed | $(FmtRate $data.mortgage_rates.rates."20yr_fixed") | |
+| 15yr fixed | $(FmtRate $data.mortgage_rates.rates."15yr_fixed") | |
+
+Rate driver: $($data.mortgage_rates.rate_driver)
+
+---
+
+## Primary Markets
+
+Assumes **$(FmtMoney $down) down payment** (net proceeds), 30yr fixed at **$(FmtRate $rate30)**, insurance ~`$200/mo.
+
+| Market | State | Median Price | Tax Rate | Ann. Tax | Est. PITI/mo | Schools | Commute |
+|--------|-------|-------------|----------|----------|-------------|---------|---------|
+$primaryRows
+
+---
+
+## Research Markets (Comparison Set)
+
+| Market | State | Median Price | Tax Rate | Ann. Tax | Est. PITI/mo | Schools | Transit |
+|--------|-------|-------------|----------|----------|-------------|---------|---------|
+$researchRows
+
+---
+
+## Affordability Ranking (30yr @ $(FmtRate $rate30), $(FmtMoney $down) down)
+
+$($affordabilityList -join "`n")
+
+---
+
+## Best Schools (by GreatSchools avg)
+
+$($schoolList -join "`n")
+
+---
+
+## Fastest Commutes to Midtown
+
+$($commuteList -join "`n")
+
+---
+*Generated by scripts/export.ps1 · Source: data/markets.json*
+"@
+
+# ── Write Markdown ─────────────────────────────────────────────────────────────
+if (-not $HtmlOnly) {
+    $mdPath = Join-Path $EXPORTS_DIR "dashboard.md"
+    $markdown | Set-Content $mdPath -Encoding utf8
+    Write-Host "[export] ✅ Markdown  -> $mdPath"
+}
+
+# ── Write HTML dashboard (from template) ───────────────────────────────────────
+if (-not $MdOnly) {
+    $templatePath  = Join-Path $PSScriptRoot "dashboard-template.html"
+    $snapshotFile  = Join-Path $ROOT "data\markets_snapshot.json"
+    if (-not (Test-Path $templatePath)) {
+        Write-Host "[export] WARN: dashboard-template.html not found - skipping HTML dashboard."
+    } else {
+        # Inject current + snapshot data into template placeholders
+        $jsonData     = $data | ConvertTo-Json -Depth 10 -Compress
+        $snapshotData = if (Test-Path $snapshotFile) {
+            (Get-Content $snapshotFile -Raw | ConvertFrom-Json) | ConvertTo-Json -Depth 10 -Compress
+        } else { $jsonData }  # fall back to current if no snapshot yet
+        $html = (Get-Content $templatePath -Raw -Encoding utf8) `
+            -replace 'MARKETS_DATA_PLACEHOLDER',   $jsonData `
+            -replace 'SNAPSHOT_DATA_PLACEHOLDER',  $snapshotData
+        $htmlPath = Join-Path $EXPORTS_DIR "dashboard.html"
+        $html | Set-Content $htmlPath -Encoding utf8
+        Write-Host "[export] Dashboard -> $htmlPath"
+
+        # ── Also copy to docs/index.html for GitHub Pages ──────────────────────
+        $docsDir  = Join-Path $ROOT "docs"
+        $docsPath = Join-Path $docsDir "index.html"
+        New-Item -ItemType Directory -Force -Path $docsDir | Out-Null
+        $html | Set-Content $docsPath -Encoding utf8
+        Write-Host "[export] GitHub Pages -> $docsPath"
+
+        # ── Auto-push docs/index.html to GitHub so live dashboard stays current ─
+        try {
+            $gitStatus = git -C $ROOT status --porcelain docs/index.html 2>&1
+            if ($gitStatus) {
+                git -C $ROOT add docs/index.html data/markets.json 2>&1 | Out-Null
+                $stamp = Get-Date -Format "yyyy-MM-dd"
+                git -C $ROOT commit -m "chore: auto-update dashboard $stamp [skip ci]" 2>&1 | Out-Null
+                git -C $ROOT push origin master 2>&1 | Out-Null
+                Write-Host "[export] Pushed to GitHub Pages (live in ~30s)"
+            } else {
+                Write-Host "[export] GitHub Pages: no changes to push"
+            }
+        } catch {
+            Write-Host "[export] WARN: GitHub push failed - $($_.Exception.Message)"
+        }
+    }
+}
+
+Write-Host "[export] Done."

@@ -1,0 +1,24 @@
+{
+  "name": "housing-market-dashboard",
+  "version": "1.0.0",
+  "description": "NYC suburban housing market tracker — prices, taxes, schools, PITI",
+  "type": "module",
+  "scripts": {
+    "refresh": "node scripts/refresh.js",
+    "refresh:rates": "node scripts/refresh.js --rates-only",
+    "refresh:prices": "node scripts/refresh.js --prices-only",
+    "export": "node scripts/export.js",
+    "export:md": "node scripts/export.js --md-only",
+    "export:html": "node scripts/export.js --html-only",
+    "dry-run": "node scripts/refresh.js --dry-run",
+    "expense:import": "node scripts/expense-import.js",
+    "expense:report": "node scripts/expense-report.js",
+    "expense:report:month": "node scripts/expense-report.js --month="
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
