@@ -59,12 +59,14 @@ function Build-TopPicksHtml($markets) {
         $state   = $_.state
         $rfUrl   = $_.redfin
         $zlUrl   = $_.zillow
+        $trUrl   = $_.trulia
         @"
 <div style='background:#f7fafc;border-radius:8px;padding:10px 14px;border-left:3px solid #0f3460;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px'>
 <div style='font-weight:700;font-size:.88rem'>$name, $state</div>
 <div>
 <a href='$rfUrl' style='display:inline-block;padding:4px 11px;background:#d32f2f;color:#fff;border-radius:5px;font-size:.72rem;font-weight:700;text-decoration:none;margin-right:5px'>Redfin</a>
-<a href='$zlUrl' style='display:inline-block;padding:4px 11px;background:#0f3460;color:#fff;border-radius:5px;font-size:.72rem;font-weight:700;text-decoration:none'>Zillow</a>
+<a href='$zlUrl' style='display:inline-block;padding:4px 11px;background:#0f3460;color:#fff;border-radius:5px;font-size:.72rem;font-weight:700;text-decoration:none;margin-right:5px'>Zillow</a>
+<a href='$trUrl' style='display:inline-block;padding:4px 11px;background:#6b21a8;color:#fff;border-radius:5px;font-size:.72rem;font-weight:700;text-decoration:none'>Trulia</a>
 </div>
 </div>
 "@

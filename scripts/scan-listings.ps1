@@ -19,20 +19,20 @@ function Log($msg) { Write-Host "[scan-listings] $msg" }
 
 # Market slugs for Redfin and Zillow
 $markets = @(
-    @{ id="fp";  name="Floral Park";      state="NY"; redfin="NY/Floral-Park";       zillow="floral-park-ny" }
-    @{ id="rvc"; name="Rockville Centre"; state="NY"; redfin="NY/Rockville-Centre";  zillow="rockville-centre-ny" }
-    @{ id="mw";  name="Maplewood";        state="NJ"; redfin="NJ/Maplewood";         zillow="maplewood-nj" }
-    @{ id="plh"; name="Pelham";           state="NY"; redfin="NY/Pelham";            zillow="pelham-ny" }
-    @{ id="ptw"; name="Port Washington";  state="NY"; redfin="NY/Port-Washington";   zillow="port-washington-ny" }
-    @{ id="lch"; name="Larchmont";        state="NY"; redfin="NY/Larchmont";         zillow="larchmont-ny" }
-    @{ id="mmk"; name="Mamaroneck";       state="NY"; redfin="NY/Mamaroneck";        zillow="mamaroneck-ny" }
-    @{ id="brx"; name="Bronxville";       state="NY"; redfin="NY/Bronxville";        zillow="bronxville-ny" }
-    @{ id="scl"; name="Sea Cliff";        state="NY"; redfin="NY/Sea-Cliff";         zillow="sea-cliff-ny" }
-    @{ id="nro"; name="New Rochelle";     state="NY"; redfin="NY/New-Rochelle";      zillow="new-rochelle-ny" }
-    @{ id="mtc"; name="Montclair";        state="NJ"; redfin="NJ/Montclair";         zillow="montclair-nj" }
-    @{ id="wfd"; name="Westfield";        state="NJ"; redfin="NJ/Westfield";         zillow="westfield-nj" }
-    @{ id="chm"; name="Chatham";          state="NJ"; redfin="NJ/Chatham";           zillow="chatham-nj" }
-    @{ id="rkp"; name="Rockaway Park";    state="NY"; redfin="NY/Rockaway-Park";     zillow="rockaway-park-ny" }
+    @{ id="fp";  name="Floral Park";      state="NY"; redfin="NY/Floral-Park";       zillow="floral-park-ny";      trulia="floral-park_ny" }
+    @{ id="rvc"; name="Rockville Centre"; state="NY"; redfin="NY/Rockville-Centre";  zillow="rockville-centre-ny"; trulia="rockville-centre_ny" }
+    @{ id="mw";  name="Maplewood";        state="NJ"; redfin="NJ/Maplewood";         zillow="maplewood-nj";        trulia="maplewood_nj" }
+    @{ id="plh"; name="Pelham";           state="NY"; redfin="NY/Pelham";            zillow="pelham-ny";           trulia="pelham_ny" }
+    @{ id="ptw"; name="Port Washington";  state="NY"; redfin="NY/Port-Washington";   zillow="port-washington-ny";  trulia="port-washington_ny" }
+    @{ id="lch"; name="Larchmont";        state="NY"; redfin="NY/Larchmont";         zillow="larchmont-ny";        trulia="larchmont_ny" }
+    @{ id="mmk"; name="Mamaroneck";       state="NY"; redfin="NY/Mamaroneck";        zillow="mamaroneck-ny";       trulia="mamaroneck_ny" }
+    @{ id="brx"; name="Bronxville";       state="NY"; redfin="NY/Bronxville";        zillow="bronxville-ny";       trulia="bronxville_ny" }
+    @{ id="scl"; name="Sea Cliff";        state="NY"; redfin="NY/Sea-Cliff";         zillow="sea-cliff-ny";        trulia="sea-cliff_ny" }
+    @{ id="nro"; name="New Rochelle";     state="NY"; redfin="NY/New-Rochelle";      zillow="new-rochelle-ny";     trulia="new-rochelle_ny" }
+    @{ id="mtc"; name="Montclair";        state="NJ"; redfin="NJ/Montclair";         zillow="montclair-nj";        trulia="montclair_nj" }
+    @{ id="wfd"; name="Westfield";        state="NJ"; redfin="NJ/Westfield";         zillow="westfield-nj";        trulia="westfield_nj" }
+    @{ id="chm"; name="Chatham";          state="NJ"; redfin="NJ/Chatham";           zillow="chatham-nj";          trulia="chatham_nj" }
+    @{ id="rkp"; name="Rockaway Park";    state="NY"; redfin="NY/Rockaway-Park";     zillow="rockaway-park-ny";    trulia="rockaway-park_ny" }
 )
 
 Log "Generating search links for $($markets.Count) markets (${MinBeds}+ BR, under ${MaxK}k)..."
@@ -40,11 +40,12 @@ Log "Generating search links for $($markets.Count) markets (${MinBeds}+ BR, unde
 $results = $markets | ForEach-Object {
     $m = $_
     [PSCustomObject]@{
-        id       = $m.id
-        name     = $m.name
-        state    = $m.state
-        redfin   = "https://www.redfin.com/$($m.redfin)/filter/max-price=${MaxK}k,min-beds=${MinBeds},property-type=house"
-        zillow   = "https://www.zillow.com/$($m.zillow)/${MinBeds}-beds/?price=0-${MaxPrice}"
+        id     = $m.id
+        name   = $m.name
+        state  = $m.state
+        redfin = "https://www.redfin.com/$($m.redfin)/filter/max-price=${MaxK}k,min-beds=${MinBeds},property-type=house"
+        zillow = "https://www.zillow.com/$($m.zillow)/${MinBeds}-beds/?price=0-${MaxPrice}"
+        trulia = "https://www.trulia.com/$($m.trulia)/SINGLE-FAMILY_HOME/0-${MaxPrice}_price/${MinBeds}p_beds/"
     }
 }
 
