@@ -399,6 +399,35 @@
       "sources": {}
     },
     {
+      "id": "ptw",
+      "name": "Port Washington",
+      "state": "NY",
+      "county": "Nassau",
+      "region": "Long Island",
+      "transit": "LIRR",
+      "transit_terminal": "Penn Station",
+      "transit_note": "Port Washington Branch — direct service, no Jamaica transfer required; ~47-57 min to Penn Station",
+      "median_price": 1150000,
+      "annual_tax": 14500,
+      "tax_rate_pct": 1.26,
+      "commute_min": { "low": 47, "high": 57 },
+      "school_rating_greatschools": 8,
+      "school_rating_niche": "A",
+      "yoy_pct": null,
+      "dom": null,
+      "price_per_sqft": null,
+      "market_tone": "Seller's Market",
+      "downtown": {
+        "walk_score": 68,
+        "walkability_rating": 7,
+        "character": "Waterfront village on a peninsula jutting into Manhasset Bay. Main Street runs from the LIRR terminus down to the harbor with restaurants, boutiques, and a working marina. The waterfront esplanade and Manorhaven Beach Park anchor weekend life. One of Long Island's most scenic and coveted commuter towns.",
+        "highlights": ["Manhasset Bay waterfront & harbor marina", "Main Street dining and boutique corridor", "Manorhaven Beach Park & waterfront esplanade"],
+        "verdict": "The most desirable LIRR Gold Coast commuter town — waterfront lifestyle, direct no-transfer service to Penn, and top schools. Premium pricing (~$1.15M median) reflects it."
+      },
+      "notes": "Port Washington Branch is one of only two LIRR branches with direct Penn Station service (no Jamaica transfer) — a meaningful commute quality advantage over branches requiring a transfer. Above the $832,750 conforming loan limit; jumbo required for most purchases. Nassau County taxes are lower than RVC despite strong schools. Previously in primary dashboard; re-added as research market.",
+      "sources": {}
+    },
+    {
       "id": "nro",
       "name": "New Rochelle",
       "state": "NY",
@@ -433,7 +462,6 @@
 
   "removed_markets": [
     { "name": "Sea Cliff (prior)",   "state": "NY", "reason": "Removed v1 in favor of Maplewood NJ and Pelham NY; re-added v2 as research market for walkability comparison" },
-    { "name": "Port Washington",     "state": "NY", "reason": "Removed in favor of Maplewood NJ and Pelham NY" },
     { "name": "Hoboken",             "state": "NJ", "reason": "Removed May 2026 — replaced with walkability-focused NY research set" },
     { "name": "Montclair",           "state": "NJ", "reason": "Removed May 2026 — replaced with walkability-focused NY research set" },
     { "name": "White Plains",        "state": "NY", "reason": "Removed May 2026 — replaced with walkability-focused NY research set" },
