@@ -1,0 +1,31 @@
+name: Weekly Housing Dashboard Refresh
+
+on:
+  schedule:
+    - cron: '0 14 * * 3'   # Every Wednesday 10:00 AM ET (EDT = UTC-4)
+  workflow_dispatch:         # Also allow manual trigger from GitHub UI
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git for push
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: Run refresh → export → email
+        shell: pwsh
+        env:
+          FRED_API_KEY:        ${{ secrets.FRED_API_KEY }}
+          ANTHROPIC_API_KEY:   ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_ADDRESS:       ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD:  ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: ./scripts/refresh.ps1
