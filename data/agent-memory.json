@@ -1,0 +1,164 @@
+﻿{
+    "meta":  {
+                 "version":  "1.0",
+                 "created":  "2026-06-02",
+                 "last_updated":  "2026-06-02",
+                 "description":  "Agent memory â€” persists buyer preferences, market signals, and learning across weekly runs"
+             },
+    "buyer_profile":  {
+                          "budget_ceiling":  1000000,
+                          "down_payment":  658000,
+                          "conforming_limit":  832750,
+                          "max_piti_monthly":  5000,
+                          "household":  "family with two young children",
+                          "work_location":  "Midtown Manhattan (finance)",
+                          "priority_order":  [
+                                                 "school_quality",
+                                                 "commute",
+                                                 "piti_affordability",
+                                                 "price"
+                                             ],
+                          "notes":  "Jumbo loan required above $832,750 â€” adds ~0.10-0.15% to rate. Primary down payment source is proceeds from current home sale (~$700K estimated value)."
+                      },
+    "market_preferences":  {
+                               "strong_interest":  [
+
+                                                   ],
+                               "mild_interest":  [
+
+                                                 ],
+                               "ruled_out":  [
+
+                                             ],
+                               "notes":  {
+
+                                         }
+                           },
+    "commute_preferences":  {
+                                "max_commute_minutes":  55,
+                                "preferred_terminal":  "either Penn Station or Grand Central",
+                                "transit_notes":  "Metro-North to GCT preferred over LIRR to Penn for quality of ride. Direct LIRR lines (no Jamaica transfer) rated higher than branch lines requiring transfer.",
+                                "no_transfer_bonus":  true
+                            },
+    "school_preferences":  {
+                               "min_greatschools_rating":  7,
+                               "preferred_rating":  8,
+                               "notes":  "Two young children â€” school district is the #1 filter. GreatSchools 8+ strongly preferred. Niche A or better ideal."
+                           },
+    "price_signals":  {
+                          "floral_park":  {
+                                              "trend":  "rising",
+                                              "yoy_pct":  8.9,
+                                              "last_seen":  860057,
+                                              "as_of":  "2026-04-30"
+                                          },
+                          "rockville_centre":  {
+                                                   "trend":  "rising",
+                                                   "yoy_pct":  13.2,
+                                                   "last_seen":  962053,
+                                                   "as_of":  "2026-04-30"
+                                               },
+                          "maplewood":  {
+                                            "trend":  "rising",
+                                            "yoy_pct":  null,
+                                            "last_seen":  965136,
+                                            "as_of":  "2026-04-30"
+                                        },
+                          "pelham":  {
+                                         "trend":  "rising",
+                                         "yoy_pct":  null,
+                                         "last_seen":  1367865,
+                                         "as_of":  "2026-04-30"
+                                     },
+                          "port_washington":  {
+                                                  "trend":  null,
+                                                  "yoy_pct":  null,
+                                                  "last_seen":  1250254,
+                                                  "as_of":  "2026-04-30"
+                                              },
+                          "larchmont":  {
+                                            "trend":  null,
+                                            "yoy_pct":  null,
+                                            "last_seen":  1669266,
+                                            "as_of":  "2026-04-30"
+                                        },
+                          "bronxville":  {
+                                             "trend":  null,
+                                             "yoy_pct":  null,
+                                             "last_seen":  1408851,
+                                             "as_of":  "2026-04-30"
+                                         },
+                          "sea_cliff":  {
+                                            "trend":  "cooling",
+                                            "yoy_pct":  6.1,
+                                            "last_seen":  1108030,
+                                            "as_of":  "2026-04-30"
+                                        },
+                          "mamaroneck":  {
+                                             "trend":  null,
+                                             "yoy_pct":  null,
+                                             "last_seen":  908000,
+                                             "as_of":  "2026-06-02"
+                                         },
+                          "montclair":  {
+                                            "trend":  null,
+                                            "yoy_pct":  null,
+                                            "last_seen":  1154035,
+                                            "as_of":  "2026-04-30"
+                                        },
+                          "westfield":  {
+                                            "trend":  null,
+                                            "yoy_pct":  null,
+                                            "last_seen":  1282964,
+                                            "as_of":  "2026-04-30"
+                                        },
+                          "chatham":  {
+                                          "trend":  null,
+                                          "yoy_pct":  null,
+                                          "last_seen":  1340964,
+                                          "as_of":  "2026-04-30"
+                                      },
+                          "new_rochelle":  {
+                                               "trend":  null,
+                                               "yoy_pct":  null,
+                                               "last_seen":  916398,
+                                               "as_of":  "2026-04-30"
+                                           }
+                      },
+    "rate_history":  [
+                         {
+                             "date":  "2026-05-22",
+                             "rate_30yr":  0.0651,
+                             "rate_15yr":  0.0585,
+                             "driver":  "Iran conflict + May CPI 3.8%"
+                         }
+                     ],
+    "watchlist_history":  [
+
+                          ],
+    "weekly_run_log":  [
+                           {
+                               "date":  "2026-06-02",
+                               "markets_tracked":  14,
+                               "rate_30yr":  0.0651,
+                               "notable":  "Port Washington added to dashboard. GitHub Actions automation set up. Listing scanner and watchlist alerts added to email."
+                           },
+                           {
+                               "date":  "2026-06-02",
+                               "markets_tracked":  15,
+                               "rate_30yr":  0.0651,
+                               "price_changes":  0,
+                               "rate_changes":  0,
+                               "watchlist_drops":  0,
+                               "notable":  "No changes detected"
+                           }
+                       ],
+    "agent_observations":  [
+                               "Buyer added Port Washington back to dashboard after it was previously removed â€” suggests renewed interest in Gold Coast LI markets.",
+                               "Budget ceiling appears to be $1M based on search filter set to under $1M for listing scanner.",
+                               "Pelham median ($1.37M) is well above budget â€” tracked for reference but unlikely purchase target at current prices.",
+                               "Rockville Centre showing strongest YoY appreciation (13.2%) â€” competitive market, may need to move quickly.",
+                               "Floral Park is the most affordable primary market and within conforming loan limit â€” no jumbo required."
+                           ],
+    "next_run_instructions":  "Compare current prices against price_signals.last_seen values. Flag any market where price dropped more than 2% as a buying opportunity. Note any markets crossing the $832,750 conforming loan threshold in either direction."
+}

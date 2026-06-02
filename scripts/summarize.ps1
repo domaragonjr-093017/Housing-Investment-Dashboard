@@ -125,7 +125,7 @@ function FmtRate([double]$r){ "{0:F2}%" -f ($r * 100) }
 function Arrow([double]$delta) { if ($delta -gt 0) { "▲" } elseif ($delta -lt 0) { "▼" } else { "->" } }
 
 # ── AI Narrative (optional — needs ANTHROPIC_API_KEY env var) ──────────────────
-function Get-AINarrative([string]$Context) {
+function Get-AINarrative([string]$Context, [string]$MemoryContext) {
     $apiKey = $env:ANTHROPIC_API_KEY
     if (-not $apiKey) {
         Log "  AI narrative: ANTHROPIC_API_KEY not set - using template narrative."
@@ -134,16 +134,19 @@ function Get-AINarrative([string]$Context) {
     Log "  Calling Claude API for AI narrative..."
     try {
         $prompt = @"
-You are a real estate market analyst writing a weekly update email for a specific family. Their profile:
-- Budget: approximately $700K-$1M (they have $658K in home-sale proceeds for a down payment)
-- Two young children — school district quality is their #1 filter
-- Commute daily to Midtown Manhattan (LIRR, Metro-North, or NJ Transit)
-- Tracking markets in Nassau County LI, Westchester NY, and Essex/Bergen County NJ
+You are a personal real estate agent AI with memory of this buyer's history and preferences. You write their weekly housing market update email.
 
-This week's data:
+BUYER MEMORY (what you know about them so far):
+$MemoryContext
+
+THIS WEEK'S MARKET DATA:
 $Context
 
-Write exactly 3 sentences of plain-English market narrative for their weekly email. Use specific dollar figures and basis points. Sentence 1: rate environment and what it means for their monthly PITI. Sentence 2: any notable market or price movement (or confirm stability). Sentence 3: one concrete, actionable buyer guidance point for this family specifically. No bullet points, no headers — a single flowing paragraph only.
+Write exactly 3 sentences of plain-English market narrative. Use specific dollar figures and basis points.
+Sentence 1: rate environment and what it means for their monthly PITI given their $658K down payment.
+Sentence 2: the single most important market movement this week — or confirm stability if nothing changed.
+Sentence 3: one concrete, personalized buyer guidance point that reflects their memory/preferences above — not generic advice.
+No bullet points, no headers — a single flowing paragraph only.
 "@
 
         $reqBody = [ordered]@{
@@ -707,7 +710,24 @@ $aiContext = "30yr fixed: " + (FmtRate $rate30New) + $rateShift + "`n" +
     "Best value pick (lowest PITI, GreatSchools >= 8): $topPickLine" + "`n" +
     "Markets in target budget range ($700K-$1M): $($inBudget.Count) of $($allCurrent.Count)"
 
-$aiText = Get-AINarrative $aiContext
+# Load agent memory for richer Claude context
+$memoryFile = Join-Path $ROOT "data\agent-memory.json"
+$memoryContext = ""
+if (Test-Path $memoryFile) {
+    try {
+        $mem = Get-Content $memoryFile -Raw | ConvertFrom-Json
+        $observations = ($mem.agent_observations | Select-Object -First 5) -join "; "
+        $priorities   = $mem.buyer_profile.priority_order -join " > "
+        $interested   = if ($mem.market_preferences.strong_interest.Count -gt 0) { $mem.market_preferences.strong_interest -join ", " } else { "none flagged yet" }
+        $ruledOut     = if ($mem.market_preferences.ruled_out.Count -gt 0) { $mem.market_preferences.ruled_out -join ", " } else { "none ruled out yet" }
+        $memoryContext = "Priority order: $priorities. Max PITI: $($mem.buyer_profile.max_piti_monthly)/mo. Min school rating: $($mem.school_preferences.min_greatschools_rating)/10. Max commute: $($mem.commute_preferences.max_commute_minutes) min. Strong interest in: $interested. Ruled out: $ruledOut. Agent observations: $observations. Next run focus: $($mem.next_run_instructions)"
+        Log "  Agent memory loaded."
+    } catch {
+        Log "  WARN: Could not load agent memory - $($_.Exception.Message)"
+    }
+}
+
+$aiText = Get-AINarrative $aiContext $memoryContext
 $narrativeMode = if ($aiText) { "AI-generated (Claude)" } else { "template" }
 Log "Narrative mode: $narrativeMode"
 
@@ -890,6 +910,90 @@ try {
 # ── 8. Roll snapshot forward ───────────────────────────────────────────────────
 Copy-Item $CURRENT_FILE $SNAPSHOT_FILE -Force
 Log "Snapshot updated for next week's diff."
+
+# ── 9. Update agent memory ─────────────────────────────────────────────────────
+if (Test-Path $memoryFile) {
+    try {
+        $mem = Get-Content $memoryFile -Raw | ConvertFrom-Json
+
+        # Update price signals with latest data
+        foreach ($m in $allCurrent) {
+            $key = $m.name.ToLower() -replace ' ','_'
+            if ($mem.price_signals.PSObject.Properties[$key]) {
+                $prev = $mem.price_signals.$key.last_seen
+                $curr = $m.median_price
+                if ($curr -and $curr -ne $prev) {
+                    $mem.price_signals.$key.last_seen = $curr
+                    $mem.price_signals.$key.as_of     = (Get-Date -Format "yyyy-MM-dd")
+                    if ($prev -and $prev -gt 0) {
+                        $chg = [math]::Round((($curr - $prev) / $prev) * 100, 1)
+                        $mem.price_signals.$key.trend = if ($chg -gt 1) { "rising" } elseif ($chg -lt -1) { "cooling" } else { "stable" }
+                    }
+                }
+            }
+        }
+
+        # Log this run
+        $runEntry = [PSCustomObject]@{
+            date             = (Get-Date -Format "yyyy-MM-dd")
+            markets_tracked  = $allCurrent.Count
+            rate_30yr        = $rate30New
+            price_changes    = $priceChanges.Count
+            rate_changes     = $rateChanges.Count
+            watchlist_drops  = $watchlistDrops.Count
+            notable          = if ($noChanges) { "No changes detected" } else { "Changes: " + (($priceChanges + $rateChanges) -join "; ") }
+        }
+        $mem.weekly_run_log = @($mem.weekly_run_log) + $runEntry
+
+        # Ask Claude to update agent observations if API key is set
+        $apiKey = $env:ANTHROPIC_API_KEY
+        if ($apiKey) {
+            Log "  Asking Claude to update agent memory observations..."
+            try {
+                $obsPrompt = @"
+You are maintaining a memory file for a home buyer AI agent. Based on this week's data, update the agent observations.
+
+Current observations:
+$($mem.agent_observations -join "`n")
+
+This week's run summary:
+- Markets tracked: $($allCurrent.Count)
+- 30yr rate: $(FmtRate $rate30New)
+- Price changes: $($priceChanges -join ", ")
+- Rate changes: $($rateChanges -join ", ")
+- Watchlist drops: $($watchlistDrops.Count)
+
+Return ONLY a JSON array of 3-5 concise observation strings (under 120 chars each). Keep the most relevant existing observations and add new ones if warranted. No other text.
+"@
+                $obsBody  = [ordered]@{
+                    model      = "claude-haiku-4-5"
+                    max_tokens = 400
+                    messages   = @(@{ role = "user"; content = $obsPrompt })
+                } | ConvertTo-Json -Depth 5
+                $obsBytes = [System.Text.Encoding]::UTF8.GetBytes($obsBody)
+                $obsResp  = Invoke-RestMethod `
+                    -Uri "https://api.anthropic.com/v1/messages" `
+                    -Method POST `
+                    -Headers @{ "x-api-key" = $apiKey; "anthropic-version" = "2023-06-01"; "Content-Type" = "application/json; charset=utf-8" } `
+                    -Body $obsBytes -UseBasicParsing
+                $obsJson = $obsResp.content[0].text.Trim() -replace '```json','' -replace '```',''
+                $newObs  = $obsJson | ConvertFrom-Json
+                if ($newObs -and $newObs.Count -gt 0) {
+                    $mem.agent_observations = $newObs
+                    Log "  Agent observations updated by Claude."
+                }
+            } catch {
+                Log "  WARN: Could not update agent observations - $($_.Exception.Message)"
+            }
+        }
+
+        $mem.meta.last_updated = (Get-Date -Format "yyyy-MM-dd")
+        $mem | ConvertTo-Json -Depth 8 | Set-Content $memoryFile -Encoding utf8
+        Log "Agent memory updated -> $memoryFile"
+    } catch {
+        Log "WARN: Could not update agent memory - $($_.Exception.Message)"
+    }
+}
 
 <#
 ==============================================================================
