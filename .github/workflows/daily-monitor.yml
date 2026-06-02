@@ -1,0 +1,39 @@
+name: Daily Market Monitor
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # Every day at 8:00 AM ET (EDT = UTC-4)
+  workflow_dispatch:         # Allow manual trigger from GitHub UI
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: Run daily monitor
+        shell: pwsh
+        env:
+          FRED_API_KEY:       ${{ secrets.FRED_API_KEY }}
+          ANTHROPIC_API_KEY:  ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_ADDRESS:      ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: ./scripts/daily-monitor.ps1
+
+      - name: Commit memory update if changed
+        run: |
+          git diff --quiet data/agent-memory.json || (
+            git add data/agent-memory.json &&
+            git commit -m "chore: daily monitor memory update $(date +%Y-%m-%d) [skip ci]" &&
+            git push origin master
+          )
