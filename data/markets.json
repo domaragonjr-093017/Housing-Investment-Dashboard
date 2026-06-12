@@ -4,8 +4,8 @@
                  "last_updated":  "2026-06-01",
                  "description":  "Housing market dashboard data â€” NYC suburban markets for home purchase research",
                  "owner_context":  {
-                                       "net_proceeds":  658000,
-                                       "current_home_value":  700000,
+                                       "net_proceeds":  730000,
+                                       "current_home_value":  794000,
                                        "conforming_loan_limit":  832750,
                                        "jumbo_rate_premium":  0.00125,
                                        "priorities":  [
@@ -644,3 +644,4 @@
 
                   ]
 }
+
