@@ -606,6 +606,150 @@
 
                                              },
                                  "price_as_of":  "2026-04-30"
+                             },
+                             {
+                                 "id":  "sorg",
+                                 "name":  "South Orange",
+                                 "state":  "NJ",
+                                 "county":  "Essex",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "Morris & Essex Line (Midtown Direct) — direct service to Penn Station, no transfer; ~50-58 min",
+                                 "median_price":  680000,
+                                 "annual_tax":  17200,
+                                 "tax_rate_pct":  2.80,
+                                 "commute_min":  {
+                                                     "low":  50,
+                                                     "high":  58
+                                                 },
+                                 "school_rating_greatschools":  7,
+                                 "school_rating_niche":  "A-",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  78,
+                                                  "walkability_rating":  8,
+                                                  "character":  "Compact village center with South Orange Ave as its spine — independent restaurants, cafes, a bookstore, and the Baird Community Center all walkable from the NJ Transit platform. Seton Hall University adds energy and a year-round dining scene.",
+                                                  "highlights":  [
+                                                                     "South Orange Ave village strip",
+                                                                     "Seton Hall University campus (walkable)",
+                                                                     "Meadowland Park & Flood's Hill sledding"
+                                                                 ],
+                                                  "verdict":  "Tight, walkable village center with genuine neighborhood character. Shares schools and some amenities with Maplewood — often considered the same lifestyle market at a slight price discount."
+                                              },
+                                 "notes":  "Shares the South Orange-Maplewood School District (SOMSD) with Maplewood — same schools as the primary market at a typically lower price point. Strong Midtown Direct access. NJ high taxes apply (~2.8% effective rate). Good value play vs Maplewood for buyers flexible on town identity.",
+                                 "sources":  {}
+                             },
+                             {
+                                 "id":  "worg",
+                                 "name":  "West Orange",
+                                 "state":  "NJ",
+                                 "county":  "Essex",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "Morris & Essex Line (Midtown Direct) — Brick Church or Highland Ave stations; ~45-55 min to Penn",
+                                 "median_price":  590000,
+                                 "annual_tax":  15000,
+                                 "tax_rate_pct":  2.60,
+                                 "commute_min":  {
+                                                  "low":  45,
+                                                  "high":  55
+                                              },
+                                 "school_rating_greatschools":  6,
+                                 "school_rating_niche":  "B+",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  55,
+                                                  "walkability_rating":  5,
+                                                  "character":  "Larger, more suburban town than its Orange neighbors — spread across multiple distinct neighborhoods. Main Street in the Pleasantdale area has some retail, but West Orange is largely car-dependent. The Turtle Back Zoo, South Mountain Reservation, and Eagle Rock Reservation are major draws.",
+                                                  "highlights":  [
+                                                                     "South Mountain Reservation (2,000+ acres)",
+                                                                     "Turtle Back Zoo",
+                                                                     "Edison National Historic Site"
+                                                                 ],
+                                                  "verdict":  "More suburban and car-dependent than South Orange or Maplewood. Trades walkability for space, lower prices, and excellent outdoor recreation access."
+                                              },
+                                 "notes":  "Most affordable of the Essex County NJ markets in this set. West Orange Public Schools are decent (Niche B+, GreatSchools 6/10) but below the South Orange-Maplewood and Montclair districts. Multiple NJ Transit stations (Brick Church, Highland Ave) with Midtown Direct access. Larger lot sizes and more suburban feel than Maplewood or South Orange.",
+                                 "sources":  {}
+                             },
+                             {
+                                 "id":  "ruth",
+                                 "name":  "Rutherford",
+                                 "state":  "NJ",
+                                 "county":  "Bergen",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "Main Line / Bergen County Line — Midtown Direct to Penn Station; ~30-38 min, one of the fastest NJ Transit commutes in the NYC metro",
+                                 "median_price":  635000,
+                                 "annual_tax":  14800,
+                                 "tax_rate_pct":  2.45,
+                                 "commute_min":  {
+                                                     "low":  30,
+                                                     "high":  38
+                                                 },
+                                 "school_rating_greatschools":  7,
+                                 "school_rating_niche":  "A-",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  82,
+                                                  "walkability_rating":  8,
+                                                  "character":  "Park Avenue forms a genuine Main Street with independent restaurants, a bookstore, coffee shops, and a historic movie theater — all within a 5-minute walk of the NJ Transit station. One of Bergen County's most walkable and charming commuter downtowns.",
+                                                  "highlights":  [
+                                                                     "Park Avenue walkable Main Street",
+                                                                     "Meadowlands Sports Complex proximity",
+                                                                     "Williams Center for the Arts"
+                                                                 ],
+                                                  "verdict":  "Punches well above its price point — walkable village center, fast Midtown Direct commute, and solid schools at Bergen County prices. One of the better value propositions in the NJ market set."
+                                              },
+                                 "notes":  "Bergen County NJ — among the fastest NJ Transit commutes to Penn (30-38 min Midtown Direct, no transfer). Rutherford Borough SD rates Niche A-, GreatSchools 7/10 — solid but not elite. Lower prices than Essex County peers (Maplewood, Montclair). Walkable downtown is a standout for Bergen County. Flood risk in some areas near Passaic River — check FEMA zone before committing.",
+                                 "sources":  {}
+                             },
+                             {
+                                 "id":  "efls",
+                                 "name":  "Essex Fells",
+                                 "state":  "NJ",
+                                 "county":  "Essex",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "No station in town — drive to Mountain Ave or Caldwell (Morris & Essex Line); ~50-65 min total door-to-door to Penn",
+                                 "median_price":  980000,
+                                 "annual_tax":  16500,
+                                 "tax_rate_pct":  1.75,
+                                 "commute_min":  {
+                                                     "low":  50,
+                                                     "high":  65
+                                                 },
+                                 "school_rating_greatschools":  9,
+                                 "school_rating_niche":  "A+",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  18,
+                                                  "walkability_rating":  2,
+                                                  "character":  "Essex Fells has no commercial center — it is an exclusively residential borough of ~2,100 people. Daily errands require driving to neighboring Caldwell or West Caldwell. The appeal is entirely the housing stock: large Tudors and colonials on wooded lots in a quiet, private community.",
+                                                  "highlights":  [
+                                                                     "Wooded residential lots — quiet, private borough",
+                                                                     "Essex Fells Country Club",
+                                                                     "Adjacent to Caldwell for shopping/dining"
+                                                                 ],
+                                                  "verdict":  "No walkability to speak of — fully car-dependent. The draw is the neighborhood itself: exclusive, wooded, extremely safe, with top-tier schools and low taxes by NJ standards. A lifestyle buy, not a transit-oriented buy."
+                                              },
+                                 "notes":  "One of NJ's most exclusive small boroughs — ~2,100 residents, no commercial zone, minimum lot sizes, and among the top school districts in Essex County (Niche A+, GreatSchools 9/10). Unusually low effective tax rate for NJ (~1.75%) due to low density and favorable assessment structure. No walk-to-train — must drive to Mountain Ave or Caldwell station for Morris & Essex service. Median price near $1M puts most inventory at or above budget ceiling. Very low inventory / slow turnover.",
+                                 "sources":  {}
                              }
                          ],
     "removed_markets":  [
