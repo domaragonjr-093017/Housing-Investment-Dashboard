@@ -750,6 +750,42 @@
                                               },
                                  "notes":  "One of NJ's most exclusive small boroughs — ~2,100 residents, no commercial zone, minimum lot sizes, and among the top school districts in Essex County (Niche A+, GreatSchools 9/10). Unusually low effective tax rate for NJ (~1.75%) due to low density and favorable assessment structure. No walk-to-train — must drive to Mountain Ave or Caldwell station for Morris & Essex service. Median price near $1M puts most inventory at or above budget ceiling. Very low inventory / slow turnover.",
                                  "sources":  {}
+                             },
+                             {
+                                 "id":  "nutl",
+                                 "name":  "Nutley",
+                                 "state":  "NJ",
+                                 "county":  "Essex",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "No station in town — drive or bus to Clifton (Boonton Line) or Bloomfield (M&E Line); NJ Transit 192 bus direct to Port Authority; ~50-65 min door-to-door",
+                                 "median_price":  565000,
+                                 "annual_tax":  14200,
+                                 "tax_rate_pct":  2.65,
+                                 "commute_min":  {
+                                                     "low":  50,
+                                                     "high":  65
+                                                 },
+                                 "school_rating_greatschools":  7,
+                                 "school_rating_niche":  "A-",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  72,
+                                                  "walkability_rating":  7,
+                                                  "character":  "Franklin Avenue is a compact Main Street with diners, Italian restaurants, a pharmacy, and local shops — a classic NJ township center. Quiet, residential, and family-oriented with a tight community feel.",
+                                                  "highlights":  [
+                                                                     "Franklin Avenue Main Street",
+                                                                     "Yanticaw Park (150+ acres)",
+                                                                     "Rutgers University Newark nearby"
+                                                                 ],
+                                                  "verdict":  "Solid working-class suburb with genuine neighborhood feel. More affordable than its Essex County neighbors. No walk-to-train is the main drawback for NYC commuters."
+                                              },
+                                 "notes":  "Essex County township with no NJ Transit rail station — commute requires driving to Clifton (Boonton Line) or Bloomfield (M&E) or taking the 192 bus to Port Authority (~55-65 min). Most affordable Essex County market in this set at ~$565K median. Nutley Public Schools rate Niche A-, GreatSchools 7/10 — competitive with South Orange at a lower price point. Strong Italian-American community identity. Close to Belleville and Bloomfield.",
+                                 "sources":  {}
                              }
                          ],
     "removed_markets":  [
