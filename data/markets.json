@@ -786,6 +786,42 @@
                                               },
                                  "notes":  "Essex County township with no NJ Transit rail station — commute requires driving to Clifton (Boonton Line) or Bloomfield (M&E) or taking the 192 bus to Port Authority (~55-65 min). Most affordable Essex County market in this set at ~$565K median. Nutley Public Schools rate Niche A-, GreatSchools 7/10 — competitive with South Orange at a lower price point. Strong Italian-American community identity. Close to Belleville and Bloomfield.",
                                  "sources":  {}
+                             },
+                             {
+                                 "id":  "mrk",
+                                 "name":  "Merrick",
+                                 "state":  "NY",
+                                 "county":  "Nassau",
+                                 "region":  "Long Island",
+                                 "transit":  "LIRR",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "Babylon Branch — most trains stop at Jamaica; select peak expresses run direct to Penn; ~45-55 min total",
+                                 "median_price":  720000,
+                                 "annual_tax":  13500,
+                                 "tax_rate_pct":  1.85,
+                                 "commute_min":  {
+                                                     "low":  45,
+                                                     "high":  55
+                                                 },
+                                 "school_rating_greatschools":  8,
+                                 "school_rating_niche":  "A",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  65,
+                                                  "walkability_rating":  6,
+                                                  "character":  "Merrick Road is the main commercial corridor with local restaurants, shops, and services — a classic South Shore Nassau County strip. Merrick station area has a small cluster of commuter-oriented dining. Primarily residential with a quiet, family-focused character.",
+                                                  "highlights":  [
+                                                                     "Merrick Road commercial corridor",
+                                                                     "Merrick Lake Park & Anchor Marine Park",
+                                                                     "South Shore waterfront access"
+                                                                 ],
+                                                  "verdict":  "Comfortable South Shore suburb with good schools and solid LIRR access. More car-dependent than North Shore peers but priced well below them."
+                                              },
+                                 "notes":  "South Shore Nassau County on the LIRR Babylon Branch. Strong schools (Merrick UFSD + Sanford H. Calhoun HS, Niche A, GreatSchools 8/10). Lower taxes than North Shore and Rockville Centre at a similar or lower price point. Most LIRR Babylon Branch trains stop at Jamaica — check peak express schedules for direct Penn service. Good value among Nassau County markets with top-tier schools.",
+                                 "sources":  {}
                              }
                          ],
     "removed_markets":  [
