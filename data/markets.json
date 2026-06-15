@@ -788,6 +788,105 @@
                                  "sources":  {}
                              },
                              {
+                                 "id":  "glnr",
+                                 "name":  "Glen Ridge",
+                                 "state":  "NJ",
+                                 "county":  "Essex",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "Montclair-Boonton Line (Midtown Direct) — Glen Ridge station; ~45-55 min to Penn Station",
+                                 "median_price":  860000,
+                                 "annual_tax":  19500,
+                                 "tax_rate_pct":  2.35,
+                                 "commute_min":  { "low": 45, "high": 55 },
+                                 "school_rating_greatschools":  9,
+                                 "school_rating_niche":  "A+",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  72,
+                                                  "walkability_rating":  7,
+                                                  "character":  "Tiny, immaculate borough centered on Ridgewood Avenue — a handful of local shops and restaurants in a quiet, tree-lined setting. Glen Ridge is primarily residential; Bloomfield and Montclair serve as its commercial hubs. Exceptionally safe and tightly-knit community.",
+                                                  "highlights":  [
+                                                                     "Ridgewood Ave village strip",
+                                                                     "Glen Ridge Country Club",
+                                                                     "Walk to Glen Ridge NJ Transit station"
+                                                                 ],
+                                                  "verdict":  "More village than downtown — the appeal is the residential streets, not the commercial scene. Borders Montclair for restaurants and shopping."
+                                              },
+                                 "notes":  "One of the highest-rated school districts in all of NJ — Glen Ridge Public Schools consistently rank Niche A+, GreatSchools 9/10. Very small borough (~7,500 residents), extremely low inventory and fast-moving market. Borders Montclair (shares some amenities). Walk-to-train via Montclair-Boonton Line (Midtown Direct). NJ high taxes but below Montclair. Premium for schools and exclusivity is real — expect competition.",
+                                 "sources":  {}
+                             },
+                             {
+                                 "id":  "vron",
+                                 "name":  "Verona",
+                                 "state":  "NJ",
+                                 "county":  "Essex",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "No station in town — drive or bus to Montclair Bay St or Mountain Ave (Montclair-Boonton Line); ~55-70 min door-to-door",
+                                 "median_price":  620000,
+                                 "annual_tax":  14800,
+                                 "tax_rate_pct":  2.50,
+                                 "commute_min":  { "low": 55, "high": 70 },
+                                 "school_rating_greatschools":  8,
+                                 "school_rating_niche":  "A",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  68,
+                                                  "walkability_rating":  6,
+                                                  "character":  "Bloomfield Avenue runs through town with a modest strip of local restaurants, a hardware store, and small shops. Relaxed, residential pace — more small-town than village. Verona Park is the social anchor with a lake, tennis courts, and summer concerts.",
+                                                  "highlights":  [
+                                                                     "Verona Park (lake, tennis, summer events)",
+                                                                     "Bloomfield Avenue local dining strip",
+                                                                     "Verona Community Pool"
+                                                                 ],
+                                                  "verdict":  "Quiet, family-oriented suburb with good schools at a relative value. Trade-off is no direct train — car commute required to reach NJ Transit."
+                                              },
+                                 "notes":  "Verona Township — no rail station, must drive to Montclair (Bay St or Watchung Ave) or Mountain Ave for NJ Transit Midtown Direct access. Schools rate Niche A, GreatSchools 8/10 (Verona Public Schools) — strong for the price point. More affordable than Glen Ridge and Montclair neighbors. Car-dependent commute is the primary drawback.",
+                                 "sources":  {}
+                             },
+                             {
+                                 "id":  "cldw",
+                                 "name":  "Caldwell",
+                                 "state":  "NJ",
+                                 "county":  "Essex",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "transit_note":  "Montclair-Boonton Line (Midtown Direct) — Mountain Ave station; ~55-65 min to Penn Station",
+                                 "median_price":  545000,
+                                 "annual_tax":  13200,
+                                 "tax_rate_pct":  2.40,
+                                 "commute_min":  { "low": 55, "high": 65 },
+                                 "school_rating_greatschools":  7,
+                                 "school_rating_niche":  "A-",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  70,
+                                                  "walkability_rating":  7,
+                                                  "character":  "Bloomfield Avenue through the Caldwell business district has a genuine small-town Main Street feel — coffee shops, a deli, a bookstore, independent restaurants, and the historic Caldwell Theater. One of the more charming downtowns in Essex County given its modest size.",
+                                                  "highlights":  [
+                                                                     "Bloomfield Ave business district",
+                                                                     "Caldwell Public Library & community events",
+                                                                     "Adjacent to Essex Fells (top schools)"
+                                                                 ],
+                                                  "verdict":  "Underrated downtown with genuine character. More affordable than its neighbors with solid schools — a sleeper pick in Essex County."
+                                              },
+                                 "notes":  "Borough of Caldwell — most affordable of the Caldwell/Essex Fells/Verona cluster. Mountain Ave station (Montclair-Boonton Line, Midtown Direct) is accessible via short drive or walk depending on neighborhood. Caldwell-West Caldwell SD rates Niche A-, GreatSchools 7/10. Adjacent to Essex Fells (Niche A+) but in a different district. Good value anchor for the western Essex County market set.",
+                                 "sources":  {}
+                             },
+                             {
                                  "id":  "mrk",
                                  "name":  "Merrick",
                                  "state":  "NY",
