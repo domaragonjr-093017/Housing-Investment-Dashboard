@@ -1279,6 +1279,17 @@ function ovSync(field, val) {
 var _termCompCharts = {};
 
 calcUpdate();
+// Sync all hero display elements with live net_proceeds from data
+(function() {
+  const fmtD = '$' + DOWN.toLocaleString();
+  ['hero-proceeds-big','hero-money-net','hero-scenario-a'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.textContent = fmtD;
+  });
+  var slEl = document.getElementById('inv-sl-proceeds');
+  var inEl = document.getElementById('inv-in-proceeds');
+  if (slEl) { slEl.max = Math.max(+slEl.max, DOWN); slEl.value = DOWN; }
+  if (inEl) inEl.value = DOWN;
+})();
 
 
 // ── Term comparison chart: Total Cost Breakdown (4 stacked bars) ──────────────
