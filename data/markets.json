@@ -336,44 +336,6 @@
                                  "price_as_of":  "2026-04-30"
                              },
                              {
-                                 "id":  "mmk",
-                                 "name":  "Mamaroneck",
-                                 "state":  "NY",
-                                 "county":  "Westchester",
-                                 "region":  "Westchester",
-                                 "transit":  "Metro-North",
-                                 "transit_terminal":  "Grand Central Terminal",
-                                 "median_price":  908000,
-                                 "annual_tax":  12615,
-                                 "tax_rate_pct":  1.76,
-                                 "commute_min":  {
-                                                     "low":  45,
-                                                     "high":  55
-                                                 },
-                                 "school_rating_greatschools":  9,
-                                 "school_rating_niche":  "A+",
-                                 "niche_rank":  "#24 Best SD in NY",
-                                 "yoy_pct":  null,
-                                 "dom":  25,
-                                 "price_per_sqft":  null,
-                                 "market_tone":  "Seller\u0027s Market",
-                                 "downtown":  {
-                                                  "walk_score":  86,
-                                                  "walkability_rating":  8,
-                                                  "character":  "Lively harborside village with cafe-lined Mamaroneck Avenue connecting Metro-North station to Long Island Sound. Multicultural main street with authentic diversity and a working harbor marina.",
-                                                  "highlights":  [
-                                                                     "Harbor Island Park (44 acres on the Sound)",
-                                                                     "Mamaroneck Avenue dining \u0026 shopping strip",
-                                                                     "Active waterfront marina with Sound views"
-                                                                 ],
-                                                  "verdict":  "Genuinely walkable and well-rounded. More vibrant and diverse than Larchmont. Best value play: same A+ schools at ~$550K lower price. Tax trajectory rising sharply is the key risk."
-                                              },
-                                 "notes":  "Best value play in Westchester â€” same A+ SD as Larchmont (~$550K lower median). Some inventory $750K-$950K. Tax levy rising: +9.95% in 2025, double-digit increases projected 2026-2027.",
-                                 "sources":  {
-
-                                             }
-                             },
-                             {
                                  "id":  "mtc",
                                  "name":  "Montclair",
                                  "state":  "NJ",
@@ -615,7 +577,7 @@
                                  "region":  "New Jersey",
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
-                                 "transit_note":  "Morris & Essex Line (Midtown Direct) — direct service to Penn Station, no transfer; ~50-58 min",
+                                 "transit_note":  "Morris \u0026 Essex Line (Midtown Direct) — direct service to Penn Station, no transfer; ~50-58 min",
                                  "median_price":  680000,
                                  "annual_tax":  17200,
                                  "tax_rate_pct":  2.80,
@@ -636,12 +598,14 @@
                                                   "highlights":  [
                                                                      "South Orange Ave village strip",
                                                                      "Seton Hall University campus (walkable)",
-                                                                     "Meadowland Park & Flood's Hill sledding"
+                                                                     "Meadowland Park \u0026 Flood\u0027s Hill sledding"
                                                                  ],
                                                   "verdict":  "Tight, walkable village center with genuine neighborhood character. Shares schools and some amenities with Maplewood — often considered the same lifestyle market at a slight price discount."
                                               },
                                  "notes":  "Shares the South Orange-Maplewood School District (SOMSD) with Maplewood — same schools as the primary market at a typically lower price point. Strong Midtown Direct access. NJ high taxes apply (~2.8% effective rate). Good value play vs Maplewood for buyers flexible on town identity.",
-                                 "sources":  {}
+                                 "sources":  {
+
+                                             }
                              },
                              {
                                  "id":  "worg",
@@ -651,14 +615,14 @@
                                  "region":  "New Jersey",
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
-                                 "transit_note":  "Morris & Essex Line (Midtown Direct) — Brick Church or Highland Ave stations; ~45-55 min to Penn",
+                                 "transit_note":  "Morris \u0026 Essex Line (Midtown Direct) — Brick Church or Highland Ave stations; ~45-55 min to Penn",
                                  "median_price":  590000,
                                  "annual_tax":  15000,
                                  "tax_rate_pct":  2.60,
                                  "commute_min":  {
-                                                  "low":  45,
-                                                  "high":  55
-                                              },
+                                                     "low":  45,
+                                                     "high":  55
+                                                 },
                                  "school_rating_greatschools":  6,
                                  "school_rating_niche":  "B+",
                                  "yoy_pct":  null,
@@ -677,7 +641,9 @@
                                                   "verdict":  "More suburban and car-dependent than South Orange or Maplewood. Trades walkability for space, lower prices, and excellent outdoor recreation access."
                                               },
                                  "notes":  "Most affordable of the Essex County NJ markets in this set. West Orange Public Schools are decent (Niche B+, GreatSchools 6/10) but below the South Orange-Maplewood and Montclair districts. Multiple NJ Transit stations (Brick Church, Highland Ave) with Midtown Direct access. Larger lot sizes and more suburban feel than Maplewood or South Orange.",
-                                 "sources":  {}
+                                 "sources":  {
+
+                                             }
                              },
                              {
                                  "id":  "ruth",
@@ -704,7 +670,7 @@
                                  "downtown":  {
                                                   "walk_score":  82,
                                                   "walkability_rating":  8,
-                                                  "character":  "Park Avenue forms a genuine Main Street with independent restaurants, a bookstore, coffee shops, and a historic movie theater — all within a 5-minute walk of the NJ Transit station. One of Bergen County's most walkable and charming commuter downtowns.",
+                                                  "character":  "Park Avenue forms a genuine Main Street with independent restaurants, a bookstore, coffee shops, and a historic movie theater — all within a 5-minute walk of the NJ Transit station. One of Bergen County\u0027s most walkable and charming commuter downtowns.",
                                                   "highlights":  [
                                                                      "Park Avenue walkable Main Street",
                                                                      "Meadowlands Sports Complex proximity",
@@ -713,7 +679,9 @@
                                                   "verdict":  "Punches well above its price point — walkable village center, fast Midtown Direct commute, and solid schools at Bergen County prices. One of the better value propositions in the NJ market set."
                                               },
                                  "notes":  "Bergen County NJ — among the fastest NJ Transit commutes to Penn (30-38 min Midtown Direct, no transfer). Rutherford Borough SD rates Niche A-, GreatSchools 7/10 — solid but not elite. Lower prices than Essex County peers (Maplewood, Montclair). Walkable downtown is a standout for Bergen County. Flood risk in some areas near Passaic River — check FEMA zone before committing.",
-                                 "sources":  {}
+                                 "sources":  {
+
+                                             }
                              },
                              {
                                  "id":  "efls",
@@ -723,7 +691,7 @@
                                  "region":  "New Jersey",
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
-                                 "transit_note":  "No station in town — drive to Mountain Ave or Caldwell (Morris & Essex Line); ~50-65 min total door-to-door to Penn",
+                                 "transit_note":  "No station in town — drive to Mountain Ave or Caldwell (Morris \u0026 Essex Line); ~50-65 min total door-to-door to Penn",
                                  "median_price":  980000,
                                  "annual_tax":  16500,
                                  "tax_rate_pct":  1.75,
@@ -748,8 +716,10 @@
                                                                  ],
                                                   "verdict":  "No walkability to speak of — fully car-dependent. The draw is the neighborhood itself: exclusive, wooded, extremely safe, with top-tier schools and low taxes by NJ standards. A lifestyle buy, not a transit-oriented buy."
                                               },
-                                 "notes":  "One of NJ's most exclusive small boroughs — ~2,100 residents, no commercial zone, minimum lot sizes, and among the top school districts in Essex County (Niche A+, GreatSchools 9/10). Unusually low effective tax rate for NJ (~1.75%) due to low density and favorable assessment structure. No walk-to-train — must drive to Mountain Ave or Caldwell station for Morris & Essex service. Median price near $1M puts most inventory at or above budget ceiling. Very low inventory / slow turnover.",
-                                 "sources":  {}
+                                 "notes":  "One of NJ\u0027s most exclusive small boroughs — ~2,100 residents, no commercial zone, minimum lot sizes, and among the top school districts in Essex County (Niche A+, GreatSchools 9/10). Unusually low effective tax rate for NJ (~1.75%) due to low density and favorable assessment structure. No walk-to-train — must drive to Mountain Ave or Caldwell station for Morris \u0026 Essex service. Median price near $1M puts most inventory at or above budget ceiling. Very low inventory / slow turnover.",
+                                 "sources":  {
+
+                                             }
                              },
                              {
                                  "id":  "nutl",
@@ -759,7 +729,7 @@
                                  "region":  "New Jersey",
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
-                                 "transit_note":  "No station in town — drive or bus to Clifton (Boonton Line) or Bloomfield (M&E Line); NJ Transit 192 bus direct to Port Authority; ~50-65 min door-to-door",
+                                 "transit_note":  "No station in town — drive or bus to Clifton (Boonton Line) or Bloomfield (M\u0026E Line); NJ Transit 192 bus direct to Port Authority; ~50-65 min door-to-door",
                                  "median_price":  565000,
                                  "annual_tax":  14200,
                                  "tax_rate_pct":  2.65,
@@ -784,8 +754,10 @@
                                                                  ],
                                                   "verdict":  "Solid working-class suburb with genuine neighborhood feel. More affordable than its Essex County neighbors. No walk-to-train is the main drawback for NYC commuters."
                                               },
-                                 "notes":  "Essex County township with no NJ Transit rail station — commute requires driving to Clifton (Boonton Line) or Bloomfield (M&E) or taking the 192 bus to Port Authority (~55-65 min). Most affordable Essex County market in this set at ~$565K median. Nutley Public Schools rate Niche A-, GreatSchools 7/10 — competitive with South Orange at a lower price point. Strong Italian-American community identity. Close to Belleville and Bloomfield.",
-                                 "sources":  {}
+                                 "notes":  "Essex County township with no NJ Transit rail station — commute requires driving to Clifton (Boonton Line) or Bloomfield (M\u0026E) or taking the 192 bus to Port Authority (~55-65 min). Most affordable Essex County market in this set at ~$565K median. Nutley Public Schools rate Niche A-, GreatSchools 7/10 — competitive with South Orange at a lower price point. Strong Italian-American community identity. Close to Belleville and Bloomfield.",
+                                 "sources":  {
+
+                                             }
                              },
                              {
                                  "id":  "glnr",
@@ -799,7 +771,10 @@
                                  "median_price":  860000,
                                  "annual_tax":  19500,
                                  "tax_rate_pct":  2.35,
-                                 "commute_min":  { "low": 45, "high": 55 },
+                                 "commute_min":  {
+                                                     "low":  45,
+                                                     "high":  55
+                                                 },
                                  "school_rating_greatschools":  9,
                                  "school_rating_niche":  "A+",
                                  "yoy_pct":  null,
@@ -818,7 +793,9 @@
                                                   "verdict":  "More village than downtown — the appeal is the residential streets, not the commercial scene. Borders Montclair for restaurants and shopping."
                                               },
                                  "notes":  "One of the highest-rated school districts in all of NJ — Glen Ridge Public Schools consistently rank Niche A+, GreatSchools 9/10. Very small borough (~7,500 residents), extremely low inventory and fast-moving market. Borders Montclair (shares some amenities). Walk-to-train via Montclair-Boonton Line (Midtown Direct). NJ high taxes but below Montclair. Premium for schools and exclusivity is real — expect competition.",
-                                 "sources":  {}
+                                 "sources":  {
+
+                                             }
                              },
                              {
                                  "id":  "vron",
@@ -832,7 +809,10 @@
                                  "median_price":  620000,
                                  "annual_tax":  14800,
                                  "tax_rate_pct":  2.50,
-                                 "commute_min":  { "low": 55, "high": 70 },
+                                 "commute_min":  {
+                                                     "low":  55,
+                                                     "high":  70
+                                                 },
                                  "school_rating_greatschools":  8,
                                  "school_rating_niche":  "A",
                                  "yoy_pct":  null,
@@ -851,7 +831,9 @@
                                                   "verdict":  "Quiet, family-oriented suburb with good schools at a relative value. Trade-off is no direct train — car commute required to reach NJ Transit."
                                               },
                                  "notes":  "Verona Township — no rail station, must drive to Montclair (Bay St or Watchung Ave) or Mountain Ave for NJ Transit Midtown Direct access. Schools rate Niche A, GreatSchools 8/10 (Verona Public Schools) — strong for the price point. More affordable than Glen Ridge and Montclair neighbors. Car-dependent commute is the primary drawback.",
-                                 "sources":  {}
+                                 "sources":  {
+
+                                             }
                              },
                              {
                                  "id":  "cldw",
@@ -865,7 +847,10 @@
                                  "median_price":  545000,
                                  "annual_tax":  13200,
                                  "tax_rate_pct":  2.40,
-                                 "commute_min":  { "low": 55, "high": 65 },
+                                 "commute_min":  {
+                                                     "low":  55,
+                                                     "high":  65
+                                                 },
                                  "school_rating_greatschools":  7,
                                  "school_rating_niche":  "A-",
                                  "yoy_pct":  null,
@@ -878,13 +863,15 @@
                                                   "character":  "Bloomfield Avenue through the Caldwell business district has a genuine small-town Main Street feel — coffee shops, a deli, a bookstore, independent restaurants, and the historic Caldwell Theater. One of the more charming downtowns in Essex County given its modest size.",
                                                   "highlights":  [
                                                                      "Bloomfield Ave business district",
-                                                                     "Caldwell Public Library & community events",
+                                                                     "Caldwell Public Library \u0026 community events",
                                                                      "Adjacent to Essex Fells (top schools)"
                                                                  ],
                                                   "verdict":  "Underrated downtown with genuine character. More affordable than its neighbors with solid schools — a sleeper pick in Essex County."
                                               },
                                  "notes":  "Borough of Caldwell — most affordable of the Caldwell/Essex Fells/Verona cluster. Mountain Ave station (Montclair-Boonton Line, Midtown Direct) is accessible via short drive or walk depending on neighborhood. Caldwell-West Caldwell SD rates Niche A-, GreatSchools 7/10. Adjacent to Essex Fells (Niche A+) but in a different district. Good value anchor for the western Essex County market set.",
-                                 "sources":  {}
+                                 "sources":  {
+
+                                             }
                              },
                              {
                                  "id":  "mrk",
@@ -914,13 +901,15 @@
                                                   "character":  "Merrick Road is the main commercial corridor with local restaurants, shops, and services — a classic South Shore Nassau County strip. Merrick station area has a small cluster of commuter-oriented dining. Primarily residential with a quiet, family-focused character.",
                                                   "highlights":  [
                                                                      "Merrick Road commercial corridor",
-                                                                     "Merrick Lake Park & Anchor Marine Park",
+                                                                     "Merrick Lake Park \u0026 Anchor Marine Park",
                                                                      "South Shore waterfront access"
                                                                  ],
                                                   "verdict":  "Comfortable South Shore suburb with good schools and solid LIRR access. More car-dependent than North Shore peers but priced well below them."
                                               },
                                  "notes":  "South Shore Nassau County on the LIRR Babylon Branch. Strong schools (Merrick UFSD + Sanford H. Calhoun HS, Niche A, GreatSchools 8/10). Lower taxes than North Shore and Rockville Centre at a similar or lower price point. Most LIRR Babylon Branch trains stop at Jamaica — check peak express schedules for direct Penn service. Good value among Nassau County markets with top-tier schools.",
-                                 "sources":  {}
+                                 "sources":  {
+
+                                             }
                              }
                          ],
     "removed_markets":  [
@@ -953,10 +942,14 @@
                                 "name":  "Ridgewood",
                                 "state":  "NJ",
                                 "reason":  "Removed May 2026 â€” replaced with walkability-focused NY research set"
+                            },
+                            {
+                                "name":  "Mamaroneck",
+                                "state":  "NY",
+                                "reason":  "Removed June 2026 - excluded from dashboard; same Mamaroneck UFSD school district available via Larchmont, rising tax trajectory (double-digit increases 2025-2027)"
                             }
                         ],
     "watchlist":  [
 
                   ]
 }
-
