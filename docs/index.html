@@ -1018,6 +1018,53 @@ function buildCmpTable(markets) {
         const ni  = m.school_rating_niche ? ` · Niche ${m.school_rating_niche}` : '';
         return `<span style="color:${clr};font-weight:800;font-size:1rem">${c.toFixed(1)}</span><span style="color:#a0aec0;font-size:.7rem">/10${ni}</span>`;
     }},
+    { label: 'School Snapshot',      fn: m => {
+        const gs     = m.school_rating_greatschools;
+        const ni     = m.school_rating_niche;
+        const s      = m.schools || {};
+        const stAvg  = m.state === 'NJ' ? { math: 57, ela: 52 } : { math: 47, ela: 47 };
+        if (!s.district_name && gs == null && !ni)
+          return '<span style="font-size:.75rem;color:#a0aec0;font-style:italic">Data pending</span>';
+        const rated = [
+          s.elem_rating  != null ? { lbl: 'Elem',   r: s.elem_rating  } : null,
+          s.mid_rating   != null ? { lbl: 'Mid',    r: s.mid_rating   } : null,
+          s.high_rating  != null ? { lbl: 'HS',     r: s.high_rating  } : null
+        ].filter(Boolean);
+        const maxR   = rated.length ? Math.max(...rated.map(x => x.r)) : gs;
+        const minR   = rated.length ? Math.min(...rated.map(x => x.r)) : gs;
+        const hasGap = rated.length >= 2 && (maxR - minR) >= 3;
+        let lead = '';
+        if (rated.length === 0) {
+          lead = ni ? `Niche ${ni}` : gs ? `GS ${gs}/10` : '';
+        } else if (!hasGap && maxR >= 9) {
+          const desc = rated.map(x => `${x.lbl} ${x.r}`).join(' · ');
+          lead = `GS ${desc}`;
+        } else if (hasGap) {
+          const strong = rated.reduce((a, b) => b.r > a.r ? b : a);
+          const weak   = rated.reduce((a, b) => b.r < a.r ? b : a);
+          const sName = strong.lbl === 'Elem' ? 'Elementary' : strong.lbl === 'Mid' ? 'Middle' : 'High school';
+          const wName = weak.lbl   === 'Elem' ? 'elementary' : weak.lbl   === 'Mid' ? 'middle'  : 'high school';
+          lead = `${sName} GS ${strong.r}/10; ${wName} drops to ${weak.r}/10`;
+        } else {
+          const desc = rated.map(x => `${x.lbl} ${x.r}`).join(' · ');
+          lead = `GS ${desc}`;
+        }
+        if (ni && !lead.includes('Niche')) lead += (lead ? '; Niche ' : 'Niche ') + ni;
+        let prof = '';
+        if (s.math_proficiency_pct != null) {
+          const d   = s.math_proficiency_pct - stAvg.math;
+          const ctx = d >= 15 ? 'well above' : d >= 5 ? 'above' : Math.abs(d) < 5 ? 'near' : 'below';
+          prof = `${s.math_proficiency_pct}% math — ${ctx} state avg (${stAvg.math}%)`;
+        }
+        let note = '';
+        const dn = (s.district_name || '').toLowerCase();
+        if      (dn.includes('k-6'))   note = 'K–6 only; secondary via separate district';
+        else if (dn.includes('k-8'))   note = 'K–8 only; HS via Caldwell-West Caldwell';
+        else if (s.pct_econ_disadvantaged != null && s.pct_econ_disadvantaged >= 25)
+          note = `Diverse district (${s.pct_econ_disadvantaged}% econ. disadvantaged)`;
+        const parts = [lead, prof, note].filter(Boolean);
+        return `<span style="font-size:.75rem;color:#4a5568;line-height:1.6">${parts.join('. ')}${parts.length ? '.' : '—'}</span>`;
+    }},
     { label: 'Days on Market',       fn: m => m.dom ? m.dom + 'd' : '—' },
     { label: 'Transit Line',         fn: m => m.transit || '—' },
     { label: 'Est. Commute',         fn: m => m.commute_min ? fmtMin(m.commute_min) : '—' },
