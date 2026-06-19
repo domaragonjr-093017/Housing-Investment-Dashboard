@@ -84,7 +84,8 @@
                                                 "top_elem_rating":  null,
                                                 "source":  "Niche 2026 / NYSED 2023-24",
                                                 "as_of":  "2023-24",
-                                                "needs_verification":  true
+                                                "needs_verification":  true,
+                                                "character":  "K-6 only Floral Park-Bellerose UFSD earns a Niche A with 74% math proficiency — well above NY state average. Tight-knit elementary community; families send 7th-graders into Sewanhaka CSD, so research that district separately before committing."
                                             },
                                 "school_rating_niche":  "A"
                             },
@@ -144,7 +145,8 @@
                                                 "top_elem_rating":  9,
                                                 "source":  "GreatSchools 2024 / Niche 2025 / NYSED 2023-24",
                                                 "as_of":  "2023-24",
-                                                "needs_verification":  true
+                                                "needs_verification":  true,
+                                                "character":  "Compact, high-performing UFSD anchored by South Side High School (GS 9/10). Strong elementary pipeline (GS 9/10) and 80% math proficiency. One of Nassau County\u0027s best all-around suburban districts at its price point."
                                             },
                                 "school_rating_niche":  "A"
                             },
@@ -204,7 +206,8 @@
                                                 "top_elem_rating":  7,
                                                 "source":  "Niche 2025 / NJDOE SPRR 2023-24 / GreatSchools 2024",
                                                 "as_of":  "2023-24",
-                                                "needs_verification":  true
+                                                "needs_verification":  true,
+                                                "character":  "Intentionally diverse South Orange-Maplewood SD with a progressive reputation. Wide school-to-school variation — the best elementaries are genuinely strong but Columbia HS is GS 6/10. Families who prioritize diversity over uniformity tend to embrace it; those expecting uniformly elite outcomes should look at Chatham or Westfield."
                                             },
                                 "school_rating_niche":  "B+"
                             },
@@ -264,7 +267,8 @@
                                                 "top_elem_rating":  10,
                                                 "source":  "GreatSchools 2024 / Niche 2026 / NYSED 2023-24",
                                                 "as_of":  "2023-24",
-                                                "needs_verification":  true
+                                                "needs_verification":  true,
+                                                "character":  "Pelham UFSD delivers top-tier Westchester academics at a sub-.1M price. Siwanoy Elementary is GS 10/10; Pelham Memorial HS is GS 9/10, Niche A+. 82% math / 81% ELA proficiency. Arguably the best school-to-price ratio of any primary market on this list."
                                             },
                                 "school_rating_niche":  "A+"
                             }
@@ -326,7 +330,8 @@
                                                  "top_elem_rating":  null,
                                                  "source":  "Niche 2024 / NYC DOE 2024",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "NYC Community School District 27 is a significant academic trade-off. Niche B+ but math and ELA proficiency run near city averages (56%/54%). Families in Rockaway Park who prioritize school quality typically screen for specific NYC public programs or rely on Catholic schools in the area."
                                              }
                              },
                              {
@@ -387,7 +392,8 @@
                                                  "top_elem_rating":  10,
                                                  "source":  "GreatSchools 2024 / Niche 2026 / NYSED 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Mamaroneck UFSD is a top-tier Westchester district with Chatsworth Avenue School (GS 10/10) anchoring the elementary years. Mamaroneck HS (GS 8/10) is well-regarded and 83% math proficiency is strong. Notably diverse for a high-income suburb — 24% Hispanic — which adds breadth to the community without compromising outcomes."
                                              }
                              },
                              {
@@ -447,7 +453,8 @@
                                                  "top_elem_rating":  10,
                                                  "source":  "GreatSchools 2024 / Niche 2026 / NYSED 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "One of Westchester\u0027s finest — all three levels GS 10/10, 91% math / 86% ELA, Niche A+. The district\u0027s small size (~1,570 students) creates a tight-knit culture but limits AP course depth compared to larger schools. Consistently among the top public school systems in New York State."
                                              }
                              },
                              {
@@ -508,7 +515,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "GreatSchools 2024 / Niche 2026 / NYSED 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "North Shore CSD\u0027s reputation rests on its exceptional high school (GS 10/10, Niche A+) — among Long Island\u0027s elite. 95% math proficiency is the highest of any market tracked. Elementary schools are solid (GS 8/10) with a favorable 9:1 student-teacher ratio. The HS is the district\u0027s crown jewel."
                                              }
                              },
                              {
@@ -568,7 +576,8 @@
                                                  "top_elem_rating":  9,
                                                  "source":  "Niche 2025 / GreatSchools 2024 / NJDOE 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Magnet-based district with a strong progressive identity and wide school-to-school variation. Elementary outcomes depend heavily on magnet assignment (Ridgewood Ave is GS 9/10; others lower). Middle school is the weak link at GS 5/10. Academically inconsistent district-wide, but culturally rich and deeply community-engaged — families tend to self-select for the magnet fit."
                                              }
                              },
                              {
@@ -629,7 +638,8 @@
                                                  "top_elem_rating":  9,
                                                  "source":  "Niche 2024-25 / GreatSchools 2024 / NJDOE 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Consistently top-20 in NJ (Niche A+) with strong numbers across all levels — Elem and Middle both GS 9/10, HS 8/10. 71% math / 77% ELA well above NJ averages. Low economic disadvantage (1%). One of the most academically reliable districts in Union County, with a conventional suburban school experience."
                                              }
                              },
                              {
@@ -689,7 +699,8 @@
                                                  "top_elem_rating":  10,
                                                  "source":  "Niche 2024-25 / GreatSchools 2024 / NJDOE 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "School District of the Chathams is one of NJ\u0027s hidden gems. Milton Avenue Elementary ranks #1 in NJ on GreatSchools (10/10). All levels strong: Elem 10/10, Middle 8/10, HS 7/10. 70% math / 75% ELA. Niche A+, very low economic disadvantage (2%). Top academic environment without the price tag of Bronxville or North Shore."
                                              }
                              },
                              {
@@ -750,7 +761,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "GreatSchools 2024 / Niche 2025 / NYSED 2023-24 — Ward Elem GS 8/10 well above district; shared MS and HS are district-wide",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Ward Elementary (GS 8/10) is a genuine standout in the New Rochelle north zone and a strong draw for young families. The catch: students feed into Albert Leonard MS (GS 5/10) and the shared New Rochelle HS (GS 4/10), which is city-wide and pulls down the district average significantly. Buyers here get strong elementary years; private school planning at the middle school transition is common."
                                              }
                              },
                              {
@@ -811,7 +823,8 @@
                                                  "top_elem_rating":  7,
                                                  "source":  "GreatSchools 2024 / Niche 2026 / NYSED 2023-24 — Schreiber HS is GS 10/10",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Paul D. Schreiber HS (GS 10/10, Niche A+) is the district\u0027s calling card — strong AP offerings and one of Long Island\u0027s better public high schools. Elementary schools are solid but more average (GS 7/10). 79% math proficiency. A district where the high school significantly elevates the overall story."
                                              }
                              },
                              {
@@ -874,7 +887,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "GreatSchools 2024 / Niche 2025 / NYSED 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "City-wide New Rochelle district with high diversity and inconsistent outcomes. The high school (GS 4/10) and notable chronic absenteeism are the primary concerns. 57% math proficiency is slightly above NY state average, but wide school-to-school variation means your specific zone matters enormously. See Wykagyl for the north-zone school story."
                                              }
                              },
                              {
@@ -934,7 +948,8 @@
                                                  "top_elem_rating":  7,
                                                  "source":  "Niche 2025 / NJDOE SPRR 2023-24 / GreatSchools 2024",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Shares South Orange-Maplewood SD with Maplewood — same intentional diversity and wide school-to-school variation. Columbia HS is GS 6/10. 53% math near NJ average. The district\u0027s progressive culture and active parent community are real assets; families who engage deeply with the school community tend to have strong outcomes."
                                              }
                              },
                              {
@@ -994,7 +1009,8 @@
                                                  "top_elem_rating":  9,
                                                  "source":  "Niche 2025 / GreatSchools 2024 / NJDOE 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Large, diverse district with meaningful school-to-school variation. Deerfield Elementary is a bright spot (GS 9/10), but the HS is GS 6/10 and 45% math proficiency is 12pp below NJ average. 25% economically disadvantaged with an 80%+ minority enrollment. Best elementaries are neighborhood-dependent — research your zone before buying."
                                              }
                              },
                              {
@@ -1054,7 +1070,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "Niche 2025 / GreatSchools 2024 / NJDOE 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Solid, consistent district with a community-oriented feel and Niche A grade. All levels respectable (Elem/Mid 8/10, HS 7/10). 50% math proficiency is below NJ state average (57%), worth noting despite the solid GS ratings. Low economic disadvantage (4%) and meaningfully diverse for Bergen County with 25% Hispanic enrollment."
                                              }
                              },
                              {
@@ -1114,7 +1131,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "Niche 2024 / GreatSchools 2024 / NJDOE 2023-24 — K-8 only; high_rating = James Caldwell HS (GS 6/10)",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Tiny K-8 district (~247 students) with exceptional proficiency numbers — 82% math and 87% ELA well above NJ averages and a 10:1 student-teacher ratio. A boutique elementary-through-middle experience. For high school, students attend James Caldwell HS in the Caldwell-West Caldwell SD (GS 6/10) — a significant quality step down worth factoring into the long view."
                                              }
                              },
                              {
@@ -1174,7 +1192,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "Niche 2025 / GreatSchools 2024 / NJDOE 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Radcliffe Elementary (GS 8/10) is a genuine bright spot, but Nutley\u0027s story weakens at the middle and high school levels (GS 6/10 and 5/10 respectively). 54% math near NJ average. Growing Hispanic population (31%) adds diversity. A good value among Essex County districts for families with young children; plan ahead for the secondary transition."
                                              }
                              },
                              {
@@ -1234,7 +1253,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "Niche 2024-25 / GreatSchools 2024 / NJDOE 2023-24 — HS serves grades 7-12",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Compact, high-performing district where the high school serves grades 7-12. 77% math / 81% ELA well above NJ averages, very low economic disadvantage (1%). Strong community feel with active parent involvement. All levels GS 7-8/10; consistently one of Essex County\u0027s more reliable academic performers."
                                              }
                              },
                              {
@@ -1294,7 +1314,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "Niche 2024 / GreatSchools 2024 / NJDOE 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Balanced mid-tier district with Elem 8/10 and HS 8/10 (Verona HS earned Niche A-). 53% math near NJ average. Very low economic disadvantage (1%). A reliable, low-drama suburban district — won\u0027t drive a school-quality decision but won\u0027t raise red flags either. Good fit for families where schools are one factor among many."
                                              }
                              },
                              {
@@ -1354,7 +1375,8 @@
                                                  "top_elem_rating":  7,
                                                  "source":  "Niche 2025 / GreatSchools 2024 / NJDOE 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Mid-tier across the board (Elem/Mid 7/10, HS 6/10), Niche A-. 58% math near NJ average. Hosts Essex Fells students for high school. A serviceable regional district — adequate for families not leading with schools as a primary criterion, and notably more affordable than top-tier Essex County peers."
                                              }
                              },
                              {
@@ -1414,7 +1436,8 @@
                                                  "top_elem_rating":  8,
                                                  "source":  "GreatSchools 2024 / Niche 2026 / NYSED 2023-24",
                                                  "as_of":  "2023-24",
-                                                 "needs_verification":  true
+                                                 "needs_verification":  true,
+                                                 "character":  "Merrick UFSD covers K-6 with solid elementary ratings (GS 8/10) and 78% math proficiency well above NY average. At 7th grade, students feed into the Bellmore-Merrick Central HS District — Calhoun HS is GS 9/10 and Niche A+, one of Long Island\u0027s stronger high schools. Strong story at both ends of the K-12 span."
                                              }
                              }
                          ],
