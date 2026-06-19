@@ -534,7 +534,11 @@ td.muted{color:#a0aec0}
 <div class="page" id="page-compare">
   <div id="compare-exec-summary"></div>
   <div class="table-wrap" id="compare-all" style="overflow:auto;max-height:68vh"></div>
-  <div style="font-size:.75rem;color:#a0aec0;margin-top:12px">Price/sqft, Days on Market, and Market Tone populate once added to data/markets.json</div>
+  <div style="font-size:.75rem;color:#a0aec0;margin-top:12px">
+    Price/sqft, Days on Market, and Market Tone populate once added to data/markets.json &nbsp;·&nbsp;
+    <strong>School Score</strong> = composite weighted for young families: Elementary 60% · Middle 25% · High School 15% &nbsp;·&nbsp;
+    <span style="cursor:pointer;color:#0f3460;text-decoration:underline" onclick="showTab('schools')">🏫 Schools tab</span> has proficiency %, demographics, student-teacher ratios, and top elementary schools for all markets
+  </div>
 </div>
 
 <!-- ── SCHOOLS ────────────────────────────────────────────────── -->
@@ -999,6 +1003,21 @@ function buildCmpTable(markets) {
   const metrics = [
     { label: 'Median Price',         fn: m => `<strong>${fmt$(m.median_price)}</strong>` },
     { label: 'School District',      fn: m => fmtSchool(m.school_rating_greatschools, m.school_rating_niche) },
+    { label: 'School Score',         fn: m => {
+        const gs = m.school_rating_greatschools;
+        const s  = m.schools || {};
+        let e   = s.elem_rating  != null ? s.elem_rating  : gs;
+        let mid = s.mid_rating   != null ? s.mid_rating   : null;
+        let h   = s.high_rating  != null ? s.high_rating  : null;
+        if (e == null) return '<span style="color:#a0aec0">—</span>';
+        if (mid == null && h == null) { mid = e; h = gs != null ? gs : e; }
+        else if (mid == null) { mid = (e + h) / 2; }
+        else if (h == null)   { h   = gs != null ? gs : (e + mid) / 2; }
+        const c   = Math.round((e * 0.60 + mid * 0.25 + h * 0.15) * 10) / 10;
+        const clr = c >= 8 ? '#166534' : c >= 6 ? '#92400e' : '#991b1b';
+        const ni  = m.school_rating_niche ? ` · Niche ${m.school_rating_niche}` : '';
+        return `<span style="color:${clr};font-weight:800;font-size:1rem">${c.toFixed(1)}</span><span style="color:#a0aec0;font-size:.7rem">/10${ni}</span>`;
+    }},
     { label: 'Days on Market',       fn: m => m.dom ? m.dom + 'd' : '—' },
     { label: 'Transit Line',         fn: m => m.transit || '—' },
     { label: 'Est. Commute',         fn: m => m.commute_min ? fmtMin(m.commute_min) : '—' },
