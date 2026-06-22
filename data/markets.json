@@ -1439,6 +1439,186 @@
                                                  "needs_verification":  true,
                                                  "character":  "Merrick UFSD covers K-6 with solid elementary ratings (GS 8/10) and 78% math proficiency well above NY average. At 7th grade, students feed into the Bellmore-Merrick Central HS District — Calhoun HS is GS 9/10 and Niche A+, one of Long Island\u0027s stronger high schools. Strong story at both ends of the K-12 span."
                                              }
+                             },
+                             {
+                                 "id":  "mlv",
+                                 "name":  "Malverne",
+                                 "state":  "NY",
+                                 "county":  "Nassau",
+                                 "region":  "Long Island",
+                                 "transit":  "LIRR",
+                                 "transit_terminal":  "Penn Station",
+                                 "median_price":  700000,
+                                 "annual_tax":  14500,
+                                 "tax_rate_pct":  2.07,
+                                 "commute_min":  {
+                                                     "low":  43,
+                                                     "high":  52
+                                                 },
+                                 "school_rating_greatschools":  7,
+                                 "school_rating_niche":  "B+",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  68,
+                                                  "walkability_rating":  6,
+                                                  "character":  "Small incorporated village with a quiet main-street feel. The LIRR station anchors a modest commercial strip with a diner, local shops, and services. More residential than walkable — neighboring Lynbrook offers more evening and retail variety.",
+                                                  "highlights":  [
+                                                                     "LIRR Malverne station (Long Beach Branch)",
+                                                                     "Proximity to Lynbrook and Valley Stream",
+                                                                     "Quiet tree-lined residential streets"
+                                                                 ],
+                                                  "verdict":  "Car-dependent for most errands but the LIRR makes the city commute easy. Neighboring Lynbrook offers the downtown experience Malverne itself lacks."
+                                              },
+                                 "notes":  "Small Nassau County village on the LIRR Long Beach Branch. Malverne UFSD is a full K-12 district serving a notably diverse community — one of the more racially mixed school districts in Nassau County. Priced at the affordable end of Nassau LIRR towns. Taxes fully combined.",
+                                 "sources":  {
+
+                                             },
+                                 "schools":  {
+                                                 "district_name":  "Malverne UFSD",
+                                                 "elem_rating":  7,
+                                                 "mid_rating":  null,
+                                                 "high_rating":  6,
+                                                 "math_proficiency_pct":  56,
+                                                 "reading_proficiency_pct":  53,
+                                                 "student_teacher_ratio":  13.0,
+                                                 "pct_econ_disadvantaged":  35,
+                                                 "demographics":  {
+                                                                      "white_pct":  40,
+                                                                      "hispanic_pct":  20,
+                                                                      "black_pct":  35,
+                                                                      "asian_pct":  3
+                                                                  },
+                                                 "chronic_absenteeism_pct":  null,
+                                                 "top_elem_name":  "Malverne Elementary School",
+                                                 "top_elem_rating":  7,
+                                                 "source":  "GreatSchools 2024 / Niche 2025 / NYSED 2023-24",
+                                                 "as_of":  "2023-24",
+                                                 "needs_verification":  true,
+                                                 "character":  "Malverne UFSD is one of Nassau County\u0027s most racially and economically diverse K-12 districts — a meaningful contrast to its homogeneous neighbors. School quality is above state average but trails nearby Lynbrook and Rockville Centre on proficiency metrics. Families who value community diversity alongside solid academics often find this a compelling trade-off at a lower price point."
+                                             }
+                             },
+                             {
+                                 "id":  "lbk",
+                                 "name":  "Lynbrook",
+                                 "state":  "NY",
+                                 "county":  "Nassau",
+                                 "region":  "Long Island",
+                                 "transit":  "LIRR",
+                                 "transit_terminal":  "Penn Station",
+                                 "median_price":  760000,
+                                 "annual_tax":  17000,
+                                 "tax_rate_pct":  2.24,
+                                 "commute_min":  {
+                                                     "low":  40,
+                                                     "high":  48
+                                                 },
+                                 "school_rating_greatschools":  8,
+                                 "school_rating_niche":  "A-",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  72,
+                                                  "walkability_rating":  7,
+                                                  "character":  "One of the more walkable downtowns on Nassau County\u0027s South Shore. Merrick Road and the station area have a genuine village feel with restaurants, coffee shops, and local retail all within easy walking distance of the LIRR platform.",
+                                                  "highlights":  [
+                                                                     "Merrick Road dining and retail strip",
+                                                                     "LIRR Lynbrook station (Long Beach Branch)",
+                                                                     "Village Park and Greis Park green space"
+                                                                 ],
+                                                  "verdict":  "Solid South Shore walkability with a true village core near the station — better than most Nassau County commuter towns at this price tier."
+                                              },
+                                 "notes":  "Nassau County South Shore village on the LIRR Long Beach Branch. Lynbrook UFSD is a full K-12 district with a strong academic reputation. More walkable than many Nassau peers and priced between Floral Park and Rockville Centre. Taxes fully combined.",
+                                 "sources":  {
+
+                                             },
+                                 "schools":  {
+                                                 "district_name":  "Lynbrook UFSD",
+                                                 "elem_rating":  8,
+                                                 "mid_rating":  7,
+                                                 "high_rating":  8,
+                                                 "math_proficiency_pct":  73,
+                                                 "reading_proficiency_pct":  67,
+                                                 "student_teacher_ratio":  12.0,
+                                                 "pct_econ_disadvantaged":  14,
+                                                 "demographics":  {
+                                                                      "white_pct":  68,
+                                                                      "hispanic_pct":  16,
+                                                                      "black_pct":  5,
+                                                                      "asian_pct":  9
+                                                                  },
+                                                 "chronic_absenteeism_pct":  null,
+                                                 "top_elem_name":  "Marion Street Elementary School",
+                                                 "top_elem_rating":  8,
+                                                 "source":  "GreatSchools 2024 / Niche 2025 / NYSED 2023-24",
+                                                 "as_of":  "2023-24",
+                                                 "needs_verification":  true,
+                                                 "character":  "Lynbrook UFSD is a well-rounded K-12 district with above-average outcomes for Nassau County at its price point. Lynbrook HS (~GS 8/10) carries strong AP enrollment. At 73% math proficiency it outperforms the NY state average meaningfully — and families get a complete K-12 district with no mid-school transition uncertainty."
+                                             }
+                             },
+                             {
+                                 "id":  "crf",
+                                 "name":  "Cranford",
+                                 "state":  "NJ",
+                                 "county":  "Union",
+                                 "region":  "New Jersey",
+                                 "transit":  "NJ Transit",
+                                 "transit_terminal":  "Penn Station",
+                                 "median_price":  760000,
+                                 "annual_tax":  19500,
+                                 "tax_rate_pct":  2.56,
+                                 "commute_min":  {
+                                                     "low":  60,
+                                                     "high":  72
+                                                 },
+                                 "school_rating_greatschools":  8,
+                                 "school_rating_niche":  "A-",
+                                 "yoy_pct":  null,
+                                 "dom":  null,
+                                 "price_per_sqft":  null,
+                                 "market_tone":  null,
+                                 "downtown":  {
+                                                  "walk_score":  72,
+                                                  "walkability_rating":  7,
+                                                  "character":  "Cranford has one of Union County\u0027s most charming downtown cores. Centennial Avenue runs a compact block of independent restaurants, coffee shops, and boutiques steps from the train station. The Nomahegan Park greenway and Rahway River add outdoor character rare in NJ suburban towns.",
+                                                  "highlights":  [
+                                                                     "Centennial Avenue village strip",
+                                                                     "NJ Transit Cranford station (Raritan Valley Line)",
+                                                                     "Nomahegan Park and Rahway River greenway"
+                                                                 ],
+                                                  "verdict":  "Above-average NJ suburban downtown — walkable village feel with genuine independent dining and notable green space. Commute adds a transfer at Newark Penn but manageable for the price."
+                                              },
+                                 "notes":  "Union County NJ on the NJ Transit Raritan Valley Line. Trains run to Newark Penn (~35-40 min) then connect to NYC Penn via NEC (~25-30 min); some peak-hour direct trains to NYC Penn exist. Cranford Public Schools are well-regarded for Union County. NJ/Union County effective tax rates run ~2.5-3.0% — budget accordingly. Taxes fully combined.",
+                                 "sources":  {
+
+                                             },
+                                 "schools":  {
+                                                 "district_name":  "Cranford Public Schools",
+                                                 "elem_rating":  8,
+                                                 "mid_rating":  8,
+                                                 "high_rating":  8,
+                                                 "math_proficiency_pct":  66,
+                                                 "reading_proficiency_pct":  64,
+                                                 "student_teacher_ratio":  12.0,
+                                                 "pct_econ_disadvantaged":  8,
+                                                 "demographics":  {
+                                                                      "white_pct":  79,
+                                                                      "hispanic_pct":  11,
+                                                                      "black_pct":  5,
+                                                                      "asian_pct":  4
+                                                                  },
+                                                 "chronic_absenteeism_pct":  null,
+                                                 "top_elem_name":  "Brookside Place School",
+                                                 "top_elem_rating":  8,
+                                                 "source":  "GreatSchools 2024 / Niche 2025 / NJDOE SPRR 2023-24",
+                                                 "as_of":  "2023-24",
+                                                 "needs_verification":  true,
+                                                 "character":  "Cranford Public Schools are one of Union County\u0027s stronger K-12 systems. Cranford HS (~GS 8/10) delivers solid AP and college-prep programming. At 66% math proficiency — well above the NJ state average of 57% — the district consistently outperforms the state benchmark. Compact, well-resourced district with low economic disadvantage."
+                                             }
                              }
                          ],
     "removed_markets":  [
