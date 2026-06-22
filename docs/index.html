@@ -2490,11 +2490,10 @@ var SCH = (function() {
       var c  = composite(m);
       var s  = m.schools || {};
       var cc = cardCls(c);
-      var star = _primaryIds.has(m.id) ? '<span class="sch-primary-star">★</span>' : '';
       var gsLbl = m.school_rating_greatschools != null ? 'GS ' + m.school_rating_greatschools + '/10' : 'GS —';
       var nLbl  = m.school_rating_niche || '—';
       return '<div class="sch-card ' + cc + '" id="sch-card-' + m.id + '" onclick="SCH.highlight(\'' + m.id + '\')">' +
-        '<div class="sch-card-name" title="' + m.name + '">' + m.name + star + '</div>' +
+        '<div class="sch-card-name" title="' + m.name + '">' + m.name + '</div>' +
         '<div class="sch-card-state">' + m.state + '</div>' +
         '<div class="sch-card-score">' + (c != null ? c.toFixed(1) : '—') + '</div>' +
         '<div class="sch-card-label">School Score</div>' +
@@ -2514,8 +2513,6 @@ var SCH = (function() {
       var avg = STATE_AVG[m.state] || STATE_AVG['NY'];
       var gs  = m.school_rating_greatschools;
       var ni  = m.school_rating_niche || '—';
-      var star = _primaryIds.has(m.id) ? '<span class="sch-primary-star">★</span>' : '';
-
       // Group separator
       var sep = '';
       if (_filter === 'all' && m.region !== lastRegion) {
@@ -2526,7 +2523,7 @@ var SCH = (function() {
       // No data row
       if (gs == null && !s.district_name) {
         return sep + '<tr id="sch-row-' + m.id + '">' +
-          '<td>' + m.name + star + '<br><span class="sch-muted">' + m.region + '</span></td>' +
+          '<td>' + m.name + '<br><span class="sch-muted">' + m.region + '</span></td>' +
           '<td class="sch-gray-cell">—</td>' +
           '<td colspan="14" class="sch-gray-cell" style="text-align:center;font-style:italic">School data pending</td>' +
           '</tr>';
@@ -2551,7 +2548,7 @@ var SCH = (function() {
 
       return sep +
         '<tr id="sch-row-' + m.id + '">' +
-        '<td>' + m.name + star + '<br><span class="sch-muted">' + m.region + '</span></td>' +
+        '<td>' + m.name + '<br><span class="sch-muted">' + m.region + '</span></td>' +
         '<td class="' + rCls(c) + '"><strong>' + (c != null ? c.toFixed(1) : '—') + '</strong></td>' +
         '<td style="font-size:.65rem;max-width:100px;white-space:normal">' + (s.district_name || '—') + '</td>' +
         '<td class="' + rCls(gs) + '">' + (gs != null ? gs + '/10' : '—') + '</td>' +
@@ -2630,7 +2627,7 @@ var SCH = (function() {
   function renderFilters() {
     var filters = [
       { f: 'all',         label: 'All Markets' },
-      { f: 'primary',     label: '★ Primary 4' },
+      { f: 'primary',     label: 'Primary 4' },
       { f: 'nj',          label: 'NJ' },
       { f: 'li',          label: 'Long Island' },
       { f: 'westchester', label: 'Westchester' }
@@ -2649,7 +2646,7 @@ SCH.render();
 (function() {
   var filters = [
     { f: 'all',         label: 'All Markets' },
-    { f: 'primary',     label: '★ Primary 4' },
+    { f: 'primary',     label: 'Primary 4' },
     { f: 'nj',          label: 'NJ' },
     { f: 'li',          label: 'Long Island' },
     { f: 'westchester', label: 'Westchester' }
