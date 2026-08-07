@@ -2,7 +2,7 @@
     "meta":  {
                  "version":  "1.0",
                  "created":  "2026-06-02",
-                 "last_updated":  "2026-06-02",
+                 "last_updated":  "2026-07-08",
                  "description":  "Agent memory â€” persists buyer preferences, market signals, and learning across weekly runs"
              },
     "buyer_profile":  {
@@ -47,52 +47,52 @@
                            },
     "price_signals":  {
                           "floral_park":  {
-                                              "trend":  "rising",
+                                              "trend":  "stable",
                                               "yoy_pct":  8.9,
-                                              "last_seen":  860057,
-                                              "as_of":  "2026-04-30"
+                                              "last_seen":  868688,
+                                              "as_of":  "2026-07-08"
                                           },
                           "rockville_centre":  {
                                                    "trend":  "rising",
                                                    "yoy_pct":  13.2,
-                                                   "last_seen":  962053,
-                                                   "as_of":  "2026-04-30"
+                                                   "last_seen":  982603,
+                                                   "as_of":  "2026-07-08"
                                                },
                           "maplewood":  {
                                             "trend":  "rising",
                                             "yoy_pct":  null,
-                                            "last_seen":  965136,
-                                            "as_of":  "2026-04-30"
+                                            "last_seen":  976599,
+                                            "as_of":  "2026-07-08"
                                         },
                           "pelham":  {
                                          "trend":  "rising",
                                          "yoy_pct":  null,
-                                         "last_seen":  1367865,
-                                         "as_of":  "2026-04-30"
+                                         "last_seen":  1390668,
+                                         "as_of":  "2026-07-08"
                                      },
                           "port_washington":  {
-                                                  "trend":  null,
+                                                  "trend":  "rising",
                                                   "yoy_pct":  null,
-                                                  "last_seen":  1250254,
-                                                  "as_of":  "2026-04-30"
+                                                  "last_seen":  1268824,
+                                                  "as_of":  "2026-07-08"
                                               },
                           "larchmont":  {
-                                            "trend":  null,
+                                            "trend":  "rising",
                                             "yoy_pct":  null,
-                                            "last_seen":  1669266,
-                                            "as_of":  "2026-04-30"
+                                            "last_seen":  1710903,
+                                            "as_of":  "2026-07-08"
                                         },
                           "bronxville":  {
-                                             "trend":  null,
+                                             "trend":  "rising",
                                              "yoy_pct":  null,
-                                             "last_seen":  1408851,
-                                             "as_of":  "2026-04-30"
+                                             "last_seen":  1580587,
+                                             "as_of":  "2026-07-08"
                                          },
                           "sea_cliff":  {
-                                            "trend":  "cooling",
+                                            "trend":  "stable",
                                             "yoy_pct":  6.1,
-                                            "last_seen":  1108030,
-                                            "as_of":  "2026-04-30"
+                                            "last_seen":  1119221,
+                                            "as_of":  "2026-07-08"
                                         },
                           "mamaroneck":  {
                                              "trend":  null,
@@ -101,29 +101,83 @@
                                              "as_of":  "2026-06-02"
                                          },
                           "montclair":  {
-                                            "trend":  null,
+                                            "trend":  "rising",
                                             "yoy_pct":  null,
-                                            "last_seen":  1154035,
-                                            "as_of":  "2026-04-30"
+                                            "last_seen":  1172127,
+                                            "as_of":  "2026-07-08"
                                         },
                           "westfield":  {
-                                            "trend":  null,
+                                            "trend":  "rising",
                                             "yoy_pct":  null,
-                                            "last_seen":  1282964,
-                                            "as_of":  "2026-04-30"
+                                            "last_seen":  1309595,
+                                            "as_of":  "2026-07-08"
                                         },
                           "chatham":  {
-                                          "trend":  null,
+                                          "trend":  "rising",
                                           "yoy_pct":  null,
-                                          "last_seen":  1340964,
-                                          "as_of":  "2026-04-30"
+                                          "last_seen":  1367505,
+                                          "as_of":  "2026-07-08"
                                       },
                           "new_rochelle":  {
-                                               "trend":  null,
+                                               "trend":  "rising",
                                                "yoy_pct":  null,
-                                               "last_seen":  916398,
-                                               "as_of":  "2026-04-30"
-                                           }
+                                               "last_seen":  935932,
+                                               "as_of":  "2026-07-08"
+                                           },
+                          "south_orange":  {
+                                               "trend":  "rising",
+                                               "yoy_pct":  null,
+                                               "last_seen":  1102650,
+                                               "as_of":  "2026-07-08"
+                                           },
+                          "west_orange":  {
+                                              "trend":  "rising",
+                                              "yoy_pct":  null,
+                                              "last_seen":  698053,
+                                              "as_of":  "2026-07-08"
+                                          },
+                          "rutherford":  {
+                                             "trend":  "rising",
+                                             "yoy_pct":  null,
+                                             "last_seen":  751634,
+                                             "as_of":  "2026-07-08"
+                                         },
+                          "essex_fells":  {
+                                              "trend":  "rising",
+                                              "yoy_pct":  null,
+                                              "last_seen":  1471178,
+                                              "as_of":  "2026-07-08"
+                                          },
+                          "nutley":  {
+                                         "trend":  "rising",
+                                         "yoy_pct":  null,
+                                         "last_seen":  665212,
+                                         "as_of":  "2026-07-08"
+                                     },
+                          "merrick":  {
+                                          "trend":  "rising",
+                                          "yoy_pct":  null,
+                                          "last_seen":  889400,
+                                          "as_of":  "2026-07-08"
+                                      },
+                          "glen_ridge":  {
+                                             "trend":  "rising",
+                                             "yoy_pct":  null,
+                                             "last_seen":  1171130,
+                                             "as_of":  "2026-07-08"
+                                         },
+                          "verona":  {
+                                         "trend":  "rising",
+                                         "yoy_pct":  null,
+                                         "last_seen":  776363,
+                                         "as_of":  "2026-07-08"
+                                     },
+                          "caldwell":  {
+                                           "trend":  "rising",
+                                           "yoy_pct":  null,
+                                           "last_seen":  741312,
+                                           "as_of":  "2026-07-08"
+                                       }
                       },
     "rate_history":  [
                          {
@@ -151,14 +205,61 @@
                                "rate_changes":  0,
                                "watchlist_drops":  0,
                                "notable":  "No changes detected"
+                           },
+                           {
+                               "date":  "2026-06-10",
+                               "markets_tracked":  15,
+                               "rate_30yr":  0.0651,
+                               "price_changes":  0,
+                               "rate_changes":  0,
+                               "watchlist_drops":  0,
+                               "notable":  "No changes detected"
+                           },
+                           {
+                               "date":  "2026-06-17",
+                               "markets_tracked":  24,
+                               "rate_30yr":  0.0651,
+                               "price_changes":  0,
+                               "rate_changes":  0,
+                               "watchlist_drops":  0,
+                               "notable":  "No changes detected"
+                           },
+                           {
+                               "date":  "2026-07-03",
+                               "markets_tracked":  26,
+                               "rate_30yr":  0.0651,
+                               "price_changes":  0,
+                               "rate_changes":  0,
+                               "watchlist_drops":  0,
+                               "notable":  "No changes detected"
+                           },
+                           {
+                               "date":  "2026-07-08",
+                               "markets_tracked":  26,
+                               "rate_30yr":  0.0651,
+                               "price_changes":  24,
+                               "rate_changes":  0,
+                               "watchlist_drops":  0,
+                               "notable":  "Changes: â–² **Floral Park** $868,688 (up $8,631, 1%); â–² **Rockville Centre** $982,603 (up $20,550, 2.1%); â–² **Maplewood** $976,599 (up $11,463, 1.2%); â–² **Pelham** $1,390,668 (up $22,803, 1.7%); â–² **Larchmont** $1,710,903 (up $41,637, 2.5%); â–² **Bronxville** $1,580,587 (up $171,736, 12.2%); â–² **Sea Cliff** $1,119,221 (up $11,191, 1%); â–² **Montclair** $1,172,127 (up $18,092, 1.6%); â–² **Westfield** $1,309,595 (up $26,631, 2.1%); â–² **Chatham** $1,367,505 (up $26,541, 2%); â–² **Port Washington** $1,268,824 (up $18,570, 1.5%); â–² **New Rochelle** $935,932 (up $19,534, 2.1%); â–² **South Orange** $1,102,650 (up $422,650, 62.2%); â–² **West Orange** $698,053 (up $108,053, 18.3%); â–² **Rutherford** $751,634 (up $116,634, 18.4%); â–² **Essex Fells** $1,471,178 (up $491,178, 50.1%); â–² **Nutley** $665,212 (up $100,212, 17.7%); â–² **Glen Ridge** $1,171,130 (up $311,130, 36.2%); â–² **Verona** $776,363 (up $156,363, 25.2%); â–² **Caldwell** $741,312 (up $196,312, 36%); â–² **Merrick** $889,400 (up $169,400, 23.5%); â–² **Malverne** $807,581 (up $107,581, 15.4%); â–¼ **Lynbrook** $748,596 (down $11,404, 1.5%); â–² **Cranford** $782,235 (up $22,235, 2.9%)"
+                           },
+                           {
+                               "date":  "2026-07-08",
+                               "markets_tracked":  26,
+                               "rate_30yr":  0.0651,
+                               "price_changes":  0,
+                               "rate_changes":  0,
+                               "watchlist_drops":  0,
+                               "notable":  "No changes detected"
                            }
                        ],
-    "agent_observations":  [
-                               "Buyer added Port Washington back to dashboard after it was previously removed â€” suggests renewed interest in Gold Coast LI markets.",
-                               "Budget ceiling appears to be $1M based on search filter set to under $1M for listing scanner.",
-                               "Pelham median ($1.37M) is well above budget â€” tracked for reference but unlikely purchase target at current prices.",
-                               "Rockville Centre showing strongest YoY appreciation (13.2%) â€” competitive market, may need to move quickly.",
-                               "Floral Park is the most affordable primary market and within conforming loan limit â€” no jumbo required."
-                           ],
+    "agent_observations":  {
+                               "value":  [
+                                             "Tracking 26 markets with 30yr mortgage rate at 6.51%",
+                                             "No properties dropped from watchlist this week",
+                                             "Stable rate environment - monitor for changes",
+                                             "Market conditions remain consistent across tracked regions"
+                                         ],
+                               "Count":  4
+                           },
     "next_run_instructions":  "Compare current prices against price_signals.last_seen values. Flag any market where price dropped more than 2% as a buying opportunity. Note any markets crossing the $832,750 conforming loan threshold in either direction."
 }

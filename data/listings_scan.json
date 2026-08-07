@@ -1,0 +1,186 @@
+﻿[
+    {
+        "id":  "fp",
+        "name":  "Floral Park",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Floral-Park/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/floral-park-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/floral-park_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "rvc",
+        "name":  "Rockville Centre",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Rockville-Centre/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/rockville-centre-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/rockville-centre_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "mw",
+        "name":  "Maplewood",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Maplewood/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/maplewood-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/maplewood_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "plh",
+        "name":  "Pelham",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Pelham/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/pelham-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/pelham_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "ptw",
+        "name":  "Port Washington",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Port-Washington/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/port-washington-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/port-washington_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "lch",
+        "name":  "Larchmont",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Larchmont/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/larchmont-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/larchmont_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "mmk",
+        "name":  "Mamaroneck",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Mamaroneck/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/mamaroneck-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/mamaroneck_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "brx",
+        "name":  "Bronxville",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Bronxville/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/bronxville-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/bronxville_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "scl",
+        "name":  "Sea Cliff",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Sea-Cliff/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/sea-cliff-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/sea-cliff_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "nro",
+        "name":  "New Rochelle",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/New-Rochelle/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/new-rochelle-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/new-rochelle_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "mtc",
+        "name":  "Montclair",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Montclair/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/montclair-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/montclair_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "wfd",
+        "name":  "Westfield",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Westfield/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/westfield-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/westfield_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "chm",
+        "name":  "Chatham",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Chatham/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/chatham-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/chatham_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "rkp",
+        "name":  "Rockaway Park",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Rockaway-Park/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/rockaway-park-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/rockaway-park_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "sorg",
+        "name":  "South Orange",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/South-Orange/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/south-orange-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/south-orange_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "worg",
+        "name":  "West Orange",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/West-Orange/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/west-orange-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/west-orange_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "ruth",
+        "name":  "Rutherford",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Rutherford/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/rutherford-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/rutherford_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "efls",
+        "name":  "Essex Fells",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Essex-Fells/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/essex-fells-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/essex-fells_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "nutl",
+        "name":  "Nutley",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Nutley/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/nutley-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/nutley_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "glnr",
+        "name":  "Glen Ridge",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Glen-Ridge/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/glen-ridge-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/glen-ridge_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "vron",
+        "name":  "Verona",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Verona/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/verona-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/verona_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "cldw",
+        "name":  "Caldwell",
+        "state":  "NJ",
+        "redfin":  "https://www.redfin.com/NJ/Caldwell/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/caldwell-nj/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/caldwell_nj/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    },
+    {
+        "id":  "mrk",
+        "name":  "Merrick",
+        "state":  "NY",
+        "redfin":  "https://www.redfin.com/NY/Merrick/filter/max-price=1000k,min-beds=3,property-type=house",
+        "zillow":  "https://www.zillow.com/merrick-ny/3-beds/?price=0-1000000",
+        "trulia":  "https://www.trulia.com/merrick_ny/SINGLE-FAMILY_HOME/0-1000000_price/3p_beds/"
+    }
+]

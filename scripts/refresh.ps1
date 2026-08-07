@@ -137,11 +137,23 @@ if (-not $RatesOnly) {
         lch = @{ city = "Larchmont";         state = "NY" }
         brx = @{ city = "Bronxville";        state = "NY" }
         scl = @{ city = "Sea Cliff";         state = "NY" }
-        mmk = @{ city = "Mamaroneck";        state = "NY" }
         mtc = @{ city = "Montclair";         state = "NJ" }
         chm = @{ city = "Chatham";           state = "NJ" }
         wfd = @{ city = "Westfield";         state = "NJ" }
         nro = @{ city = "New Rochelle";      state = "NY" }
+        ptw = @{ city = "Port Washington";   state = "NY" }
+        sorg = @{ city = "South Orange";    state = "NJ" }
+        worg = @{ city = "West Orange";     state = "NJ" }
+        ruth = @{ city = "Rutherford";      state = "NJ" }
+        efls = @{ city = "Essex Fells";     state = "NJ" }
+        nutl = @{ city = "Nutley";          state = "NJ" }
+        glnr = @{ city = "Glen Ridge";      state = "NJ" }
+        vron = @{ city = "Verona";          state = "NJ" }
+        cldw = @{ city = "Caldwell";        state = "NJ" }
+        mrk  = @{ city = "Merrick";         state = "NY" }
+        mlv  = @{ city = "Malverne";        state = "NY" }
+        lbk  = @{ city = "Lynbrook";        state = "NY" }
+        crf  = @{ city = "Cranford";        state = "NJ" }
     }
     # Note: sfrOnly flag intended for NRO but Zillow does not publish a city-level
     # SFR series for New Rochelle -- it is absent from that feed. Falls back to the

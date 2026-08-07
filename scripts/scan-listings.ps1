@@ -32,7 +32,16 @@ $markets = @(
     @{ id="mtc"; name="Montclair";        state="NJ"; redfin="NJ/Montclair";         zillow="montclair-nj";        trulia="montclair_nj" }
     @{ id="wfd"; name="Westfield";        state="NJ"; redfin="NJ/Westfield";         zillow="westfield-nj";        trulia="westfield_nj" }
     @{ id="chm"; name="Chatham";          state="NJ"; redfin="NJ/Chatham";           zillow="chatham-nj";          trulia="chatham_nj" }
-    @{ id="rkp"; name="Rockaway Park";    state="NY"; redfin="NY/Rockaway-Park";     zillow="rockaway-park-ny";    trulia="rockaway-park_ny" }
+    @{ id="rkp";  name="Rockaway Park";  state="NY"; redfin="NY/Rockaway-Park";    zillow="rockaway-park-ny";    trulia="rockaway-park_ny" }
+    @{ id="sorg"; name="South Orange";   state="NJ"; redfin="NJ/South-Orange";    zillow="south-orange-nj";     trulia="south-orange_nj" }
+    @{ id="worg"; name="West Orange";    state="NJ"; redfin="NJ/West-Orange";     zillow="west-orange-nj";      trulia="west-orange_nj" }
+    @{ id="ruth"; name="Rutherford";     state="NJ"; redfin="NJ/Rutherford";      zillow="rutherford-nj";       trulia="rutherford_nj" }
+    @{ id="efls"; name="Essex Fells";    state="NJ"; redfin="NJ/Essex-Fells";     zillow="essex-fells-nj";      trulia="essex-fells_nj" }
+    @{ id="nutl"; name="Nutley";         state="NJ"; redfin="NJ/Nutley";          zillow="nutley-nj";           trulia="nutley_nj" }
+    @{ id="glnr"; name="Glen Ridge";     state="NJ"; redfin="NJ/Glen-Ridge";      zillow="glen-ridge-nj";       trulia="glen-ridge_nj" }
+    @{ id="vron"; name="Verona";         state="NJ"; redfin="NJ/Verona";          zillow="verona-nj";           trulia="verona_nj" }
+    @{ id="cldw"; name="Caldwell";       state="NJ"; redfin="NJ/Caldwell";        zillow="caldwell-nj";         trulia="caldwell_nj" }
+    @{ id="mrk";  name="Merrick";        state="NY"; redfin="NY/Merrick";         zillow="merrick-ny";          trulia="merrick_ny" }
 )
 
 Log "Generating search links for $($markets.Count) markets (${MinBeds}+ BR, under ${MaxK}k)..."
