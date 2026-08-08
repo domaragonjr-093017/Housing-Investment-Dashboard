@@ -175,6 +175,12 @@ if (-not $MdOnly) {
         Write-Host "[export] GitHub Pages -> $docsPath"
 
         # ── Auto-push docs/index.html to GitHub so live dashboard stays current ─
+        # NOTE: PowerShell 5.1 turns a native command's stderr (e.g. git's routine
+        # "LF will be replaced by CRLF" notice) into a terminating error when
+        # $ErrorActionPreference is "Stop" (inherited from refresh.ps1). Downgrade
+        # it locally so those warnings don't abort the commit/push.
+        $prevEAP = $ErrorActionPreference
+        $ErrorActionPreference = "Continue"
         try {
             $gitStatus = git -C $ROOT status --porcelain docs/index.html 2>&1
             if ($gitStatus) {
@@ -188,6 +194,8 @@ if (-not $MdOnly) {
             }
         } catch {
             Write-Host "[export] WARN: GitHub push failed - $($_.Exception.Message)"
+        } finally {
+            $ErrorActionPreference = $prevEAP
         }
     }
 }

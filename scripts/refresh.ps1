@@ -82,10 +82,10 @@ if (-not $PricesOnly) {
         Log "Fetching mortgage rates from FRED..."
         try {
             $base   = "https://api.stlouisfed.org/fred/series/observations"
-            $params = "?api_key=$fredKey&file_type=json&sort_order=desc&limit=1"
+            $params = "api_key=$fredKey&file_type=json&sort_order=desc&limit=1"
 
-            $r30 = Invoke-RestMethod "$base`?series_id=MORTGAGE30US$params"
-            $r15 = Invoke-RestMethod "$base`?series_id=MORTGAGE15US$params"
+            $r30 = Invoke-RestMethod "$base`?series_id=MORTGAGE30US&$params"
+            $r15 = Invoke-RestMethod "$base`?series_id=MORTGAGE15US&$params"
 
             $rate30 = [double]$r30.observations[0].value / 100
             $rate15 = [double]$r15.observations[0].value / 100
