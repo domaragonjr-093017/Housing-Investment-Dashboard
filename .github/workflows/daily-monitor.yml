@@ -1,13 +1,15 @@
-name: Daily Market Monitor
+name: Weekly Market Monitor
 
 on:
   schedule:
-    - cron: '0 12 * * *'   # Every day at 8:00 AM ET (EDT = UTC-4)
+    - cron: '0 1 * * 4'   # Every Wednesday 9:00 PM ET (EDT = UTC-4) -> Thursday 01:00 UTC
   workflow_dispatch:         # Allow manual trigger from GitHub UI
 
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repo
