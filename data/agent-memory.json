@@ -1,265 +1,261 @@
-﻿{
-    "meta":  {
-                 "version":  "1.0",
-                 "created":  "2026-06-02",
-                 "last_updated":  "2026-07-08",
-                 "description":  "Agent memory â€” persists buyer preferences, market signals, and learning across weekly runs"
-             },
-    "buyer_profile":  {
-                          "budget_ceiling":  1000000,
-                          "down_payment":  658000,
-                          "conforming_limit":  832750,
-                          "max_piti_monthly":  5000,
-                          "household":  "family with two young children",
-                          "work_location":  "Midtown Manhattan (finance)",
-                          "priority_order":  [
-                                                 "school_quality",
-                                                 "commute",
-                                                 "piti_affordability",
-                                                 "price"
-                                             ],
-                          "notes":  "Jumbo loan required above $832,750 â€” adds ~0.10-0.15% to rate. Primary down payment source is proceeds from current home sale (~$700K estimated value)."
-                      },
-    "market_preferences":  {
-                               "strong_interest":  [
-
-                                                   ],
-                               "mild_interest":  [
-
-                                                 ],
-                               "ruled_out":  [
-
-                                             ],
-                               "notes":  {
-
-                                         }
-                           },
-    "commute_preferences":  {
-                                "max_commute_minutes":  55,
-                                "preferred_terminal":  "either Penn Station or Grand Central",
-                                "transit_notes":  "Metro-North to GCT preferred over LIRR to Penn for quality of ride. Direct LIRR lines (no Jamaica transfer) rated higher than branch lines requiring transfer.",
-                                "no_transfer_bonus":  true
-                            },
-    "school_preferences":  {
-                               "min_greatschools_rating":  7,
-                               "preferred_rating":  8,
-                               "notes":  "Two young children â€” school district is the #1 filter. GreatSchools 8+ strongly preferred. Niche A or better ideal."
-                           },
-    "price_signals":  {
-                          "floral_park":  {
-                                              "trend":  "stable",
-                                              "yoy_pct":  8.9,
-                                              "last_seen":  868688,
-                                              "as_of":  "2026-07-08"
-                                          },
-                          "rockville_centre":  {
-                                                   "trend":  "rising",
-                                                   "yoy_pct":  13.2,
-                                                   "last_seen":  982603,
-                                                   "as_of":  "2026-07-08"
-                                               },
-                          "maplewood":  {
-                                            "trend":  "rising",
-                                            "yoy_pct":  null,
-                                            "last_seen":  976599,
-                                            "as_of":  "2026-07-08"
-                                        },
-                          "pelham":  {
-                                         "trend":  "rising",
-                                         "yoy_pct":  null,
-                                         "last_seen":  1390668,
-                                         "as_of":  "2026-07-08"
-                                     },
-                          "port_washington":  {
-                                                  "trend":  "rising",
-                                                  "yoy_pct":  null,
-                                                  "last_seen":  1268824,
-                                                  "as_of":  "2026-07-08"
-                                              },
-                          "larchmont":  {
-                                            "trend":  "rising",
-                                            "yoy_pct":  null,
-                                            "last_seen":  1710903,
-                                            "as_of":  "2026-07-08"
-                                        },
-                          "bronxville":  {
-                                             "trend":  "rising",
-                                             "yoy_pct":  null,
-                                             "last_seen":  1580587,
-                                             "as_of":  "2026-07-08"
-                                         },
-                          "sea_cliff":  {
-                                            "trend":  "stable",
-                                            "yoy_pct":  6.1,
-                                            "last_seen":  1119221,
-                                            "as_of":  "2026-07-08"
-                                        },
-                          "mamaroneck":  {
-                                             "trend":  null,
-                                             "yoy_pct":  null,
-                                             "last_seen":  908000,
-                                             "as_of":  "2026-06-02"
-                                         },
-                          "montclair":  {
-                                            "trend":  "rising",
-                                            "yoy_pct":  null,
-                                            "last_seen":  1172127,
-                                            "as_of":  "2026-07-08"
-                                        },
-                          "westfield":  {
-                                            "trend":  "rising",
-                                            "yoy_pct":  null,
-                                            "last_seen":  1309595,
-                                            "as_of":  "2026-07-08"
-                                        },
-                          "chatham":  {
-                                          "trend":  "rising",
-                                          "yoy_pct":  null,
-                                          "last_seen":  1367505,
-                                          "as_of":  "2026-07-08"
-                                      },
-                          "new_rochelle":  {
-                                               "trend":  "rising",
-                                               "yoy_pct":  null,
-                                               "last_seen":  935932,
-                                               "as_of":  "2026-07-08"
-                                           },
-                          "south_orange":  {
-                                               "trend":  "rising",
-                                               "yoy_pct":  null,
-                                               "last_seen":  1102650,
-                                               "as_of":  "2026-07-08"
-                                           },
-                          "west_orange":  {
-                                              "trend":  "rising",
-                                              "yoy_pct":  null,
-                                              "last_seen":  698053,
-                                              "as_of":  "2026-07-08"
-                                          },
-                          "rutherford":  {
-                                             "trend":  "rising",
-                                             "yoy_pct":  null,
-                                             "last_seen":  751634,
-                                             "as_of":  "2026-07-08"
-                                         },
-                          "essex_fells":  {
-                                              "trend":  "rising",
-                                              "yoy_pct":  null,
-                                              "last_seen":  1471178,
-                                              "as_of":  "2026-07-08"
-                                          },
-                          "nutley":  {
-                                         "trend":  "rising",
-                                         "yoy_pct":  null,
-                                         "last_seen":  665212,
-                                         "as_of":  "2026-07-08"
-                                     },
-                          "merrick":  {
-                                          "trend":  "rising",
-                                          "yoy_pct":  null,
-                                          "last_seen":  889400,
-                                          "as_of":  "2026-07-08"
-                                      },
-                          "glen_ridge":  {
-                                             "trend":  "rising",
-                                             "yoy_pct":  null,
-                                             "last_seen":  1171130,
-                                             "as_of":  "2026-07-08"
-                                         },
-                          "verona":  {
-                                         "trend":  "rising",
-                                         "yoy_pct":  null,
-                                         "last_seen":  776363,
-                                         "as_of":  "2026-07-08"
-                                     },
-                          "caldwell":  {
-                                           "trend":  "rising",
-                                           "yoy_pct":  null,
-                                           "last_seen":  741312,
-                                           "as_of":  "2026-07-08"
-                                       }
-                      },
-    "rate_history":  [
-                         {
-                             "date":  "2026-05-22",
-                             "rate_30yr":  0.0651,
-                             "rate_15yr":  0.0585,
-                             "driver":  "Iran conflict + May CPI 3.8%"
-                         }
-                     ],
-    "watchlist_history":  [
-
-                          ],
-    "weekly_run_log":  [
-                           {
-                               "date":  "2026-06-02",
-                               "markets_tracked":  14,
-                               "rate_30yr":  0.0651,
-                               "notable":  "Port Washington added to dashboard. GitHub Actions automation set up. Listing scanner and watchlist alerts added to email."
-                           },
-                           {
-                               "date":  "2026-06-02",
-                               "markets_tracked":  15,
-                               "rate_30yr":  0.0651,
-                               "price_changes":  0,
-                               "rate_changes":  0,
-                               "watchlist_drops":  0,
-                               "notable":  "No changes detected"
-                           },
-                           {
-                               "date":  "2026-06-10",
-                               "markets_tracked":  15,
-                               "rate_30yr":  0.0651,
-                               "price_changes":  0,
-                               "rate_changes":  0,
-                               "watchlist_drops":  0,
-                               "notable":  "No changes detected"
-                           },
-                           {
-                               "date":  "2026-06-17",
-                               "markets_tracked":  24,
-                               "rate_30yr":  0.0651,
-                               "price_changes":  0,
-                               "rate_changes":  0,
-                               "watchlist_drops":  0,
-                               "notable":  "No changes detected"
-                           },
-                           {
-                               "date":  "2026-07-03",
-                               "markets_tracked":  26,
-                               "rate_30yr":  0.0651,
-                               "price_changes":  0,
-                               "rate_changes":  0,
-                               "watchlist_drops":  0,
-                               "notable":  "No changes detected"
-                           },
-                           {
-                               "date":  "2026-07-08",
-                               "markets_tracked":  26,
-                               "rate_30yr":  0.0651,
-                               "price_changes":  24,
-                               "rate_changes":  0,
-                               "watchlist_drops":  0,
-                               "notable":  "Changes: â–² **Floral Park** $868,688 (up $8,631, 1%); â–² **Rockville Centre** $982,603 (up $20,550, 2.1%); â–² **Maplewood** $976,599 (up $11,463, 1.2%); â–² **Pelham** $1,390,668 (up $22,803, 1.7%); â–² **Larchmont** $1,710,903 (up $41,637, 2.5%); â–² **Bronxville** $1,580,587 (up $171,736, 12.2%); â–² **Sea Cliff** $1,119,221 (up $11,191, 1%); â–² **Montclair** $1,172,127 (up $18,092, 1.6%); â–² **Westfield** $1,309,595 (up $26,631, 2.1%); â–² **Chatham** $1,367,505 (up $26,541, 2%); â–² **Port Washington** $1,268,824 (up $18,570, 1.5%); â–² **New Rochelle** $935,932 (up $19,534, 2.1%); â–² **South Orange** $1,102,650 (up $422,650, 62.2%); â–² **West Orange** $698,053 (up $108,053, 18.3%); â–² **Rutherford** $751,634 (up $116,634, 18.4%); â–² **Essex Fells** $1,471,178 (up $491,178, 50.1%); â–² **Nutley** $665,212 (up $100,212, 17.7%); â–² **Glen Ridge** $1,171,130 (up $311,130, 36.2%); â–² **Verona** $776,363 (up $156,363, 25.2%); â–² **Caldwell** $741,312 (up $196,312, 36%); â–² **Merrick** $889,400 (up $169,400, 23.5%); â–² **Malverne** $807,581 (up $107,581, 15.4%); â–¼ **Lynbrook** $748,596 (down $11,404, 1.5%); â–² **Cranford** $782,235 (up $22,235, 2.9%)"
-                           },
-                           {
-                               "date":  "2026-07-08",
-                               "markets_tracked":  26,
-                               "rate_30yr":  0.0651,
-                               "price_changes":  0,
-                               "rate_changes":  0,
-                               "watchlist_drops":  0,
-                               "notable":  "No changes detected"
-                           }
-                       ],
-    "agent_observations":  {
-                               "value":  [
-                                             "Tracking 26 markets with 30yr mortgage rate at 6.51%",
-                                             "No properties dropped from watchlist this week",
-                                             "Stable rate environment - monitor for changes",
-                                             "Market conditions remain consistent across tracked regions"
-                                         ],
-                               "Count":  4
-                           },
-    "next_run_instructions":  "Compare current prices against price_signals.last_seen values. Flag any market where price dropped more than 2% as a buying opportunity. Note any markets crossing the $832,750 conforming loan threshold in either direction."
+{
+  "meta": {
+    "version": "1.0",
+    "created": "2026-06-02",
+    "last_updated": "2026-08-20",
+    "description": "Agent memory â€” persists buyer preferences, market signals, and learning across weekly runs"
+  },
+  "buyer_profile": {
+    "budget_ceiling": 1000000,
+    "down_payment": 658000,
+    "conforming_limit": 832750,
+    "max_piti_monthly": 5000,
+    "household": "family with two young children",
+    "work_location": "Midtown Manhattan (finance)",
+    "priority_order": [
+      "school_quality",
+      "commute",
+      "piti_affordability",
+      "price"
+    ],
+    "notes": "Jumbo loan required above $832,750 â€” adds ~0.10-0.15% to rate. Primary down payment source is proceeds from current home sale (~$700K estimated value)."
+  },
+  "market_preferences": {
+    "strong_interest": [],
+    "mild_interest": [],
+    "ruled_out": [],
+    "notes": {}
+  },
+  "commute_preferences": {
+    "max_commute_minutes": 55,
+    "preferred_terminal": "either Penn Station or Grand Central",
+    "transit_notes": "Metro-North to GCT preferred over LIRR to Penn for quality of ride. Direct LIRR lines (no Jamaica transfer) rated higher than branch lines requiring transfer.",
+    "no_transfer_bonus": true
+  },
+  "school_preferences": {
+    "min_greatschools_rating": 7,
+    "preferred_rating": 8,
+    "notes": "Two young children â€” school district is the #1 filter. GreatSchools 8+ strongly preferred. Niche A or better ideal."
+  },
+  "price_signals": {
+    "floral_park": {
+      "trend": "stable",
+      "yoy_pct": 8.9,
+      "last_seen": 868688,
+      "as_of": "2026-07-08"
+    },
+    "rockville_centre": {
+      "trend": "rising",
+      "yoy_pct": 13.2,
+      "last_seen": 982603,
+      "as_of": "2026-07-08"
+    },
+    "maplewood": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 976599,
+      "as_of": "2026-07-08"
+    },
+    "pelham": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1390668,
+      "as_of": "2026-07-08"
+    },
+    "port_washington": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1268824,
+      "as_of": "2026-07-08"
+    },
+    "larchmont": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1710903,
+      "as_of": "2026-07-08"
+    },
+    "bronxville": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1580587,
+      "as_of": "2026-07-08"
+    },
+    "sea_cliff": {
+      "trend": "stable",
+      "yoy_pct": 6.1,
+      "last_seen": 1119221,
+      "as_of": "2026-07-08"
+    },
+    "mamaroneck": {
+      "trend": null,
+      "yoy_pct": null,
+      "last_seen": 908000,
+      "as_of": "2026-06-02"
+    },
+    "montclair": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1172127,
+      "as_of": "2026-07-08"
+    },
+    "westfield": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1309595,
+      "as_of": "2026-07-08"
+    },
+    "chatham": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1367505,
+      "as_of": "2026-07-08"
+    },
+    "new_rochelle": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 935932,
+      "as_of": "2026-07-08"
+    },
+    "south_orange": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1102650,
+      "as_of": "2026-07-08"
+    },
+    "west_orange": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 698053,
+      "as_of": "2026-07-08"
+    },
+    "rutherford": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 751634,
+      "as_of": "2026-07-08"
+    },
+    "essex_fells": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1471178,
+      "as_of": "2026-07-08"
+    },
+    "nutley": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 665212,
+      "as_of": "2026-07-08"
+    },
+    "merrick": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 889400,
+      "as_of": "2026-07-08"
+    },
+    "glen_ridge": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 1171130,
+      "as_of": "2026-07-08"
+    },
+    "verona": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 776363,
+      "as_of": "2026-07-08"
+    },
+    "caldwell": {
+      "trend": "rising",
+      "yoy_pct": null,
+      "last_seen": 741312,
+      "as_of": "2026-07-08"
+    }
+  },
+  "rate_history": [
+    {
+      "date": "2026-05-22",
+      "rate_30yr": 0.0651,
+      "rate_15yr": 0.0585,
+      "driver": "Iran conflict + May CPI 3.8%"
+    },
+    {
+      "date": "2026-08-20",
+      "rate_30yr": 0.0667,
+      "rate_15yr": 0.0596,
+      "driver": "(auto-updated by refresh.ps1)"
+    }
+  ],
+  "watchlist_history": [],
+  "weekly_run_log": [
+    {
+      "date": "2026-06-02",
+      "markets_tracked": 14,
+      "rate_30yr": 0.0651,
+      "notable": "Port Washington added to dashboard. GitHub Actions automation set up. Listing scanner and watchlist alerts added to email."
+    },
+    {
+      "date": "2026-06-02",
+      "markets_tracked": 15,
+      "rate_30yr": 0.0651,
+      "price_changes": 0,
+      "rate_changes": 0,
+      "watchlist_drops": 0,
+      "notable": "No changes detected"
+    },
+    {
+      "date": "2026-06-10",
+      "markets_tracked": 15,
+      "rate_30yr": 0.0651,
+      "price_changes": 0,
+      "rate_changes": 0,
+      "watchlist_drops": 0,
+      "notable": "No changes detected"
+    },
+    {
+      "date": "2026-06-17",
+      "markets_tracked": 24,
+      "rate_30yr": 0.0651,
+      "price_changes": 0,
+      "rate_changes": 0,
+      "watchlist_drops": 0,
+      "notable": "No changes detected"
+    },
+    {
+      "date": "2026-07-03",
+      "markets_tracked": 26,
+      "rate_30yr": 0.0651,
+      "price_changes": 0,
+      "rate_changes": 0,
+      "watchlist_drops": 0,
+      "notable": "No changes detected"
+    },
+    {
+      "date": "2026-07-08",
+      "markets_tracked": 26,
+      "rate_30yr": 0.0651,
+      "price_changes": 24,
+      "rate_changes": 0,
+      "watchlist_drops": 0,
+      "notable": "Changes: â–² **Floral Park** $868,688 (up $8,631, 1%); â–² **Rockville Centre** $982,603 (up $20,550, 2.1%); â–² **Maplewood** $976,599 (up $11,463, 1.2%); â–² **Pelham** $1,390,668 (up $22,803, 1.7%); â–² **Larchmont** $1,710,903 (up $41,637, 2.5%); â–² **Bronxville** $1,580,587 (up $171,736, 12.2%); â–² **Sea Cliff** $1,119,221 (up $11,191, 1%); â–² **Montclair** $1,172,127 (up $18,092, 1.6%); â–² **Westfield** $1,309,595 (up $26,631, 2.1%); â–² **Chatham** $1,367,505 (up $26,541, 2%); â–² **Port Washington** $1,268,824 (up $18,570, 1.5%); â–² **New Rochelle** $935,932 (up $19,534, 2.1%); â–² **South Orange** $1,102,650 (up $422,650, 62.2%); â–² **West Orange** $698,053 (up $108,053, 18.3%); â–² **Rutherford** $751,634 (up $116,634, 18.4%); â–² **Essex Fells** $1,471,178 (up $491,178, 50.1%); â–² **Nutley** $665,212 (up $100,212, 17.7%); â–² **Glen Ridge** $1,171,130 (up $311,130, 36.2%); â–² **Verona** $776,363 (up $156,363, 25.2%); â–² **Caldwell** $741,312 (up $196,312, 36%); â–² **Merrick** $889,400 (up $169,400, 23.5%); â–² **Malverne** $807,581 (up $107,581, 15.4%); â–¼ **Lynbrook** $748,596 (down $11,404, 1.5%); â–² **Cranford** $782,235 (up $22,235, 2.9%)"
+    },
+    {
+      "date": "2026-07-08",
+      "markets_tracked": 26,
+      "rate_30yr": 0.0651,
+      "price_changes": 0,
+      "rate_changes": 0,
+      "watchlist_drops": 0,
+      "notable": "No changes detected"
+    }
+  ],
+  "agent_observations": {
+    "value": [
+      "Tracking 26 markets with 30yr mortgage rate at 6.51%",
+      "No properties dropped from watchlist this week",
+      "Stable rate environment - monitor for changes",
+      "Market conditions remain consistent across tracked regions"
+    ],
+    "Count": 4
+  },
+  "next_run_instructions": "Compare current prices against price_signals.last_seen values. Flag any market where price dropped more than 2% as a buying opportunity. Note any markets crossing the $832,750 conforming loan threshold in either direction."
 }
