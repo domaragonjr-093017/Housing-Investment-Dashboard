@@ -1,7 +1,7 @@
 ﻿{
     "meta":  {
                  "version":  "1.0",
-                 "last_updated":  "2026-08-15",
+                 "last_updated":  "2026-08-31",
                  "description":  "Housing market dashboard data â€” NYC suburban markets for home purchase research",
                  "owner_context":  {
                                        "net_proceeds":  730000,
@@ -17,13 +17,13 @@
                                    }
              },
     "mortgage_rates":  {
-                           "as_of":  "2026-08-15",
+                           "as_of":  "2026-08-31",
                            "source":  "Freddie Mac PMMS / daily quotes",
                            "rate_driver":  "(auto-updated by refresh.ps1)",
                            "rates":  {
-                                         "30yr_fixed":  0.0667,
+                                         "30yr_fixed":  0.0666,
                                          "20yr_fixed":  0.0642,
-                                         "15yr_fixed":  0.0596
+                                         "15yr_fixed":  0.059800000000000006
                                      },
                            "notes":  "30yr at 6.51% (up from 6.50% prior week). 15yr at 5.85% (up from 5.79%). 20yr at 6.54%. Above conforming limit ($832,750) adds ~0.10-0.15% for jumbo."
                        },
@@ -36,7 +36,7 @@
                                 "region":  "Long Island",
                                 "transit":  "LIRR",
                                 "transit_terminal":  "Penn Station",
-                                "median_price":  879759,
+                                "median_price":  881047,
                                 "annual_tax":  13000,
                                 "tax_rate_pct":  1.65,
                                 "commute_min":  {
@@ -44,7 +44,7 @@
                                                     "high":  45
                                                 },
                                 "school_rating_greatschools":  null,
-                                "yoy_pct":  1.3,
+                                "yoy_pct":  0.1,
                                 "dom":  null,
                                 "price_per_sqft":  null,
                                 "market_tone":  null,
@@ -87,7 +87,7 @@
                                                 "character":  "K-6 only Floral Park-Bellerose UFSD earns a Niche A with 74% math proficiency — well above NY state average. Tight-knit elementary community; families send 7th-graders into Sewanhaka CSD, so research that district separately before committing."
                                             },
                                 "school_rating_niche":  "A",
-                                "price_as_of":  "2026-06-30"
+                                "price_as_of":  "2026-07-31"
                             },
                             {
                                 "id":  "rvc",
@@ -97,7 +97,7 @@
                                 "region":  "Long Island",
                                 "transit":  "LIRR",
                                 "transit_terminal":  "Penn Station",
-                                "median_price":  990815,
+                                "median_price":  985452,
                                 "annual_tax":  17000,
                                 "tax_rate_pct":  2.0,
                                 "commute_min":  {
@@ -105,7 +105,7 @@
                                                     "high":  45
                                                 },
                                 "school_rating_greatschools":  null,
-                                "yoy_pct":  0.8,
+                                "yoy_pct":  -0.5,
                                 "dom":  null,
                                 "price_per_sqft":  null,
                                 "market_tone":  null,
@@ -148,7 +148,7 @@
                                                 "character":  "Compact, high-performing UFSD anchored by South Side High School (GS 9/10). Strong elementary pipeline (GS 9/10) and 80% math proficiency. One of Nassau County\u0027s best all-around suburban districts at its price point."
                                             },
                                 "school_rating_niche":  "A",
-                                "price_as_of":  "2026-06-30"
+                                "price_as_of":  "2026-07-31"
                             },
                             {
                                 "id":  "mw",
@@ -158,7 +158,7 @@
                                 "region":  "New Jersey",
                                 "transit":  "NJ Transit",
                                 "transit_terminal":  "Penn Station",
-                                "median_price":  983479,
+                                "median_price":  968475,
                                 "annual_tax":  18000,
                                 "tax_rate_pct":  2.14,
                                 "commute_min":  {
@@ -166,7 +166,7 @@
                                                     "high":  55
                                                 },
                                 "school_rating_greatschools":  null,
-                                "yoy_pct":  0.7,
+                                "yoy_pct":  -1.5,
                                 "dom":  null,
                                 "price_per_sqft":  null,
                                 "market_tone":  null,
@@ -209,7 +209,7 @@
                                                 "character":  "Intentionally diverse South Orange-Maplewood SD with a progressive reputation. Wide school-to-school variation — the best elementaries are genuinely strong but Columbia HS is GS 6/10. Families who prioritize diversity over uniformity tend to embrace it; those expecting uniformly elite outcomes should look at Chatham or Westfield."
                                             },
                                 "school_rating_niche":  "B+",
-                                "price_as_of":  "2026-06-30"
+                                "price_as_of":  "2026-07-31"
                             },
                             {
                                 "id":  "plh",
@@ -219,7 +219,7 @@
                                 "region":  "Westchester",
                                 "transit":  "Metro-North",
                                 "transit_terminal":  "Grand Central Terminal",
-                                "median_price":  1427118,
+                                "median_price":  1433065,
                                 "annual_tax":  22000,
                                 "tax_rate_pct":  2.06,
                                 "commute_min":  {
@@ -227,7 +227,7 @@
                                                     "high":  33
                                                 },
                                 "school_rating_greatschools":  null,
-                                "yoy_pct":  2.6,
+                                "yoy_pct":  0.4,
                                 "dom":  null,
                                 "price_per_sqft":  null,
                                 "market_tone":  null,
@@ -270,7 +270,7 @@
                                                 "character":  "Pelham UFSD delivers top-tier Westchester academics at a sub-.1M price. Siwanoy Elementary is GS 10/10; Pelham Memorial HS is GS 9/10, Niche A+. 82% math / 81% ELA proficiency. Arguably the best school-to-price ratio of any primary market on this list."
                                             },
                                 "school_rating_niche":  "A+",
-                                "price_as_of":  "2026-06-30"
+                                "price_as_of":  "2026-07-31"
                             }
                         ],
     "research_markets":  [
@@ -342,7 +342,7 @@
                                  "region":  "Westchester",
                                  "transit":  "Metro-North",
                                  "transit_terminal":  "Grand Central Terminal",
-                                 "median_price":  1750144,
+                                 "median_price":  1754617,
                                  "annual_tax":  24345,
                                  "tax_rate_pct":  1.75,
                                  "commute_min":  {
@@ -352,7 +352,7 @@
                                  "school_rating_greatschools":  9,
                                  "school_rating_niche":  "A+",
                                  "niche_rank":  "#24 Best SD in NY (Mamaroneck UFSD)",
-                                 "yoy_pct":  2.3,
+                                 "yoy_pct":  0.3,
                                  "dom":  23,
                                  "price_per_sqft":  null,
                                  "market_tone":  "Seller\u0027s Market",
@@ -394,7 +394,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Mamaroneck UFSD is a top-tier Westchester district with Chatsworth Avenue School (GS 10/10) anchoring the elementary years. Mamaroneck HS (GS 8/10) is well-regarded and 83% math proficiency is strong. Notably diverse for a high-income suburb — 24% Hispanic — which adds breadth to the community without compromising outcomes."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "brx",
@@ -404,7 +404,7 @@
                                  "region":  "Westchester",
                                  "transit":  "Metro-North",
                                  "transit_terminal":  "Grand Central Terminal",
-                                 "median_price":  1541568,
+                                 "median_price":  1502922,
                                  "annual_tax":  10759,
                                  "tax_rate_pct":  1.37,
                                  "commute_min":  {
@@ -455,7 +455,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "One of Westchester\u0027s finest — all three levels GS 10/10, 91% math / 86% ELA, Niche A+. The district\u0027s small size (~1,570 students) creates a tight-knit culture but limits AP course depth compared to larger schools. Consistently among the top public school systems in New York State."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "scl",
@@ -465,7 +465,7 @@
                                  "region":  "Long Island",
                                  "transit":  "LIRR",
                                  "transit_terminal":  "Penn Station",
-                                 "median_price":  1130375,
+                                 "median_price":  1132847,
                                  "annual_tax":  13125,
                                  "tax_rate_pct":  1.23,
                                  "commute_min":  {
@@ -475,7 +475,7 @@
                                  "school_rating_greatschools":  10,
                                  "school_rating_niche":  "A",
                                  "niche_rank":  "#75 Best Elementary in NY (Sea Cliff Elem)",
-                                 "yoy_pct":  1,
+                                 "yoy_pct":  0.2,
                                  "dom":  72,
                                  "price_per_sqft":  null,
                                  "market_tone":  "Cooling",
@@ -517,7 +517,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "North Shore CSD\u0027s reputation rests on its exceptional high school (GS 10/10, Niche A+) — among Long Island\u0027s elite. 95% math proficiency is the highest of any market tracked. Elementary schools are solid (GS 8/10) with a favorable 9:1 student-teacher ratio. The HS is the district\u0027s crown jewel."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "mtc",
@@ -527,7 +527,7 @@
                                  "region":  "New Jersey",
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
-                                 "median_price":  1198749,
+                                 "median_price":  1179442,
                                  "annual_tax":  22487,
                                  "tax_rate_pct":  2.31,
                                  "commute_min":  {
@@ -536,7 +536,7 @@
                                                  },
                                  "school_rating_greatschools":  6,
                                  "school_rating_niche":  "A",
-                                 "yoy_pct":  2.3,
+                                 "yoy_pct":  -1.6,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -578,7 +578,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Magnet-based district with a strong progressive identity and wide school-to-school variation. Elementary outcomes depend heavily on magnet assignment (Ridgewood Ave is GS 9/10; others lower). Middle school is the weak link at GS 5/10. Academically inconsistent district-wide, but culturally rich and deeply community-engaged — families tend to self-select for the magnet fit."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "wfd",
@@ -589,7 +589,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "Raritan Valley Line to Newark Penn, then NJT or PATH â€” no Midtown Direct",
-                                 "median_price":  1329379,
+                                 "median_price":  1320544,
                                  "annual_tax":  18500,
                                  "tax_rate_pct":  1.87,
                                  "commute_min":  {
@@ -598,7 +598,7 @@
                                                  },
                                  "school_rating_greatschools":  9,
                                  "school_rating_niche":  "A+",
-                                 "yoy_pct":  1.5,
+                                 "yoy_pct":  -0.7,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -640,7 +640,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Consistently top-20 in NJ (Niche A+) with strong numbers across all levels — Elem and Middle both GS 9/10, HS 8/10. 71% math / 77% ELA well above NJ averages. Low economic disadvantage (1%). One of the most academically reliable districts in Union County, with a conventional suburban school experience."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "chm",
@@ -650,7 +650,7 @@
                                  "region":  "New Jersey",
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
-                                 "median_price":  1374346,
+                                 "median_price":  1382894,
                                  "annual_tax":  22000,
                                  "tax_rate_pct":  2.32,
                                  "commute_min":  {
@@ -659,7 +659,7 @@
                                                  },
                                  "school_rating_greatschools":  8,
                                  "school_rating_niche":  "A+",
-                                 "yoy_pct":  0.5,
+                                 "yoy_pct":  0.6,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -701,7 +701,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "School District of the Chathams is one of NJ\u0027s hidden gems. Milton Avenue Elementary ranks #1 in NJ on GreatSchools (10/10). All levels strong: Elem 10/10, Middle 8/10, HS 7/10. 70% math / 75% ELA. Niche A+, very low economic disadvantage (2%). Top academic environment without the price tag of Bronxville or North Shore."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "wyk",
@@ -774,7 +774,7 @@
                                  "transit":  "LIRR",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "Port Washington Branch â€” direct service, no Jamaica transfer required; ~47-57 min to Penn Station",
-                                 "median_price":  1291441,
+                                 "median_price":  1282232,
                                  "annual_tax":  14500,
                                  "tax_rate_pct":  1.26,
                                  "commute_min":  {
@@ -783,7 +783,7 @@
                                                  },
                                  "school_rating_greatschools":  8,
                                  "school_rating_niche":  "A",
-                                 "yoy_pct":  1.8,
+                                 "yoy_pct":  -0.7,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  "Seller\u0027s Market",
@@ -825,7 +825,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Paul D. Schreiber HS (GS 10/10, Niche A+) is the district\u0027s calling card — strong AP offerings and one of Long Island\u0027s better public high schools. Elementary schools are solid but more average (GS 7/10). 79% math proficiency. A district where the high school significantly elevates the overall story."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "nro",
@@ -837,7 +837,7 @@
                                  "transit_terminal":  "Grand Central Terminal",
                                  "transit_note":  "New Haven Line â€” express ~30 min to GCT, locals ~40 min; downtown homes walkable to station",
                                  "price_basis":  "all_homes_incl_condos",
-                                 "median_price":  952048,
+                                 "median_price":  959109,
                                  "annual_tax":  17500,
                                  "tax_rate_pct":  1.67,
                                  "commute_min":  {
@@ -847,7 +847,7 @@
                                  "school_rating_greatschools":  5,
                                  "school_rating_niche":  "A-",
                                  "niche_rank":  "#166 Best SD in NY (New Rochelle City SD)",
-                                 "yoy_pct":  1.7,
+                                 "yoy_pct":  0.7,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  "Mixed",
@@ -889,7 +889,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "City-wide New Rochelle district with high diversity and inconsistent outcomes. The high school (GS 4/10) and notable chronic absenteeism are the primary concerns. 57% math proficiency is slightly above NY state average, but wide school-to-school variation means your specific zone matters enormously. See Wykagyl for the north-zone school story."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "sorg",
@@ -900,7 +900,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "Morris \u0026 Essex Line (Midtown Direct) — direct service to Penn Station, no transfer; ~50-58 min",
-                                 "median_price":  1117544,
+                                 "median_price":  1091241,
                                  "annual_tax":  17200,
                                  "tax_rate_pct":  2.80,
                                  "commute_min":  {
@@ -909,7 +909,7 @@
                                                  },
                                  "school_rating_greatschools":  7,
                                  "school_rating_niche":  "A-",
-                                 "yoy_pct":  1.4,
+                                 "yoy_pct":  -2.4,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -951,7 +951,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Shares South Orange-Maplewood SD with Maplewood — same intentional diversity and wide school-to-school variation. Columbia HS is GS 6/10. 53% math near NJ average. The district\u0027s progressive culture and active parent community are real assets; families who engage deeply with the school community tend to have strong outcomes."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "worg",
@@ -962,7 +962,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "Morris \u0026 Essex Line (Midtown Direct) — Brick Church or Highland Ave stations; ~45-55 min to Penn",
-                                 "median_price":  704992,
+                                 "median_price":  699467,
                                  "annual_tax":  15000,
                                  "tax_rate_pct":  2.60,
                                  "commute_min":  {
@@ -971,7 +971,7 @@
                                                  },
                                  "school_rating_greatschools":  6,
                                  "school_rating_niche":  "B+",
-                                 "yoy_pct":  1,
+                                 "yoy_pct":  -0.8,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1013,7 +1013,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Large, diverse district with meaningful school-to-school variation. Deerfield Elementary is a bright spot (GS 9/10), but the HS is GS 6/10 and 45% math proficiency is 12pp below NJ average. 25% economically disadvantaged with an 80%+ minority enrollment. Best elementaries are neighborhood-dependent — research your zone before buying."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "ruth",
@@ -1024,7 +1024,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "Main Line / Bergen County Line — Midtown Direct to Penn Station; ~30-38 min, one of the fastest NJ Transit commutes in the NYC metro",
-                                 "median_price":  759779,
+                                 "median_price":  762123,
                                  "annual_tax":  14800,
                                  "tax_rate_pct":  2.45,
                                  "commute_min":  {
@@ -1033,7 +1033,7 @@
                                                  },
                                  "school_rating_greatschools":  7,
                                  "school_rating_niche":  "A-",
-                                 "yoy_pct":  1.1,
+                                 "yoy_pct":  0.3,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1075,7 +1075,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Solid, consistent district with a community-oriented feel and Niche A grade. All levels respectable (Elem/Mid 8/10, HS 7/10). 50% math proficiency is below NJ state average (57%), worth noting despite the solid GS ratings. Low economic disadvantage (4%) and meaningfully diverse for Bergen County with 25% Hispanic enrollment."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "efls",
@@ -1086,7 +1086,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "No station in town — drive to Mountain Ave or Caldwell (Morris \u0026 Essex Line); ~50-65 min total door-to-door to Penn",
-                                 "median_price":  1489081,
+                                 "median_price":  1477824,
                                  "annual_tax":  16500,
                                  "tax_rate_pct":  1.75,
                                  "commute_min":  {
@@ -1095,7 +1095,7 @@
                                                  },
                                  "school_rating_greatschools":  9,
                                  "school_rating_niche":  "A+",
-                                 "yoy_pct":  1.2,
+                                 "yoy_pct":  -0.8,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1137,7 +1137,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Tiny K-8 district (~247 students) with exceptional proficiency numbers — 82% math and 87% ELA well above NJ averages and a 10:1 student-teacher ratio. A boutique elementary-through-middle experience. For high school, students attend James Caldwell HS in the Caldwell-West Caldwell SD (GS 6/10) — a significant quality step down worth factoring into the long view."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "nutl",
@@ -1148,7 +1148,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "No station in town — drive or bus to Clifton (Boonton Line) or Bloomfield (M\u0026E Line); NJ Transit 192 bus direct to Port Authority; ~50-65 min door-to-door",
-                                 "median_price":  669759,
+                                 "median_price":  658202,
                                  "annual_tax":  14200,
                                  "tax_rate_pct":  2.65,
                                  "commute_min":  {
@@ -1157,7 +1157,7 @@
                                                  },
                                  "school_rating_greatschools":  7,
                                  "school_rating_niche":  "A-",
-                                 "yoy_pct":  0.7,
+                                 "yoy_pct":  -1.7,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1199,7 +1199,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Radcliffe Elementary (GS 8/10) is a genuine bright spot, but Nutley\u0027s story weakens at the middle and high school levels (GS 6/10 and 5/10 respectively). 54% math near NJ average. Growing Hispanic population (31%) adds diversity. A good value among Essex County districts for families with young children; plan ahead for the secondary transition."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "glnr",
@@ -1210,7 +1210,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "Montclair-Boonton Line (Midtown Direct) — Glen Ridge station; ~45-55 min to Penn Station",
-                                 "median_price":  1198717,
+                                 "median_price":  1185767,
                                  "annual_tax":  19500,
                                  "tax_rate_pct":  2.35,
                                  "commute_min":  {
@@ -1219,7 +1219,7 @@
                                                  },
                                  "school_rating_greatschools":  9,
                                  "school_rating_niche":  "A+",
-                                 "yoy_pct":  2.4,
+                                 "yoy_pct":  -1.1,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1261,7 +1261,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Compact, high-performing district where the high school serves grades 7-12. 77% math / 81% ELA well above NJ averages, very low economic disadvantage (1%). Strong community feel with active parent involvement. All levels GS 7-8/10; consistently one of Essex County\u0027s more reliable academic performers."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "vron",
@@ -1272,7 +1272,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "No station in town — drive or bus to Montclair Bay St or Mountain Ave (Montclair-Boonton Line); ~55-70 min door-to-door",
-                                 "median_price":  781010,
+                                 "median_price":  775304,
                                  "annual_tax":  14800,
                                  "tax_rate_pct":  2.50,
                                  "commute_min":  {
@@ -1281,7 +1281,7 @@
                                                  },
                                  "school_rating_greatschools":  8,
                                  "school_rating_niche":  "A",
-                                 "yoy_pct":  0.6,
+                                 "yoy_pct":  -0.7,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1323,7 +1323,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Balanced mid-tier district with Elem 8/10 and HS 8/10 (Verona HS earned Niche A-). 53% math near NJ average. Very low economic disadvantage (1%). A reliable, low-drama suburban district — won\u0027t drive a school-quality decision but won\u0027t raise red flags either. Good fit for families where schools are one factor among many."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "cldw",
@@ -1334,7 +1334,7 @@
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "Montclair-Boonton Line (Midtown Direct) — Mountain Ave station; ~55-65 min to Penn Station",
-                                 "median_price":  749525,
+                                 "median_price":  743449,
                                  "annual_tax":  13200,
                                  "tax_rate_pct":  2.40,
                                  "commute_min":  {
@@ -1343,7 +1343,7 @@
                                                  },
                                  "school_rating_greatschools":  7,
                                  "school_rating_niche":  "A-",
-                                 "yoy_pct":  1.1,
+                                 "yoy_pct":  -0.8,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1385,7 +1385,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Mid-tier across the board (Elem/Mid 7/10, HS 6/10), Niche A-. 58% math near NJ average. Hosts Essex Fells students for high school. A serviceable regional district — adequate for families not leading with schools as a primary criterion, and notably more affordable than top-tier Essex County peers."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "mrk",
@@ -1396,7 +1396,7 @@
                                  "transit":  "LIRR",
                                  "transit_terminal":  "Penn Station",
                                  "transit_note":  "Babylon Branch — most trains stop at Jamaica; select peak expresses run direct to Penn; ~45-55 min total",
-                                 "median_price":  901523,
+                                 "median_price":  899960,
                                  "annual_tax":  13500,
                                  "tax_rate_pct":  1.85,
                                  "commute_min":  {
@@ -1405,7 +1405,7 @@
                                                  },
                                  "school_rating_greatschools":  8,
                                  "school_rating_niche":  "A",
-                                 "yoy_pct":  1.4,
+                                 "yoy_pct":  -0.2,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1447,7 +1447,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Merrick UFSD covers K-6 with solid elementary ratings (GS 8/10) and 78% math proficiency well above NY average. At 7th grade, students feed into the Bellmore-Merrick Central HS District — Calhoun HS is GS 9/10 and Niche A+, one of Long Island\u0027s stronger high schools. Strong story at both ends of the K-12 span."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "mlv",
@@ -1457,7 +1457,7 @@
                                  "region":  "Long Island",
                                  "transit":  "LIRR",
                                  "transit_terminal":  "Penn Station",
-                                 "median_price":  820033,
+                                 "median_price":  819556,
                                  "annual_tax":  14500,
                                  "tax_rate_pct":  2.07,
                                  "commute_min":  {
@@ -1466,7 +1466,7 @@
                                                  },
                                  "school_rating_greatschools":  7,
                                  "school_rating_niche":  "B+",
-                                 "yoy_pct":  1.5,
+                                 "yoy_pct":  -0.1,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1508,7 +1508,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Malverne UFSD is one of Nassau County\u0027s most racially and economically diverse K-12 districts — a meaningful contrast to its homogeneous neighbors. School quality is above state average but trails nearby Lynbrook and Rockville Centre on proficiency metrics. Families who value community diversity alongside solid academics often find this a compelling trade-off at a lower price point."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "lbk",
@@ -1518,7 +1518,7 @@
                                  "region":  "Long Island",
                                  "transit":  "LIRR",
                                  "transit_terminal":  "Penn Station",
-                                 "median_price":  760508,
+                                 "median_price":  762838,
                                  "annual_tax":  17000,
                                  "tax_rate_pct":  2.24,
                                  "commute_min":  {
@@ -1527,7 +1527,7 @@
                                                  },
                                  "school_rating_greatschools":  8,
                                  "school_rating_niche":  "A-",
-                                 "yoy_pct":  1.6,
+                                 "yoy_pct":  0.3,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1569,7 +1569,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Lynbrook UFSD is a well-rounded K-12 district with above-average outcomes for Nassau County at its price point. Lynbrook HS (~GS 8/10) carries strong AP enrollment. At 73% math proficiency it outperforms the NY state average meaningfully — and families get a complete K-12 district with no mid-school transition uncertainty."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              },
                              {
                                  "id":  "crf",
@@ -1579,7 +1579,7 @@
                                  "region":  "New Jersey",
                                  "transit":  "NJ Transit",
                                  "transit_terminal":  "Penn Station",
-                                 "median_price":  797825,
+                                 "median_price":  783169,
                                  "annual_tax":  19500,
                                  "tax_rate_pct":  2.56,
                                  "commute_min":  {
@@ -1588,7 +1588,7 @@
                                                  },
                                  "school_rating_greatschools":  8,
                                  "school_rating_niche":  "A-",
-                                 "yoy_pct":  2,
+                                 "yoy_pct":  -1.8,
                                  "dom":  null,
                                  "price_per_sqft":  null,
                                  "market_tone":  null,
@@ -1630,7 +1630,7 @@
                                                  "needs_verification":  true,
                                                  "character":  "Cranford Public Schools are one of Union County\u0027s stronger K-12 systems. Cranford HS (~GS 8/10) delivers solid AP and college-prep programming. At 66% math proficiency — well above the NJ state average of 57% — the district consistently outperforms the state benchmark. Compact, well-resourced district with low economic disadvantage."
                                              },
-                                 "price_as_of":  "2026-06-30"
+                                 "price_as_of":  "2026-07-31"
                              }
                          ],
     "removed_markets":  [
