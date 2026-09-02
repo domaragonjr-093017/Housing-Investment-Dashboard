@@ -440,7 +440,7 @@ td.muted{color:#a0aec0}
       </div>
       <div class="field">
         <label>Down Payment</label>
-        <input type="range" id="ov-down" min="50000" max="800000" step="5000" oninput="ovSync('down',this.value)"/>
+        <input type="range" id="ov-down" min="50000" max="850000" step="5000" oninput="ovSync('down',this.value)"/>
         <div class="val" id="ov-v-down"></div>
       </div>
       <!-- Row 2 -->
@@ -494,7 +494,7 @@ td.muted{color:#a0aec0}
 <div style="display:none">
   <input type="range" id="r-price" min="500000" max="1500000" step="5000"/>
   <div id="v-price"></div>
-  <input type="range" id="r-down" min="50000" max="800000" step="5000"/>
+  <input type="range" id="r-down" min="50000" max="850000" step="5000"/>
   <div id="v-down"></div>
   <div id="v-loan"></div>
   <input type="range" id="r-rate" min="4.0" max="9.0" step="0.05"/>
@@ -1075,7 +1075,12 @@ function calcUpdate() {
   // Clear active market unless this call came directly from quickFill()
   if (!_activeMktJustSet) _activeMkt = null;
   _activeMktJustSet = false;
-  const price = +rPrice.value, down = +rDown.value;
+  const price = +rPrice.value;
+  // Down payment can't exceed 100% of home price (an all-cash purchase) —
+  // cap the slider dynamically since it tracks price, not a fixed dollar figure.
+  rDown.max = price;
+  let down = +rDown.value;
+  if (down > price) { down = price; rDown.value = price; }
   const rate  = +rRate.value / 100;
   const tax   = +nTax.value || 0;
   const ins   = +nIns.value || 2400;
@@ -1135,7 +1140,10 @@ function calcUpdate() {
     { id:'ov-rate',  vid:'ov-v-rate',  val:(+rRate.value).toFixed(2), display:(+rRate.value).toFixed(2) + '%' },
   ].forEach(({ id, vid, val, display }) => {
     const el = document.getElementById(id);
-    if (el && el !== _focused) el.value = val;
+    if (el) {
+      if (id === 'ov-down') el.max = price;
+      if (el !== _focused) el.value = val;
+    }
     const vEl = document.getElementById(vid);
     if (vEl) vEl.textContent = display;
   });
