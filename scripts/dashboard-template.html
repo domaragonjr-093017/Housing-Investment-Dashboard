@@ -202,6 +202,7 @@ td.muted{color:#a0aec0}
   <div class="tab" onclick="showTab('weekly')">Weekly Changes</div>
   <div class="tab" onclick="showTab('watchlist')">Watchlist</div>
   <div class="tab" onclick="showTab('investment')">📊 Investment Analysis</div>
+  <div class="tab" onclick="showTab('afford')">💰 Affordability</div>
 </nav>
 
 <!-- ── OUR STORY (EXECUTIVE SUMMARY) ────────────────────────── -->
@@ -743,6 +744,53 @@ td.muted{color:#a0aec0}
   <div class="wl-cards" id="wl-list"></div>
 </div>
 
+<!-- ── AFFORDABILITY ────────────────────────────────────────── -->
+<div class="page" id="page-afford">
+  <div class="calc-panel" style="margin-bottom:20px">
+    <h3>💰 Affordability Calculator</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px">
+      <div class="field">
+        <label>Gross Annual Income</label>
+        <input type="number" id="af-income" value="220000" oninput="affordUpdate()"/>
+      </div>
+      <div class="field">
+        <label>Other Monthly Debt</label>
+        <input type="number" id="af-debt" value="2000" oninput="affordUpdate()"/>
+      </div>
+      <div class="field">
+        <label>Down Payment</label>
+        <input type="number" id="af-down" oninput="affordUpdate()"/>
+      </div>
+      <div class="field">
+        <label>Interest Rate — 30yr (%)</label>
+        <input type="number" step="0.01" id="af-rate" oninput="affordUpdate()"/>
+      </div>
+      <div class="field">
+        <label>Annual Property Tax</label>
+        <input type="number" id="af-tax" oninput="affordUpdate()"/>
+      </div>
+      <div class="field">
+        <label>Annual Insurance</label>
+        <input type="number" id="af-ins" oninput="affordUpdate()"/>
+      </div>
+    </div>
+    <div style="font-size:.75rem;color:#4a5568;line-height:1.6;background:#f7fafc;border-radius:8px;padding:12px 16px">
+      <strong>"Other Monthly Debt" should include:</strong> credit cards, auto loans, student loans, personal loans, IRS/tax installment payments, alimony or child support, and any other financed obligation with an ongoing payment. It should <em>not</em> include utilities, groceries, or other living expenses — lenders don't count those toward DTI, but budget for them separately.
+    </div>
+  </div>
+
+  <div class="section-title">Affordability by Debt-to-Income (DTI) Tier</div>
+  <div class="table-wrap" style="margin-bottom:12px">
+    <table>
+      <thead><tr><th>DTI Tier</th><th>Back-end Limit</th><th>Max PITI/mo</th><th>Max Loan Amount</th><th>Max Home Price</th></tr></thead>
+      <tbody id="af-table-body"></tbody>
+    </table>
+  </div>
+  <div style="font-size:.72rem;color:#a0aec0;line-height:1.6">
+    Most lenders anchor around the <strong>Standard / QM cap (43%)</strong> tier as the practical approval ceiling for qualified mortgages — treat the 45–50% tiers as needing strong compensating factors (excellent credit, reserves). Figures assume a standard 30-year fixed loan and PITI = P&amp;I + 1/12 annual tax + 1/12 annual insurance. A <span class="badge yellow">jumbo</span> tag means the loan amount exceeds the $832,750 conforming limit and typically carries a ~0.10–0.15% rate premium not reflected in this table.
+  </div>
+</div>
+
 <script>
 // ── Data injected by export.ps1 ───────────────────────────────
 const D = MARKETS_DATA_PLACEHOLDER;
@@ -786,7 +834,7 @@ const S = SNAPSHOT_DATA_PLACEHOLDER;
 
 // ── Tabs ──────────────────────────────────────────────────────
 function showTab(id) {
-  const ids = ['summary','overview','compare','weekly','watchlist','investment'];
+  const ids = ['summary','overview','compare','weekly','watchlist','investment','afford'];
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ids[i] === id));
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
@@ -1167,6 +1215,51 @@ function calcUpdate() {
     if (ac) ac.classList.add('card--active');
   }
 }
+
+// ── Affordability calculator ──────────────────────────────────
+const DTI_TIERS = [
+  { label: 'Conservative',      pct: 0.36 },
+  { label: 'Standard / QM cap', pct: 0.43 },
+  { label: 'Aggressive',        pct: 0.45 },
+  { label: 'Upper bound',       pct: 0.50 },
+];
+
+function affordUpdate() {
+  const income = +document.getElementById('af-income').value || 0;
+  const debt   = +document.getElementById('af-debt').value   || 0;
+  const down   = +document.getElementById('af-down').value   || 0;
+  const rate   = (+document.getElementById('af-rate').value || 0) / 100;
+  const tax    = +document.getElementById('af-tax').value    || 0;
+  const ins    = +document.getElementById('af-ins').value    || 0;
+
+  const grossMonthly = income / 12;
+  const r = rate / 12, n = 360;
+  const taxMo = tax / 12, insMo = ins / 12;
+
+  const rows = DTI_TIERS.map(t => {
+    const maxPITI  = Math.max(0, grossMonthly * t.pct - debt);
+    const maxPI    = Math.max(0, maxPITI - taxMo - insMo);
+    const factor   = Math.pow(1 + r, n);
+    const maxLoan  = r === 0 ? maxPI * n : maxPI * (factor - 1) / (r * factor);
+    const maxPrice = maxLoan + down;
+    const jumbo    = maxLoan > 832750;
+    return `<tr>
+      <td style="font-weight:700">${t.label}</td>
+      <td>${Math.round(t.pct * 100)}%</td>
+      <td>${fmt$(maxPITI)}</td>
+      <td>${fmt$(maxLoan)}${jumbo ? ' <span class="badge yellow">jumbo</span>' : ''}</td>
+      <td style="font-weight:700;color:#e94560">${fmt$(maxPrice)}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('af-table-body').innerHTML = rows;
+}
+
+// Seed from the same rate/down-payment/tax assumptions the PITI calculator uses
+document.getElementById('af-down').value = DOWN;
+document.getElementById('af-rate').value = (RATE30 * 100).toFixed(2);
+document.getElementById('af-tax').value  = 24000;
+document.getElementById('af-ins').value  = INS;
+affordUpdate();
 
 // Tracks which market is currently loaded; cleared on any manual slider/input change
 var _activeMkt = null, _activeMktJustSet = false;
