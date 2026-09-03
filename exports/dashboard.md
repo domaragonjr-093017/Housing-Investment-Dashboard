@@ -54,6 +54,7 @@ Assumes **$730,000 down payment** (net proceeds), 30yr fixed at **6.66%**, insur
 | **Malverne** | NY | $819,556 | 2.07% | $14,500/yr | $1,984/mo | 7/10 GS, Niche B+ | 43-52 min |
 | **Lynbrook** | NY | $762,838 | 2.24% | $17,000/yr | $1,828/mo | 8/10 GS, Niche A- | 40-48 min |
 | **Cranford** | NJ | $783,169 | 2.56% | $19,500/yr | $2,167/mo | 8/10 GS, Niche A- | 60-72 min |
+| **Ridgewood** | NJ | $1,273,036 | 2.73% | $20,596/yr | $5,406/mo | 9/10 GS, Niche A+ | 45-60 min |
 
 ---
 
@@ -78,13 +79,14 @@ Assumes **$730,000 down payment** (net proceeds), 30yr fixed at **6.66%**, insur
 17. **Glen Ridge, NJ** - $4,754/mo PITI ($1,185,767 price, $19,500/yr tax)
 18. **Port Washington, NY** - $4,957/mo PITI ($1,282,232 price, $14,500/yr tax)
 19. **Montclair, NJ** - $4,962/mo PITI ($1,179,442 price, $22,487/yr tax)
-20. **Westfield, NJ** - $5,537/mo PITI ($1,320,544 price, $18,500/yr tax)
-21. **Bronxville, NY** - $6,064/mo PITI ($1,502,922 price, $10,759/yr tax)
-22. **Chatham, NJ** - $6,229/mo PITI ($1,382,894 price, $22,000/yr tax)
-23. **Essex Fells, NJ** - $6,381/mo PITI ($1,477,824 price, $16,500/yr tax)
-24. **Pelham, NY** - $6,551/mo PITI ($1,433,065 price, $22,000/yr tax)
-25. **Wykagyl (New Rochelle), NY** - $6,577/mo PITI ($1,450,000 price, $21,000/yr tax)
-26. **Larchmont, NY** - $8,813/mo PITI ($1,754,617 price, $24,345/yr tax)
+20. **Ridgewood, NJ** - $5,406/mo PITI ($1,273,036 price, $20,596/yr tax)
+21. **Westfield, NJ** - $5,537/mo PITI ($1,320,544 price, $18,500/yr tax)
+22. **Bronxville, NY** - $6,064/mo PITI ($1,502,922 price, $10,759/yr tax)
+23. **Chatham, NJ** - $6,229/mo PITI ($1,382,894 price, $22,000/yr tax)
+24. **Essex Fells, NJ** - $6,381/mo PITI ($1,477,824 price, $16,500/yr tax)
+25. **Pelham, NY** - $6,551/mo PITI ($1,433,065 price, $22,000/yr tax)
+26. **Wykagyl (New Rochelle), NY** - $6,577/mo PITI ($1,450,000 price, $21,000/yr tax)
+27. **Larchmont, NY** - $8,813/mo PITI ($1,754,617 price, $24,345/yr tax)
 
 ---
 
@@ -94,19 +96,20 @@ Assumes **$730,000 down payment** (net proceeds), 30yr fixed at **6.66%**, insur
 - **Sea Cliff, NY** - 10/10 GS, Niche A Â· #75 Best Elementary in NY (Sea Cliff Elem)
 - **Westfield, NJ** - 9/10 GS, Niche A+
 - **Glen Ridge, NJ** - 9/10 GS, Niche A+
-- **Larchmont, NY** - 9/10 GS, Niche A+ Â· #24 Best SD in NY (Mamaroneck UFSD)
 - **Essex Fells, NJ** - 9/10 GS, Niche A+
+- **Larchmont, NY** - 9/10 GS, Niche A+ Â· #24 Best SD in NY (Mamaroneck UFSD)
+- **Ridgewood, NJ** - 9/10 GS, Niche A+
 - **Merrick, NY** - 8/10 GS, Niche A
 - **Verona, NJ** - 8/10 GS, Niche A
 - **Cranford, NJ** - 8/10 GS, Niche A-
-- **Lynbrook, NY** - 8/10 GS, Niche A-
 - **Chatham, NJ** - 8/10 GS, Niche A+
 - **Port Washington, NY** - 8/10 GS, Niche A
-- **Malverne, NY** - 7/10 GS, Niche B+
+- **Lynbrook, NY** - 8/10 GS, Niche A-
 - **Caldwell, NJ** - 7/10 GS, Niche A-
 - **Nutley, NJ** - 7/10 GS, Niche A-
 - **South Orange, NJ** - 7/10 GS, Niche A-
 - **Rutherford, NJ** - 7/10 GS, Niche A-
+- **Malverne, NY** - 7/10 GS, Niche B+
 - **Wykagyl (New Rochelle), NY** - 6/10 GS, Niche A- Â· North-end NR schools: Ward Elem B+, Albert Leonard Middle A-, NR High A-
 - **Montclair, NJ** - 6/10 GS, Niche A
 - **West Orange, NJ** - 6/10 GS, Niche B+

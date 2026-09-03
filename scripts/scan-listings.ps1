@@ -42,6 +42,7 @@ $markets = @(
     @{ id="vron"; name="Verona";         state="NJ"; redfin="NJ/Verona";          zillow="verona-nj";           trulia="verona_nj" }
     @{ id="cldw"; name="Caldwell";       state="NJ"; redfin="NJ/Caldwell";        zillow="caldwell-nj";         trulia="caldwell_nj" }
     @{ id="mrk";  name="Merrick";        state="NY"; redfin="NY/Merrick";         zillow="merrick-ny";          trulia="merrick_ny" }
+    @{ id="rdg";  name="Ridgewood";      state="NJ"; redfin="NJ/Ridgewood";       zillow="ridgewood-nj";        trulia="ridgewood_nj" }
 )
 
 Log "Generating search links for $($markets.Count) markets (${MinBeds}+ BR, under ${MaxK}k)..."

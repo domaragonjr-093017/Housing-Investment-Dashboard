@@ -154,6 +154,7 @@ if (-not $RatesOnly) {
         mlv  = @{ city = "Malverne";        state = "NY" }
         lbk  = @{ city = "Lynbrook";        state = "NY" }
         crf  = @{ city = "Cranford";        state = "NJ" }
+        rdg  = @{ city = "Ridgewood";       state = "NJ" }
     }
     # Note: sfrOnly flag intended for NRO but Zillow does not publish a city-level
     # SFR series for New Rochelle -- it is absent from that feed. Falls back to the
