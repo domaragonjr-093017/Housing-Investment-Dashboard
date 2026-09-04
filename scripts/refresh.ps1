@@ -131,16 +131,11 @@ if (-not $RatesOnly) {
         fp  = @{ city = "Floral Park";      state = "NY" }
         rvc = @{ city = "Rockville Centre";  state = "NY" }
         mw  = @{ city = "Maplewood";         state = "NJ" }
-        plh = @{ city = "Pelham";            state = "NY" }
         min = @{ city = "Mineola";           state = "NY" }
-        rkp = @{ city = "Rockaway Park";     state = "NY" }
-        lch = @{ city = "Larchmont";         state = "NY" }
-        brx = @{ city = "Bronxville";        state = "NY" }
         scl = @{ city = "Sea Cliff";         state = "NY" }
         mtc = @{ city = "Montclair";         state = "NJ" }
         chm = @{ city = "Chatham";           state = "NJ" }
         wfd = @{ city = "Westfield";         state = "NJ" }
-        nro = @{ city = "New Rochelle";      state = "NY" }
         ptw = @{ city = "Port Washington";   state = "NY" }
         sorg = @{ city = "South Orange";    state = "NJ" }
         worg = @{ city = "West Orange";     state = "NJ" }
@@ -156,11 +151,6 @@ if (-not $RatesOnly) {
         crf  = @{ city = "Cranford";        state = "NJ" }
         rdg  = @{ city = "Ridgewood";       state = "NJ" }
     }
-    # Note: sfrOnly flag intended for NRO but Zillow does not publish a city-level
-    # SFR series for New Rochelle -- it is absent from that feed. Falls back to the
-    # combined (all homes) series. See markets.json notes for price caveat.
-    # Note: Wykagyl (wyk) is a New Rochelle neighborhood -- Zillow ZHVI is city-level,
-    # so it has no auto-refresh entry and keeps its static value in markets.json.
 
     try {
         $allData = Build-ZillowLookup $CSV_URL_ALL

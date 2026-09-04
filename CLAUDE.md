@@ -26,7 +26,6 @@ Track and compare suburban NYC housing markets to support a home purchase decisi
 | fp  | Floral Park      | NY    | Nassau LI   | $790K        | ~$13K/yr  | 35–45 min (LIRR)  |
 | rvc | Rockville Centre | NY    | Nassau LI   | $850K        | ~$17K/yr  | 40–45 min (LIRR)  |
 | mw  | Maplewood        | NJ    | Essex       | $840K        | ~$18K/yr  | 45–55 min (NJ Transit) |
-| plh | Pelham           | NY    | Westchester | $1.07M       | ~$22K/yr  | ~33 min (Metro-North GCT) |
 
 Tax figures are **fully combined**: county + town + school district + special districts. School tax ≈ 60–70% of total bill and is not broken out separately in the dashboard.
 
@@ -116,7 +115,8 @@ Rate driver: Iran conflict + May CPI at 3.8%. Cross-reference: Freddie Mac weekl
 
 ## Key Design Decisions
 
-- Sea Cliff NY and Port Washington NY were evaluated and removed; replaced by Maplewood NJ (NJ diversity + NYC spillover demand) and Pelham NY (Metro-North GCT commute story)
+- Sea Cliff NY and Port Washington NY were evaluated and removed; replaced by Maplewood NJ (NJ diversity + NYC spillover demand)
+- All Westchester (Pelham, Bronxville, Larchmont, New Rochelle, Wykagyl) and Queens (Rockaway Park) markets were removed per owner preference (2026-09) — LI/NJ focus only going forward
 - Mineola is retained as the value/commute anchor for LI markets
 - Tax is displayed as one combined figure — school tax is already the dominant component (~60–70%) and breaking it out added confusion without clarity
 - PITI calculator pre-loads net proceeds (~$658K) as the default down payment
