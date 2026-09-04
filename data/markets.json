@@ -13,7 +13,8 @@
                                                           "commute",
                                                           "piti_affordability",
                                                           "price"
-                                                      ]
+                                                      ],
+                                       "max_piti_target":  5000
                                    }
              },
     "mortgage_rates":  {
