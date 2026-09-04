@@ -737,6 +737,21 @@ td.muted{color:#a0aec0}
 
 <!-- ── AFFORDABILITY ────────────────────────────────────────── -->
 <div class="page" id="page-afford">
+  <div id="af-sticky-summary" style="position:sticky;top:0;z-index:10;background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;border-radius:10px;padding:12px 20px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.18);display:flex;align-items:center;gap:28px;flex-wrap:wrap">
+    <div>
+      <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;opacity:.65">Net Monthly Income</div>
+      <div style="font-size:1.15rem;font-weight:800" id="af-sticky-net"></div>
+    </div>
+    <div>
+      <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;opacity:.65">50% Needs Budget</div>
+      <div style="font-size:1.15rem;font-weight:800" id="af-sticky-needs"></div>
+    </div>
+    <div>
+      <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;opacity:.65">Your Ceiling</div>
+      <div style="font-size:1.15rem;font-weight:800" id="af-sticky-ceiling-status"></div>
+    </div>
+    <div style="flex:1;min-width:240px;font-size:.78rem;font-weight:500;line-height:1.4;opacity:.92" id="af-sticky-verdict"></div>
+  </div>
   <div class="calc-panel" style="margin-bottom:20px">
     <h3>💰 Affordability Calculator</h3>
     <div style="font-size:.68rem;font-weight:700;color:#0f3460;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px">
@@ -1360,6 +1375,16 @@ function affordUpdate() {
     summary = `${fitCount} of ${needsRows.length} scenarios fit within your 50% Needs budget. ${best.label} leaves the most room, ${fmt$(best.remaining)}/mo. Your ceiling ${ceilingR.over ? `runs ${fmt$(Math.abs(ceilingR.remaining))}/mo over` : `leaves ${fmt$(ceilingR.remaining)}/mo of room`}.`;
   }
   document.getElementById('af-503020-summary').textContent = summary;
+
+  // ── Sticky live snapshot — keeps the verdict visible without scrolling ──
+  document.getElementById('af-sticky-net').textContent   = fmt$(netMonthly);
+  document.getElementById('af-sticky-needs').textContent = fmt$(needsBudget);
+  const ceilStatusEl = document.getElementById('af-sticky-ceiling-status');
+  ceilStatusEl.textContent = ceilingR.over
+    ? `+${fmt$(Math.abs(ceilingR.remaining))} over`
+    : `${fmt$(ceilingR.remaining)} room`;
+  ceilStatusEl.style.color = ceilingR.over ? '#feb2b2' : '#9ae6b4';
+  document.getElementById('af-sticky-verdict').textContent = summary;
 }
 
 // Seed from the same rate/down-payment/tax assumptions the PITI calculator uses
