@@ -803,75 +803,70 @@ td.muted{color:#a0aec0}
         The target you've set elsewhere on the dashboard (Purchasing Power cards, weekly trend). Shown below as a reference point against what a lender would actually approve and what 50/20/30 budgeting would recommend.
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(233,69,96,.06);border:1px solid rgba(233,69,96,.22);border-radius:8px">
+    <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(233,69,96,.06);border:1px solid rgba(233,69,96,.22);border-radius:8px;margin-bottom:12px">
       <div style="flex:1">
         <label style="display:block;font-size:.78rem;font-weight:600;color:#e94560;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Your Target Home Price</label>
         <input type="number" id="af-target-price" oninput="affordUpdate()" style="width:100%;padding:8px 12px;border:2px solid #f8b4c0;border-radius:8px;font-size:.95rem;color:#1a202c"/>
       </div>
       <div style="font-size:.72rem;color:#4a5568;line-height:1.5;max-width:340px">
-        A specific home you're pricing out. Works backwards from this price to the PITI it requires, then shows how that compares against the lender tiers and your 50/20/30 budget below.
+        A specific home you're pricing out. Works backwards from this price to the PITI it requires, then shows how that compares against every scenario in the table below.
       </div>
     </div>
-  </div>
 
-  <div class="section-title">Affordability by Debt-to-Income (DTI) Tier</div>
-  <div class="table-wrap" style="margin-bottom:12px">
-    <table>
-      <thead><tr><th>DTI Tier</th><th>Back-end Limit</th><th title="This column also feeds the 50/20/30 table below">Max PITI/mo ↓</th><th>Max Loan Amount</th><th>Max Home Price</th></tr></thead>
-      <tbody id="af-table-body"></tbody>
-    </table>
-  </div>
-  <div style="font-size:.72rem;color:#a0aec0;line-height:1.6;margin-bottom:24px">
-    Most lenders anchor around the <strong>Standard / QM cap (43%)</strong> tier as the practical approval ceiling for qualified mortgages — treat the 45–50% tiers as needing strong compensating factors (excellent credit, reserves). Figures assume a standard 30-year fixed loan and PITI = P&amp;I + 1/12 annual tax + 1/12 annual insurance. A <span class="badge yellow">jumbo</span> tag means the loan amount exceeds the $832,750 conforming limit and typically carries a ~0.10–0.15% rate premium not reflected in this table. The highlighted <strong>Your ceiling</strong> row shows where your own $/mo target falls among the lender tiers.
-  </div>
-
-  <div class="calc-panel" style="margin-bottom:20px">
-    <h3>50/20/30 Budget Check</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <div style="font-size:.68rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+      <span style="width:8px;height:8px;border-radius:2px;background:#718096;display:inline-block"></span>
+      Converts your income to net take-home pay for the 50/20/30 columns
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
       <div class="field">
         <label>Effective Tax Rate (%)</label>
         <input type="number" step="0.5" id="af-taxrate" value="32" oninput="affordUpdate()"/>
-        <div style="font-size:.68rem;color:#a0aec0;margin-top:4px;line-height:1.4">Converts the Gross Annual Income above into real take-home pay for this budget check</div>
+        <div style="font-size:.68rem;color:#a0aec0;margin-top:4px;line-height:1.4">Converts the Gross Annual Income above into real take-home pay</div>
       </div>
       <div class="field">
         <label>Other Monthly Living Needs</label>
         <input type="number" id="af-needs" value="2000" oninput="affordUpdate()"/>
+        <div style="font-size:.68rem;color:#a0aec0;margin-top:4px;line-height:1.4">Utilities, groceries, insurance, transportation — not counted toward lender DTI</div>
       </div>
     </div>
-    <div style="font-size:.75rem;color:#4a5568;line-height:1.6;background:#f7fafc;border-radius:8px;padding:12px 16px;margin-bottom:16px">
-      <strong>Other Monthly Living Needs</strong> should cover utilities, groceries, insurance premiums, and transportation — the non-housing costs that count as "Needs" in the 50/20/30 framework, separate from the debt entered above.
+  </div>
+
+  <div style="background:#f7fafc;border-radius:10px;padding:14px 16px;margin-bottom:12px">
+    <div style="font-size:.72rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Net Monthly Income (take-home, after tax)</div>
+    <div style="font-size:1.4rem;font-weight:800;color:#0f3460" id="af-net-income"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px">
+    <div style="background:#f7fafc;border-radius:10px;padding:12px 14px;border-left:4px solid #0f3460">
+      <div style="font-size:.7rem;font-weight:700;color:#0f3460;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">50% Needs</div>
+      <div style="font-size:.68rem;color:#718096;line-height:1.4;margin-bottom:8px">Essentials you can't skip: housing (PITI), debt minimums, groceries, utilities, insurance, transportation</div>
+      <div style="font-size:1.25rem;font-weight:800;color:#0f3460" id="af-needs-budget"></div>
     </div>
-    <div style="background:#f7fafc;border-radius:10px;padding:14px 16px;margin-bottom:12px">
-      <div style="font-size:.72rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Net Monthly Income (take-home, after tax)</div>
-      <div style="font-size:1.4rem;font-weight:800;color:#0f3460" id="af-net-income"></div>
+    <div style="background:#f7fafc;border-radius:10px;padding:12px 14px;border-left:4px solid #805ad5">
+      <div style="font-size:.7rem;font-weight:700;color:#805ad5;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">20% Wants</div>
+      <div style="font-size:.68rem;color:#718096;line-height:1.4;margin-bottom:8px">Lifestyle spending: dining out, travel, entertainment, subscriptions, hobbies, upgrades</div>
+      <div style="font-size:1.25rem;font-weight:800;color:#805ad5" id="af-wants-budget"></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
-      <div style="background:#f7fafc;border-radius:10px;padding:12px 14px;border-left:4px solid #0f3460">
-        <div style="font-size:.7rem;font-weight:700;color:#0f3460;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">50% Needs</div>
-        <div style="font-size:.68rem;color:#718096;line-height:1.4;margin-bottom:8px">Essentials you can't skip: housing (PITI), debt minimums, groceries, utilities, insurance, transportation</div>
-        <div style="font-size:1.25rem;font-weight:800;color:#0f3460" id="af-needs-budget"></div>
-      </div>
-      <div style="background:#f7fafc;border-radius:10px;padding:12px 14px;border-left:4px solid #805ad5">
-        <div style="font-size:.7rem;font-weight:700;color:#805ad5;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">20% Wants</div>
-        <div style="font-size:.68rem;color:#718096;line-height:1.4;margin-bottom:8px">Lifestyle spending: dining out, travel, entertainment, subscriptions, hobbies, upgrades</div>
-        <div style="font-size:1.25rem;font-weight:800;color:#805ad5" id="af-wants-budget"></div>
-      </div>
-      <div style="background:#f7fafc;border-radius:10px;padding:12px 14px;border-left:4px solid #276749">
-        <div style="font-size:.7rem;font-weight:700;color:#276749;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">30% Savings &amp; Debt Payoff</div>
-        <div style="font-size:.68rem;color:#718096;line-height:1.4;margin-bottom:8px">Retirement contributions, investing, emergency fund, extra (above-minimum) debt paydown</div>
-        <div style="font-size:1.25rem;font-weight:800;color:#276749" id="af-save-budget"></div>
-      </div>
+    <div style="background:#f7fafc;border-radius:10px;padding:12px 14px;border-left:4px solid #276749">
+      <div style="font-size:.7rem;font-weight:700;color:#276749;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">30% Savings &amp; Debt Payoff</div>
+      <div style="font-size:.68rem;color:#718096;line-height:1.4;margin-bottom:8px">Retirement contributions, investing, emergency fund, extra (above-minimum) debt paydown</div>
+      <div style="font-size:1.25rem;font-weight:800;color:#276749" id="af-save-budget"></div>
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>DTI Tier</th><th>PITI</th><th>Debt</th><th>Total</th><th>% of Needs Budget</th><th>Room Remaining</th></tr></thead>
-        <tbody id="af-503020-body"></tbody>
-      </table>
-    </div>
-    <div id="af-503020-summary" style="font-size:.85rem;font-weight:700;color:#0f3460;background:#f7fafc;border-radius:8px;padding:12px 16px;margin-top:14px"></div>
-    <div style="font-size:.72rem;color:#a0aec0;margin-top:10px;line-height:1.6">
-      A green badge (100% or under) means that tier still leaves room in your 50% Needs bucket for utilities, groceries, and insurance after PITI and debt. Red (over 100%) means that tier already exceeds your Needs budget before those costs are counted. The highlighted <strong>Your ceiling</strong> row shows where your own target lands.
-    </div>
+  </div>
+
+  <div class="section-title">Affordability &amp; 50/20/30 Fit by Scenario</div>
+  <div class="table-wrap" style="margin-bottom:12px">
+    <table>
+      <thead><tr>
+        <th>DTI Tier</th><th>Back-end Limit</th><th>Max PITI/mo</th><th>Max Loan Amount</th><th>Max Home Price</th>
+        <th>Debt</th><th>Total</th><th>% of Needs Budget</th><th>Room Remaining</th>
+      </tr></thead>
+      <tbody id="af-table-body"></tbody>
+    </table>
+  </div>
+  <div id="af-503020-summary" style="font-size:.85rem;font-weight:700;color:#0f3460;background:#f7fafc;border-radius:8px;padding:12px 16px;margin-bottom:14px"></div>
+  <div style="font-size:.72rem;color:#a0aec0;line-height:1.6;margin-bottom:24px">
+    <strong>Back-end Limit / Max PITI–Loan–Price</strong> = what a lender would approve, based on gross income. Most anchor around <strong>Standard / QM cap (43%)</strong> as the practical ceiling; treat 45–50% as needing strong compensating factors (excellent credit, reserves). A <span class="badge yellow">jumbo</span> tag means the loan exceeds the $832,750 conforming limit (~0.10–0.15% rate premium, not reflected here).
+    <strong>% of Needs Budget / Room Remaining</strong> = PITI + debt against 50% of your net income — 100% or under (green) leaves room for groceries, utilities, and insurance; over 100% (red) means it doesn't. The highlighted <strong style="color:#0f3460">Your ceiling</strong> and <strong style="color:#e94560">Your target price</strong> rows show where your own numbers land among the lender tiers.
   </div>
 </div>
 
@@ -1366,20 +1361,6 @@ function affordUpdate() {
 
   const allRows = [...tierRows, ceilingRow, priceRow].sort((a, b) => a.maxPITI - b.maxPITI);
 
-  document.getElementById('af-table-body').innerHTML = allRows.map(row => {
-    const jumbo    = row.maxLoan > 832750;
-    const rowBg    = row.isCeiling ? 'rgba(15,52,96,.07)' : row.isPrice ? 'rgba(233,69,96,.06)' : '';
-    const rowStyle = rowBg ? ` style="background:${rowBg}"` : '';
-    const labelClr = row.isCeiling ? ';color:#0f3460' : row.isPrice ? ';color:#e94560' : '';
-    return `<tr${rowStyle}>
-      <td style="font-weight:700${labelClr}">${row.label}</td>
-      <td>${row.limitLabel}</td>
-      <td>${fmt$(row.maxPITI)}</td>
-      <td>${fmt$(row.maxLoan)}${jumbo ? ' <span class="badge yellow">jumbo</span>' : ''}</td>
-      <td style="font-weight:700;color:#e94560">${fmt$(row.maxPrice)}</td>
-    </tr>`;
-  }).join('');
-
   // ── 50/20/30 budget check ──────────────────────────────────
   const netMonthly  = grossMonthly * (1 - taxRate);
   const needsBudget = netMonthly * 0.50;
@@ -1397,13 +1378,18 @@ function affordUpdate() {
     return { ...row, totalNeeds, pctOfNeeds, remaining, over: pctOfNeeds > 100 };
   });
 
-  document.getElementById('af-503020-body').innerHTML = needsRows.map(row => {
+  // ── One unified table: lender fit (first 5 cols) + 50/20/30 fit (last 4 cols) ──
+  document.getElementById('af-table-body').innerHTML = needsRows.map(row => {
+    const jumbo    = row.maxLoan > 832750;
     const rowBg    = row.isCeiling ? 'rgba(15,52,96,.07)' : row.isPrice ? 'rgba(233,69,96,.06)' : '';
     const rowStyle = rowBg ? ` style="background:${rowBg}"` : '';
     const labelClr = row.isCeiling ? ';color:#0f3460' : row.isPrice ? ';color:#e94560' : '';
     return `<tr${rowStyle}>
       <td style="font-weight:700${labelClr}">${row.label}</td>
+      <td>${row.limitLabel}</td>
       <td>${fmt$(row.maxPITI)}</td>
+      <td>${fmt$(row.maxLoan)}${jumbo ? ' <span class="badge yellow">jumbo</span>' : ''}</td>
+      <td style="font-weight:700;color:#e94560">${fmt$(row.maxPrice)}</td>
       <td>${fmt$(debt)}</td>
       <td style="font-weight:700">${fmt$(row.totalNeeds)}</td>
       <td><span class="badge ${row.over ? 'red' : 'green'}">${row.pctOfNeeds}%</span></td>
