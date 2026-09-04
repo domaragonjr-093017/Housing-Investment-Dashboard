@@ -1344,6 +1344,8 @@ function affordUpdate() {
     summary = `All ${needsRows.length} scenarios fit within your 50% Needs budget — ${best.label} leaves the most room, ${fmt$(best.remaining)}/mo left over for other Needs.`;
   } else if (fitCount === 0) {
     summary = `None of these scenarios fit within your 50% Needs budget under strict 50/30/20 — even the best case (${best.label}) runs ${fmt$(Math.abs(best.remaining))}/mo over, before groceries, utilities, or insurance. Your ceiling (${fmt$(ceilingR.totalNeeds)}/mo) is ${fmt$(Math.abs(ceilingR.remaining))}/mo over.`;
+  } else if (best.isCeiling) {
+    summary = `${fitCount} of ${needsRows.length} scenarios fit within your 50% Needs budget — your ceiling leaves the most room of any of them, ${fmt$(best.remaining)}/mo.`;
   } else {
     summary = `${fitCount} of ${needsRows.length} scenarios fit within your 50% Needs budget. ${best.label} leaves the most room, ${fmt$(best.remaining)}/mo. Your ceiling ${ceilingR.over ? `runs ${fmt$(Math.abs(ceilingR.remaining))}/mo over` : `leaves ${fmt$(ceilingR.remaining)}/mo of room`}.`;
   }
