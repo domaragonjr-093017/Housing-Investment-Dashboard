@@ -739,7 +739,11 @@ td.muted{color:#a0aec0}
 <div class="page" id="page-afford">
   <div class="calc-panel" style="margin-bottom:20px">
     <h3>💰 Affordability Calculator</h3>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px">
+    <div style="font-size:.68rem;font-weight:700;color:#0f3460;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+      <span style="width:8px;height:8px;border-radius:2px;background:#0f3460;display:inline-block"></span>
+      Sets your PITI ceiling — drives both tables below
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px">
       <div class="field">
         <label>Gross Annual Income</label>
         <input type="number" id="af-income" value="220000" oninput="affordUpdate()"/>
@@ -748,6 +752,12 @@ td.muted{color:#a0aec0}
         <label>Other Monthly Debt</label>
         <input type="number" id="af-debt" value="2000" oninput="affordUpdate()"/>
       </div>
+    </div>
+    <div style="font-size:.68rem;font-weight:700;color:#a0aec0;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+      <span style="width:8px;height:8px;border-radius:2px;background:#cbd5e0;display:inline-block"></span>
+      Sets your max loan &amp; price — DTI table only, doesn't affect the 50/30/20 check
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
       <div class="field">
         <label>Down Payment</label>
         <input type="number" id="af-down" oninput="affordUpdate()"/>
@@ -782,7 +792,7 @@ td.muted{color:#a0aec0}
   <div class="section-title">Affordability by Debt-to-Income (DTI) Tier</div>
   <div class="table-wrap" style="margin-bottom:12px">
     <table>
-      <thead><tr><th>DTI Tier</th><th>Back-end Limit</th><th>Max PITI/mo</th><th>Max Loan Amount</th><th>Max Home Price</th></tr></thead>
+      <thead><tr><th>DTI Tier</th><th>Back-end Limit</th><th title="This column also feeds the 50/30/20 table below">Max PITI/mo ↓</th><th>Max Loan Amount</th><th>Max Home Price</th></tr></thead>
       <tbody id="af-table-body"></tbody>
     </table>
   </div>
