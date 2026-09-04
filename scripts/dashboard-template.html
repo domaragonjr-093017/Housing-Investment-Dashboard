@@ -762,6 +762,7 @@ td.muted{color:#a0aec0}
       <div class="field">
         <label>Gross Annual Income</label>
         <input type="number" id="af-income" value="220000" oninput="affordUpdate()"/>
+        <div style="font-size:.68rem;color:#a0aec0;margin-top:4px;line-height:1.4">Used as-is for lender DTI (industry standard); converted to net pay below for the 50/30/20 check</div>
       </div>
       <div class="field">
         <label>Other Monthly Debt</label>
@@ -821,6 +822,7 @@ td.muted{color:#a0aec0}
       <div class="field">
         <label>Effective Tax Rate (%)</label>
         <input type="number" step="0.5" id="af-taxrate" value="32" oninput="affordUpdate()"/>
+        <div style="font-size:.68rem;color:#a0aec0;margin-top:4px;line-height:1.4">Converts the Gross Annual Income above into real take-home pay for this budget check</div>
       </div>
       <div class="field">
         <label>Other Monthly Living Needs</label>
