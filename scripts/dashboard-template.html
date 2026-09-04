@@ -855,7 +855,7 @@ td.muted{color:#a0aec0}
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>DTI Tier</th><th>PITI + Debt</th><th>% of Needs Budget</th><th>Room Remaining</th></tr></thead>
+        <thead><tr><th>DTI Tier</th><th>PITI</th><th>Debt</th><th>Total</th><th>% of Needs Budget</th><th>Room Remaining</th></tr></thead>
         <tbody id="af-503020-body"></tbody>
       </table>
     </div>
@@ -1372,7 +1372,9 @@ function affordUpdate() {
     const rowStyle = row.isCeiling ? ' style="background:rgba(15,52,96,.07)"' : '';
     return `<tr${rowStyle}>
       <td style="font-weight:700${row.isCeiling ? ';color:#0f3460' : ''}">${row.label}</td>
-      <td>${fmt$(row.totalNeeds)}</td>
+      <td>${fmt$(row.maxPITI)}</td>
+      <td>${fmt$(debt)}</td>
+      <td style="font-weight:700">${fmt$(row.totalNeeds)}</td>
       <td><span class="badge ${row.over ? 'red' : 'green'}">${row.pctOfNeeds}%</span></td>
       <td style="font-weight:700;color:${row.over ? '#c53030' : '#276749'}">${row.remaining >= 0 ? '+' : '-'}${fmt$(Math.abs(row.remaining))}</td>
     </tr>`;
