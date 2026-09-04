@@ -762,7 +762,7 @@ td.muted{color:#a0aec0}
       <div class="field">
         <label>Gross Annual Income</label>
         <input type="number" id="af-income" value="220000" oninput="affordUpdate()"/>
-        <div style="font-size:.68rem;color:#a0aec0;margin-top:4px;line-height:1.4">Used as-is for lender DTI (industry standard); converted to net pay below for the 50/30/20 check</div>
+        <div style="font-size:.68rem;color:#a0aec0;margin-top:4px;line-height:1.4">Used as-is for lender DTI (industry standard); converted to net pay below for the 50/20/30 check</div>
       </div>
       <div class="field">
         <label>Other Monthly Debt</label>
@@ -771,7 +771,7 @@ td.muted{color:#a0aec0}
     </div>
     <div style="font-size:.68rem;font-weight:700;color:#a0aec0;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px">
       <span style="width:8px;height:8px;border-radius:2px;background:#cbd5e0;display:inline-block"></span>
-      Sets your max loan &amp; price — DTI table only, doesn't affect the 50/30/20 check
+      Sets your max loan &amp; price — DTI table only, doesn't affect the 50/20/30 check
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
       <div class="field">
@@ -800,7 +800,7 @@ td.muted{color:#a0aec0}
         <input type="number" id="af-ceiling" oninput="affordUpdate()" style="width:100%;padding:8px 12px;border:2px solid #cbd5e0;border-radius:8px;font-size:.95rem;color:#1a202c"/>
       </div>
       <div style="font-size:.72rem;color:#4a5568;line-height:1.5;max-width:340px">
-        The target you've set elsewhere on the dashboard (Purchasing Power cards, weekly trend). Shown below as a reference point against what a lender would actually approve and what 50/30/20 budgeting would recommend.
+        The target you've set elsewhere on the dashboard (Purchasing Power cards, weekly trend). Shown below as a reference point against what a lender would actually approve and what 50/20/30 budgeting would recommend.
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(233,69,96,.06);border:1px solid rgba(233,69,96,.22);border-radius:8px">
@@ -809,7 +809,7 @@ td.muted{color:#a0aec0}
         <input type="number" id="af-target-price" oninput="affordUpdate()" style="width:100%;padding:8px 12px;border:2px solid #f8b4c0;border-radius:8px;font-size:.95rem;color:#1a202c"/>
       </div>
       <div style="font-size:.72rem;color:#4a5568;line-height:1.5;max-width:340px">
-        A specific home you're pricing out. Works backwards from this price to the PITI it requires, then shows how that compares against the lender tiers and your 50/30/20 budget below.
+        A specific home you're pricing out. Works backwards from this price to the PITI it requires, then shows how that compares against the lender tiers and your 50/20/30 budget below.
       </div>
     </div>
   </div>
@@ -817,7 +817,7 @@ td.muted{color:#a0aec0}
   <div class="section-title">Affordability by Debt-to-Income (DTI) Tier</div>
   <div class="table-wrap" style="margin-bottom:12px">
     <table>
-      <thead><tr><th>DTI Tier</th><th>Back-end Limit</th><th title="This column also feeds the 50/30/20 table below">Max PITI/mo ↓</th><th>Max Loan Amount</th><th>Max Home Price</th></tr></thead>
+      <thead><tr><th>DTI Tier</th><th>Back-end Limit</th><th title="This column also feeds the 50/20/30 table below">Max PITI/mo ↓</th><th>Max Loan Amount</th><th>Max Home Price</th></tr></thead>
       <tbody id="af-table-body"></tbody>
     </table>
   </div>
@@ -826,7 +826,7 @@ td.muted{color:#a0aec0}
   </div>
 
   <div class="calc-panel" style="margin-bottom:20px">
-    <h3>50/30/20 Budget Check</h3>
+    <h3>50/20/30 Budget Check</h3>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
       <div class="field">
         <label>Effective Tax Rate (%)</label>
@@ -839,7 +839,7 @@ td.muted{color:#a0aec0}
       </div>
     </div>
     <div style="font-size:.75rem;color:#4a5568;line-height:1.6;background:#f7fafc;border-radius:8px;padding:12px 16px;margin-bottom:16px">
-      <strong>Other Monthly Living Needs</strong> should cover utilities, groceries, insurance premiums, and transportation — the non-housing costs that count as "Needs" in the 50/30/20 framework, separate from the debt entered above.
+      <strong>Other Monthly Living Needs</strong> should cover utilities, groceries, insurance premiums, and transportation — the non-housing costs that count as "Needs" in the 50/20/30 framework, separate from the debt entered above.
     </div>
     <div style="background:#f7fafc;border-radius:10px;padding:14px 16px;margin-bottom:12px">
       <div style="font-size:.72rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Net Monthly Income (take-home, after tax)</div>
@@ -852,12 +852,12 @@ td.muted{color:#a0aec0}
         <div style="font-size:1.25rem;font-weight:800;color:#0f3460" id="af-needs-budget"></div>
       </div>
       <div style="background:#f7fafc;border-radius:10px;padding:12px 14px;border-left:4px solid #805ad5">
-        <div style="font-size:.7rem;font-weight:700;color:#805ad5;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">30% Wants</div>
+        <div style="font-size:.7rem;font-weight:700;color:#805ad5;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">20% Wants</div>
         <div style="font-size:.68rem;color:#718096;line-height:1.4;margin-bottom:8px">Lifestyle spending: dining out, travel, entertainment, subscriptions, hobbies, upgrades</div>
         <div style="font-size:1.25rem;font-weight:800;color:#805ad5" id="af-wants-budget"></div>
       </div>
       <div style="background:#f7fafc;border-radius:10px;padding:12px 14px;border-left:4px solid #276749">
-        <div style="font-size:.7rem;font-weight:700;color:#276749;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">20% Savings &amp; Debt Payoff</div>
+        <div style="font-size:.7rem;font-weight:700;color:#276749;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">30% Savings &amp; Debt Payoff</div>
         <div style="font-size:.68rem;color:#718096;line-height:1.4;margin-bottom:8px">Retirement contributions, investing, emergency fund, extra (above-minimum) debt paydown</div>
         <div style="font-size:1.25rem;font-weight:800;color:#276749" id="af-save-budget"></div>
       </div>
@@ -1380,11 +1380,11 @@ function affordUpdate() {
     </tr>`;
   }).join('');
 
-  // ── 50/30/20 budget check ──────────────────────────────────
+  // ── 50/20/30 budget check ──────────────────────────────────
   const netMonthly  = grossMonthly * (1 - taxRate);
   const needsBudget = netMonthly * 0.50;
-  const wantsBudget = netMonthly * 0.30;
-  const saveBudget  = netMonthly * 0.20;
+  const wantsBudget = netMonthly * 0.20;
+  const saveBudget  = netMonthly * 0.30;
   document.getElementById('af-net-income').textContent   = fmt$(netMonthly);
   document.getElementById('af-needs-budget').textContent = fmt$(needsBudget);
   document.getElementById('af-wants-budget').textContent = fmt$(wantsBudget);
@@ -1418,7 +1418,7 @@ function affordUpdate() {
   if (fitCount === needsRows.length) {
     summary = `All ${needsRows.length} scenarios fit within your 50% Needs budget — ${best.label} leaves the most room, ${fmt$(best.remaining)}/mo left over for other Needs.`;
   } else if (fitCount === 0) {
-    summary = `None of these scenarios fit within your 50% Needs budget under strict 50/30/20 — even the best case (${best.label}) runs ${fmt$(Math.abs(best.remaining))}/mo over, before groceries, utilities, or insurance. Your ceiling (${fmt$(ceilingR.totalNeeds)}/mo) is ${fmt$(Math.abs(ceilingR.remaining))}/mo over.`;
+    summary = `None of these scenarios fit within your 50% Needs budget under strict 50/20/30 — even the best case (${best.label}) runs ${fmt$(Math.abs(best.remaining))}/mo over, before groceries, utilities, or insurance. Your ceiling (${fmt$(ceilingR.totalNeeds)}/mo) is ${fmt$(Math.abs(ceilingR.remaining))}/mo over.`;
   } else if (best.isCeiling) {
     summary = `${fitCount} of ${needsRows.length} scenarios fit within your 50% Needs budget — your ceiling leaves the most room of any of them, ${fmt$(best.remaining)}/mo.`;
   } else {
