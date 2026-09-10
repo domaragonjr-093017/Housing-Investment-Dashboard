@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.0",
     "created": "2026-06-02",
-    "last_updated": "2026-09-03",
+    "last_updated": "2026-09-10",
     "description": "Agent memory â€” persists buyer preferences, market signals, and learning across weekly runs"
   },
   "buyer_profile": {
@@ -194,6 +194,12 @@
       "date": "2026-09-03",
       "rate_30yr": 0.0666,
       "rate_15yr": 0.059800000000000006,
+      "driver": "(auto-updated by refresh.ps1)"
+    },
+    {
+      "date": "2026-09-10",
+      "rate_30yr": 0.06709999999999999,
+      "rate_15yr": 0.0604,
       "driver": "(auto-updated by refresh.ps1)"
     }
   ],
