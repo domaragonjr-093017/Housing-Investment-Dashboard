@@ -773,7 +773,6 @@ $maxPrice = 1000000
 $listingUrls = @{
     fp  = @{ redfin = "NY/Floral-Park";       zillow = "floral-park-ny" }
     rvc = @{ redfin = "NY/Rockville-Centre";  zillow = "rockville-centre-ny" }
-    mw  = @{ redfin = "NJ/Maplewood";         zillow = "maplewood-nj" }
 }
 
 $btnStyle = "display:inline-block;padding:6px 14px;border-radius:6px;font-size:.75rem;font-weight:700;text-decoration:none;margin-right:6px"

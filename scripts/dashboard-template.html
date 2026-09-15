@@ -238,7 +238,7 @@ td.muted{color:#a0aec0}
       <div style="font-size:2.2rem;font-weight:900;color:#1e3a5f;line-height:1;margin-bottom:8px">02</div>
       <div style="font-size:1.4rem;margin-bottom:8px">🔍</div>
       <div style="font-size:.85rem;font-weight:800;color:#e2e8f0;margin-bottom:4px">Comparing</div>
-      <div style="font-size:.72rem;color:#475569">11 markets<br>across LI, NY, NJ</div>
+      <div style="font-size:.72rem;color:#475569">7 markets<br>across Long Island</div>
     </div>
     <div style="padding:28px 18px;border-right:1px solid #21262d;position:relative">
       <div style="position:absolute;right:-14px;top:50%;transform:translateY(-50%);width:28px;height:28px;background:#161b22;border:1px solid #21262d;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#334155;font-size:.9rem;z-index:3">›</div>
@@ -309,7 +309,7 @@ td.muted{color:#a0aec0}
   </div>
 
   <!-- ⑤ WHERE WE'RE LOOKING — transit-coded cards -->
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px">
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:8px">
     <div style="background:#161b22;border:1px solid #21262d;border-radius:12px;overflow:hidden">
       <div style="background:#3b82f6;padding:6px;text-align:center;font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#fff">LIRR</div>
       <div style="padding:16px 12px;text-align:center">
@@ -328,17 +328,8 @@ td.muted{color:#a0aec0}
         <div style="font-size:.65rem;color:#334155">40–45 min</div>
       </div>
     </div>
-    <div style="background:#161b22;border:1px solid #21262d;border-radius:12px;overflow:hidden">
-      <div style="background:#16a34a;padding:6px;text-align:center;font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#fff">NJ Transit</div>
-      <div style="padding:16px 12px;text-align:center">
-        <div style="font-size:.92rem;font-weight:800;color:#e2e8f0;margin-bottom:1px">Maplewood</div>
-        <div style="font-size:.65rem;color:#475569;margin-bottom:10px">Essex, NJ</div>
-        <div style="font-size:1.35rem;font-weight:900;color:#22c55e;margin-bottom:2px">$840K</div>
-        <div style="font-size:.65rem;color:#334155">45–55 min</div>
-      </div>
-    </div>
   </div>
-  <div style="text-align:center;font-size:.68rem;color:#334155;margin-bottom:20px">+ 18 research markets benchmarked &nbsp;·&nbsp; all prices auto-updated from Zillow</div>
+  <div style="text-align:center;font-size:.68rem;color:#334155;margin-bottom:20px">+ 5 research markets benchmarked &nbsp;·&nbsp; all prices auto-updated from Zillow</div>
 
   <!-- ⑥ THE QUESTION — big visual split -->
   <div style="display:grid;grid-template-columns:1fr 44px 1fr;gap:10px;align-items:center;margin-bottom:20px">
@@ -945,10 +936,7 @@ function _cardHtml(m) {
 (function renderGroupedCards() {
   const all = [...D.primary_markets, ...D.research_markets];
   const groups = [
-    { region: 'New Jersey',   label: 'New Jersey' },
-    { region: 'Westchester',  label: 'Westchester' },
     { region: 'Long Island',  label: 'Long Island' },
-    { region: 'Queens / NYC', label: 'Queens / NYC' },
   ];
   document.getElementById('all-cards-container').innerHTML = groups.map(g => {
     const markets = all.filter(m => m.region === g.region).sort((a,b) => a.median_price - b.median_price);

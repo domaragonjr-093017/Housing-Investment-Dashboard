@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Purpose
 
-Track and compare suburban NYC housing markets to support a home purchase decision. The owner evaluates markets across Nassau County LI, Westchester, and NJ on four axes: **price, all-in PITI cost, commute to Midtown Manhattan, and school district quality.**
+Track and compare suburban NYC housing markets to support a home purchase decision. The owner evaluates markets across Nassau County, Long Island on four axes: **price, all-in PITI cost, commute to Midtown Manhattan, and school district quality.** (Westchester and NJ markets were evaluated and dropped — see Key Design Decisions.)
 
 ---
 
@@ -25,23 +25,12 @@ Track and compare suburban NYC housing markets to support a home purchase decisi
 |-----|------------------|-------|-------------|--------------|-----------|-------------------|
 | fp  | Floral Park      | NY    | Nassau LI   | $790K        | ~$13K/yr  | 35–45 min (LIRR)  |
 | rvc | Rockville Centre | NY    | Nassau LI   | $850K        | ~$17K/yr  | 40–45 min (LIRR)  |
-| mw  | Maplewood        | NJ    | Essex       | $840K        | ~$18K/yr  | 45–55 min (NJ Transit) |
 
 Tax figures are **fully combined**: county + town + school district + special districts. School tax ≈ 60–70% of total bill and is not broken out separately in the dashboard.
 
 ## Secondary Research Markets (town_research.md)
 
-A second set of 5 towns was researched for comparison — see `town_research.md` for full detail:
-
-| Town         | State | Median Price    | Tax Rate | Ann. Tax     | Schools              |
-|--------------|-------|-----------------|----------|--------------|----------------------|
-| Hoboken      | NJ    | ~$872K          | ~1.14%*  | ~$9,948      | 8/10 GreatSchools    |
-| Montclair    | NJ    | ~$1M+           | ~3.38%   | ~$22,487     | Niche A              |
-| Ridgewood    | NJ    | ~$1.05–1.35M    | ~2.80%   | ~$17–21K     | 9/10 GreatSchools    |
-| White Plains | NY    | ~$695K          | ~1.97%   | ~$9,854      | Above avg, diverse   |
-| Garden City  | NY    | ~$1.07M         | ~1.46%   | ~$12,269     | 10/10 (top 5% NY)    |
-
-\* Hoboken faces ~18–23% combined tax hike in 2026–27.
+`town_research.md` is an archival research doc covering 5 towns (Hoboken NJ, Montclair NJ, Ridgewood NJ, White Plains NY, Garden City NY) from an earlier NY/NJ comparison phase — kept for reference only. As of 2026-09 the live dashboard is Long Island only; the NJ towns in that file are not part of the current comparison set. White Plains and Garden City (NY) were never added to `data/markets.json` either — they remain research-only.
 
 ---
 
@@ -65,7 +54,7 @@ The interactive dashboard widget was built iteratively across multiple Claude.ai
 ```
 C:\Users\domar\housing-dashboard\
 ├── CLAUDE.md                        # This file
-├── town_research.md                 # Research: Hoboken, Montclair, Ridgewood, White Plains, Garden City
+├── town_research.md                 # Archival NY/NJ research (pre-2026-09 LI-only pivot) — not live data
 ├── data/
 │   ├── markets.json                 # All market data, watchlist, mortgage rate config
 │   ├── markets_snapshot.json        # Pre-refresh snapshot for diff/summary
@@ -115,8 +104,8 @@ Rate driver: Iran conflict + May CPI at 3.8%. Cross-reference: Freddie Mac weekl
 
 ## Key Design Decisions
 
-- Sea Cliff NY and Port Washington NY were evaluated and removed; replaced by Maplewood NJ (NJ diversity + NYC spillover demand)
-- All Westchester (Pelham, Bronxville, Larchmont, New Rochelle, Wykagyl) and Queens (Rockaway Park) markets were removed per owner preference (2026-09) — LI/NJ focus only going forward
+- All Westchester (Pelham, Bronxville, Larchmont, New Rochelle, Wykagyl) and Queens (Rockaway Park) markets were removed per owner preference (2026-09)
+- All NJ markets (Maplewood, Montclair, Westfield, Chatham, South Orange, West Orange, Rutherford, Essex Fells, Nutley, Glen Ridge, Verona, Caldwell, Cranford, Ridgewood) were removed per owner preference (2026-09) — **dashboard is Long Island only going forward**
 - Mineola is retained as the value/commute anchor for LI markets
 - Tax is displayed as one combined figure — school tax is already the dominant component (~60–70%) and breaking it out added confusion without clarity
 - PITI calculator pre-loads net proceeds (~$658K) as the default down payment
