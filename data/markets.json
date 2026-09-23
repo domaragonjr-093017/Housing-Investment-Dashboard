@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "1.0",
-    "last_updated": "2026-09-16",
+    "last_updated": "2026-09-23",
     "description": "Housing market dashboard data ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â NYC suburban markets for home purchase research",
     "owner_context": {
       "net_proceeds": 730000,
@@ -18,13 +18,13 @@
     }
   },
   "mortgage_rates": {
-    "as_of": "2026-09-16",
+    "as_of": "2026-09-23",
     "source": "Freddie Mac PMMS / daily quotes",
     "rate_driver": "(auto-updated by refresh.ps1)",
     "rates": {
-      "30yr_fixed": 0.0676,
-      "20yr_fixed": 0.0652,
-      "15yr_fixed": 0.060899999999999996
+      "30yr_fixed": 0.0695,
+      "20yr_fixed": 0.067,
+      "15yr_fixed": 0.0626
     },
     "notes": "30yr at 6.51% (up from 6.50% prior week). 15yr at 5.85% (up from 5.79%). 20yr at 6.54%. Above conforming limit ($832,750) adds ~0.10-0.15% for jumbo."
   },
