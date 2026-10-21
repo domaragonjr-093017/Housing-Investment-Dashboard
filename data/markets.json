@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "1.0",
-    "last_updated": "2026-10-14",
+    "last_updated": "2026-10-21",
     "description": "Housing market dashboard data ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â NYC suburban markets for home purchase research",
     "owner_context": {
       "net_proceeds": 730000,
@@ -37,7 +37,7 @@
       "region": "Long Island",
       "transit": "LIRR",
       "transit_terminal": "Penn Station",
-      "median_price": 876337.0,
+      "median_price": 871228.0,
       "annual_tax": 13000,
       "tax_rate_pct": 1.65,
       "commute_min": {
@@ -45,7 +45,7 @@
         "high": 45
       },
       "school_rating_greatschools": null,
-      "yoy_pct": -0.5,
+      "yoy_pct": -0.6,
       "dom": null,
       "price_per_sqft": null,
       "market_tone": null,
@@ -86,7 +86,7 @@
         "character": "K-6 only Floral Park-Bellerose UFSD earns a Niche A with 74% math proficiency Ã¢â‚¬â€ well above NY state average. Tight-knit elementary community; families send 7th-graders into Sewanhaka CSD, so research that district separately before committing."
       },
       "school_rating_niche": "A",
-      "price_as_of": "2026-08-31"
+      "price_as_of": "2026-09-30"
     },
     {
       "id": "rvc",
@@ -96,7 +96,7 @@
       "region": "Long Island",
       "transit": "LIRR",
       "transit_terminal": "Penn Station",
-      "median_price": 988001.0,
+      "median_price": 977794.0,
       "annual_tax": 17000,
       "tax_rate_pct": 2.0,
       "commute_min": {
@@ -104,7 +104,7 @@
         "high": 45
       },
       "school_rating_greatschools": null,
-      "yoy_pct": 0.3,
+      "yoy_pct": -1.0,
       "dom": null,
       "price_per_sqft": null,
       "market_tone": null,
@@ -145,7 +145,7 @@
         "character": "Compact, high-performing UFSD anchored by South Side High School (GS 9/10). Strong elementary pipeline (GS 9/10) and 80% math proficiency. One of Nassau County's best all-around suburban districts at its price point."
       },
       "school_rating_niche": "A",
-      "price_as_of": "2026-08-31"
+      "price_as_of": "2026-09-30"
     }
   ],
   "research_markets": [
@@ -157,7 +157,7 @@
       "region": "Long Island",
       "transit": "LIRR",
       "transit_terminal": "Penn Station",
-      "median_price": 1132305.0,
+      "median_price": 1129423.0,
       "annual_tax": 13125,
       "tax_rate_pct": 1.23,
       "commute_min": {
@@ -167,7 +167,7 @@
       "school_rating_greatschools": 10,
       "school_rating_niche": "A",
       "niche_rank": "#75 Best Elementary in NY (Sea Cliff Elem)",
-      "yoy_pct": -0.0,
+      "yoy_pct": -0.3,
       "dom": 72,
       "price_per_sqft": null,
       "market_tone": "Cooling",
@@ -207,7 +207,7 @@
         "needs_verification": true,
         "character": "North Shore CSD's reputation rests on its exceptional high school (GS 10/10, Niche A+) Ã¢â‚¬â€ among Long Island's elite. 95% math proficiency is the highest of any market tracked. Elementary schools are solid (GS 8/10) with a favorable 9:1 student-teacher ratio. The HS is the district's crown jewel."
       },
-      "price_as_of": "2026-08-31"
+      "price_as_of": "2026-09-30"
     },
     {
       "id": "ptw",
@@ -218,7 +218,7 @@
       "transit": "LIRR",
       "transit_terminal": "Penn Station",
       "transit_note": "Port Washington Branch ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â direct service, no Jamaica transfer required; ~47-57 min to Penn Station",
-      "median_price": 1293349.0,
+      "median_price": 1285775.0,
       "annual_tax": 14500,
       "tax_rate_pct": 1.26,
       "commute_min": {
@@ -227,7 +227,7 @@
       },
       "school_rating_greatschools": 8,
       "school_rating_niche": "A",
-      "yoy_pct": 0.9,
+      "yoy_pct": -0.6,
       "dom": null,
       "price_per_sqft": null,
       "market_tone": "Seller's Market",
@@ -267,7 +267,7 @@
         "needs_verification": true,
         "character": "Paul D. Schreiber HS (GS 10/10, Niche A+) is the district's calling card Ã¢â‚¬â€ strong AP offerings and one of Long Island's better public high schools. Elementary schools are solid but more average (GS 7/10). 79% math proficiency. A district where the high school significantly elevates the overall story."
       },
-      "price_as_of": "2026-08-31"
+      "price_as_of": "2026-09-30"
     },
     {
       "id": "mrk",
@@ -278,7 +278,7 @@
       "transit": "LIRR",
       "transit_terminal": "Penn Station",
       "transit_note": "Babylon Branch Ã¢â‚¬â€ most trains stop at Jamaica; select peak expresses run direct to Penn; ~45-55 min total",
-      "median_price": 900567.0,
+      "median_price": 895597.0,
       "annual_tax": 13500,
       "tax_rate_pct": 1.85,
       "commute_min": {
@@ -287,7 +287,7 @@
       },
       "school_rating_greatschools": 8,
       "school_rating_niche": "A",
-      "yoy_pct": 0.1,
+      "yoy_pct": -0.6,
       "dom": null,
       "price_per_sqft": null,
       "market_tone": null,
@@ -327,7 +327,7 @@
         "needs_verification": true,
         "character": "Merrick UFSD covers K-6 with solid elementary ratings (GS 8/10) and 78% math proficiency well above NY average. At 7th grade, students feed into the Bellmore-Merrick Central HS District Ã¢â‚¬â€ Calhoun HS is GS 9/10 and Niche A+, one of Long Island's stronger high schools. Strong story at both ends of the K-12 span."
       },
-      "price_as_of": "2026-08-31"
+      "price_as_of": "2026-09-30"
     },
     {
       "id": "mlv",
@@ -337,7 +337,7 @@
       "region": "Long Island",
       "transit": "LIRR",
       "transit_terminal": "Penn Station",
-      "median_price": 814835.0,
+      "median_price": 811531.0,
       "annual_tax": 14500,
       "tax_rate_pct": 2.07,
       "commute_min": {
@@ -346,7 +346,7 @@
       },
       "school_rating_greatschools": 7,
       "school_rating_niche": "B+",
-      "yoy_pct": -0.6,
+      "yoy_pct": -0.4,
       "dom": null,
       "price_per_sqft": null,
       "market_tone": null,
@@ -386,7 +386,7 @@
         "needs_verification": true,
         "character": "Malverne UFSD is one of Nassau County's most racially and economically diverse K-12 districts Ã¢â‚¬â€ a meaningful contrast to its homogeneous neighbors. School quality is above state average but trails nearby Lynbrook and Rockville Centre on proficiency metrics. Families who value community diversity alongside solid academics often find this a compelling trade-off at a lower price point."
       },
-      "price_as_of": "2026-08-31"
+      "price_as_of": "2026-09-30"
     },
     {
       "id": "lbk",
@@ -396,7 +396,7 @@
       "region": "Long Island",
       "transit": "LIRR",
       "transit_terminal": "Penn Station",
-      "median_price": 759594.0,
+      "median_price": 755921.0,
       "annual_tax": 17000,
       "tax_rate_pct": 2.24,
       "commute_min": {
@@ -405,7 +405,7 @@
       },
       "school_rating_greatschools": 8,
       "school_rating_niche": "A-",
-      "yoy_pct": -0.4,
+      "yoy_pct": -0.5,
       "dom": null,
       "price_per_sqft": null,
       "market_tone": null,
@@ -445,7 +445,7 @@
         "needs_verification": true,
         "character": "Lynbrook UFSD is a well-rounded K-12 district with above-average outcomes for Nassau County at its price point. Lynbrook HS (~GS 8/10) carries strong AP enrollment. At 73% math proficiency it outperforms the NY state average meaningfully Ã¢â‚¬â€ and families get a complete K-12 district with no mid-school transition uncertainty."
       },
-      "price_as_of": "2026-08-31"
+      "price_as_of": "2026-09-30"
     }
   ],
   "removed_markets": [
